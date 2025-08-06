@@ -9,11 +9,13 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
 
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap');  /*fonte
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap');
+
+    /*fonte
       /* dados do tema escuro */
     [data-theme="dark"] {
       --fundo-principal: #1a1a1a;
-      --texto-principal: #f0f0f0;    
+      --texto-principal: #f0f0f0;
       --botao-fundo: #333333;
       --borda-ativa: #007bff;
 
@@ -69,9 +71,10 @@
       color: white;
     }
 
+    /* variaveis globais do tema claro */
+
     :root {
       --fundo-principal: #d4c3d8;
-      --texto-principal: white;
       --botao-fundo: #e0e0e0;
       --borda-ativa: #007bff;
     }
@@ -85,7 +88,7 @@
     body {
       font-family: 'DM Sans', sans-serif;
       background: var(--fundo-principal);
-      color: var(--texto-principal);
+      color: white;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -146,7 +149,7 @@
       padding: 12px 30px;
       border: none;
       border-radius: 6px;
-      background: var(--botao-fundo);
+      background: var(#e0e0e0);
       color: #4b4b4b;
       font-weight: 700;
       font-size: 1rem;
@@ -218,6 +221,7 @@
 <body>
 
   <header class="cabecalho">
+
     <div class="botoes-esquerda">
       <button class="botao-icone" onclick="mostrarInstrucoes()">
         <i class="fas fa-question"></i>
@@ -262,6 +266,25 @@
       </div>
     </div>
   </footer>
+  <script>
+    /*oq for de coisa visual de js vai fica aq outro arquivo eh pras funcionalidade do jogo*/
+    function alternarTema() {
+      const body = document.body; //contsante do body pq vai ser alteradi
+      const iconeTema = document.querySelector('.botao-tema i');//pra indicar qual o icone do botao
+
+      if (body.getAttribute('data-theme') === 'dark') { //se o body tem os dados do tema escuro -> ativo
+        body.removeAttribute('data-theme'); //tirar os atributos do tema escuro , pra volta pro claro
+        iconeTema.className = 'fas fa-moon'; //adiciona no icone o simbolo da lua pra dizer que ta no claro e pd mudar
+      } else {
+        body.setAttribute('data-theme', 'dark'); //senao,tema escuro e icone do sol q eh pra volta pro claro
+        iconeTema.className = 'fas fa-sun';
+      }
+    }
+    
+    function mostrarInstrucoes() {
+    }
+
+  </script>
 
 </body>
 
