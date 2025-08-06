@@ -1,0 +1,155 @@
+root {
+            --bg-primary: #f8f9ff;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #e8ecff;
+            --text-primary: #2d3748;
+            --text-secondary: #4a5568;
+            --text-muted: #718096;
+            --accent: #667eea;
+            --accent-hover: #5a67d8;
+            --success: #48bb78;
+            --warning: #ed8936;
+            --error: #f56565;
+            --border: #e2e8f0;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+
+.modal-instrucoes {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3000;
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-instrucoes.oculto {
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.conteudo-instrucoes {
+    background: var(--bg-secondary);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px var(--shadow);
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: entradaModal 0.3s ease;
+}
+
+@keyframes entradaModal {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.cabecalho-instrucoes {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.titulo-instrucoes {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 10px;
+}
+
+.subtitulo-instrucoes {
+    color: var(--text-muted);
+    font-size: 1.2rem;
+}
+
+.etapas-instrucoes {
+    list-style: none;
+    margin-bottom: 30px;
+}
+
+.etapa-instrucao {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding: 20px;
+    background: var(--bg-tertiary);
+    border-radius: 15px;
+    transition: all 0.3s ease;
+}
+
+.etapa-instrucao:hover {
+    background: var(--accent);
+    color: white;
+    transform: translateX(5px);
+}
+
+.numero-etapa {
+    background: var(--accent);
+    color: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.etapa-instrucao:hover .numero-etapa {
+    background: white;
+    color: var(--accent);
+}
+
+.texto-etapa {
+    font-size: 1.1rem;
+    line-height: 1.5;
+}
+
+.caixa-exemplo {
+    background: linear-gradient(135deg, var(--accent), var(--success));
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.palavra-exemplo {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: 0.1em;
+}
+
+.anagramas-exemplo {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.botao-comecar-jogo {
+    width: 100%;
+    padding: 18px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.botao-comecar-jogo:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+}

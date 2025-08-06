@@ -6,12 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ANAGRAMOU!</title>
   <script src="script.js"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href="/TCC PROJETO BRAYAN E EU/logo.ico">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" /> <!--font awesome dos simbolos dos ngc-->
 
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap');
-
-    /*fonte
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap');   /*fonte */
+ 
       /* dados do tema escuro */
     [data-theme="dark"] {
       --fundo-principal: #1a1a1a;
@@ -72,7 +72,6 @@
     }
 
     /* variaveis globais do tema claro */
-
     :root {
       --fundo-principal: #d4c3d8;
       --botao-fundo: #e0e0e0;
@@ -89,7 +88,7 @@
       font-family: 'DM Sans', sans-serif;
       background: var(--fundo-principal);
       color: white;
-      min-height: 100vh;
+      min-height: 50px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -117,7 +116,7 @@
       border-radius: 8px;
       padding: 10px;
       cursor: pointer;
-      font-size: 1.2rem;
+      font-size: 19px;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
       transition: all 0.2s ease;
     }
@@ -215,6 +214,119 @@
       color: white;
       transform: translateY(-2px);
     }
+
+    .modal-instrucoes {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 1;
+    }
+
+    .modal-instrucoes.oculto {
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .conteudo-instrucoes {
+      background: #ffffff;;
+      padding: 40px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 600px;
+      max-height: 720px;
+      overflow-y: auto;
+      animation: entradaModal 0.3s ease;
+    }
+
+    .cabecalho-instrucoes {
+      text-align: center;
+      margin-bottom: 30px;
+      
+    }
+
+    .titulo-instrucoes {
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #667eea;
+    }
+
+    .subtitulo-instrucoes {
+      font-size: 16.2px;
+    }
+
+    .etapas-instrucoes {
+      margin-bottom: 30px;
+      background-color: #1a1a1a;
+      border-radius: 2px;
+
+    }
+
+    .etapa-instrucao {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+      margin-bottom: 20px;
+      padding: 20px;
+      border-radius: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .numero-etapa {
+      color: white;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      font-weight: 700;
+    }
+
+    .texto-etapa {
+      font-size: 16px;
+    }
+
+    .caixa-exemplo {
+      background: rgb(0, 0, 0);
+      color: white;
+      padding: 20px;
+      border-radius: 15px;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .palavra-exemplo {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .anagramas-exemplo {
+      font-size: 16.3px;
+      opacity: 0.9;
+    }
+
+    .botao-comecar-jogo {
+      width: 100%;
+      padding: 18px;
+      background: #63b3ed;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 20.8px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .botao-comecar-jogo:hover {
+      background: #5393c0;
+      transform: translateY(-2px);
+    }
   </style>
 </head>
 
@@ -244,7 +356,8 @@
   </header>
 
   <div class="seletor-dificuldade">
-    <button class="botao-dificuldade ativo" onclick="definirDificuldade('facil')">FÁCIL</button>
+    <button class="botao-dificuldade 
+    " onclick="definirDificuldade('facil')">FÁCIL</button>
     <button class="botao-dificuldade" onclick="definirDificuldade('medio')">MÉDIO</button>
     <button class="botao-dificuldade" onclick="definirDificuldade('dificil')">DIFÍCIL</button>
   </div>
@@ -266,6 +379,55 @@
       </div>
     </div>
   </footer>
+
+  <!-- Modal de Instruções -->
+  <div class="modal-instrucoes" id="modalInstrucoes">
+    <div class="conteudo-instrucoes">
+      <div class="cabecalho-instrucoes">
+        <h1 class="titulo-instrucoes">🎯 ANAGRAMOU!</h1>
+        <p class="subtitulo-instrucoes">Descubra todos os anagramas da palavra principal</p>
+      </div>
+
+      <div class="caixa-exemplo">
+        <div class="palavra-exemplo">CASAR</div>
+        <div class="anagramas-exemplo">Exemplo: SACRA, ARCAS, ARCAR...</div>
+      </div>
+
+      <ul class="etapas-instrucoes">
+        <li class="etapa-instrucao">
+          <div class="numero-etapa">1</div>
+          <div class="texto-etapa">
+            <strong>Escolha a dificuldade:</strong> Fácil, Médio ou Difícil. Cada nível tem uma palavra diferente com
+            seus anagramas.
+          </div>
+        </li>
+        <li class="etapa-instrucao">
+          <div class="numero-etapa">2</div>
+          <div class="texto-etapa">
+            <strong>Clique no campo de texto</strong> para começar o timer e digite os anagramas da palavra principal.
+          </div>
+        </li>
+        <li class="etapa-instrucao">
+          <div class="numero-etapa">3</div>
+          <div class="texto-etapa">
+            <strong>Encontre todos os anagramas:</strong> Use todas as letras da palavra principal para formar novas
+            palavras válidas.
+          </div>
+        </li>
+        <li class="etapa-instrucao">
+          <div class="numero-etapa">4</div>
+          <div class="texto-etapa">
+            <strong>Complete o desafio:</strong> Encontre todos os anagramas possíveis no menor tempo e apareça no
+            ranking!
+          </div>
+        </li>
+      </ul>
+
+      <button class="botao-comecar-jogo" onclick="fecharInstrucoes()">
+        Começar a Jogar!
+      </button>
+    </div>
+  </div>
   <script>
     /*oq for de coisa visual de js vai fica aq outro arquivo eh pras funcionalidade do jogo*/
     function alternarTema() {
@@ -280,10 +442,14 @@
         iconeTema.className = 'fas fa-sun';
       }
     }
-    
+
     function mostrarInstrucoes() {
+      document.getElementById('modalInstrucoes').classList.remove('oculto');
     }
 
+    function fecharInstrucoes() {
+      document.getElementById('modalInstrucoes').classList.add('oculto');
+    }
   </script>
 
 </body>
