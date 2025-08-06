@@ -12,7 +12,7 @@ const db = admin.firestore();
 
 async function salvarNoFirebase(palavra, anagramas) {
   try {
-    const hoje = new Date().toISOString().split('T')[0]; // "2025-08-06"
+    const hoje = new Date().toISOString().split('T')[0]; 
     const docRef = db.collection('palavradoDia').doc(hoje);
     await docRef.set({ palavra, anagramas });
     console.log('salvo no Firebase');
@@ -27,7 +27,6 @@ fs.readFile(filePath, 'utf8', async (err, data) => {
   if (err) { console.error('erro:', err); return; }
   try {
     const palavras = JSON.parse(data);
-
     function encontrarAnagramas(palavra, lista) {
       const chave = palavra.split('').sort().join('');
       return lista.filter(p => p !== palavra && p.split('').sort().join('') === chave);
