@@ -1,23 +1,54 @@
-/* fetch('json/anagramas_3letras.json')
-    .then(response => response.json())
-    .then(palavras => {
-    const ul = document.getElementById('listaPalavras');
-    palavras.forEach(palavra => {
-        const li = document.createElement('li');
-        li.textContent = palavra;
-        ul.appendChild(li);
-    });
-    }) */
-fetch('palavrasEmJson/palavras3letras.json')
-  .then(response => response.json())
-  .then(palavras => {
-    console.log('Palavras:', palavras);
-    const palavraAleatoria = palavras[Math.floor(Math.random() * palavras.length)];
-    console.log('Palavra aleatória:', palavraAleatoria);
-     const p = document.getElementById('palavra');        
-        p.textContent = palavraAleatoria;
+const fs = require('fs');
+const path = require('path');
+const admin = require('firebase-admin');
 
-  })
-  .catch(erro => {
-    console.error('Erro:', erro);
-  });
+const serviceAccount = require('./seguranca.json');
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+
+const db = admin.firestore();
+
+async function salvarNoFirebase(palavra, anagramas) {
+  try {
+    const hoje = new Date().toISOString().split('T')[0]; // "2025-08-06"
+    const docRef = db.collection('palavradoDia').doc(hoje);
+    await docRef.set({ palavra, anagramas });
+    console.log('salvo no Firebase');
+  } catch (err) {
+    console.error('erro ao salvar:', err);
+  }
+}
+
+const filePath = path.join(__dirname, 'words', 'palavras5letras.json');
+
+fs.readFile(filePath, 'utf8', async (err, data) => {
+  if (err) { console.error('erro:', err); return; }
+  try {
+    const palavras = JSON.parse(data);
+
+    function encontrarAnagramas(palavra, lista) {
+      const chave = palavra.split('').sort().join('');
+      return lista.filter(p => p !== palavra && p.split('').sort().join('') === chave);
+    }
+
+    let anagramas = [];
+    let palavraSelecionada = '';
+
+    while (anagramas.length < 5) {
+      palavraSelecionada = palavras[Math.floor(Math.random() * palavras.length)];
+      anagramas = encontrarAnagramas(palavraSelecionada, palavras);
+      if (anagramas.length >= 5) {
+        anagramas = anagramas.slice(0, 5);
+        break;
+      }
+    }
+
+    await salvarNoFirebase(palavraSelecionada, anagramas);
+    console.log(`palavra: ${palavraSelecionada}`);
+    console.log(`anagramas encontrados: ${anagramas.join(', ')}`);
+  } catch (erro) {
+    console.error(erro);
+  }
+});
