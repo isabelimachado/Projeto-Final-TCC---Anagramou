@@ -403,24 +403,6 @@
         <div class="anagramas-exemplo">Exemplo: SACRA, ARCAS, ARCAR...</div>
       </div>
 
-      <!-- Modal de Ranking -->
-      <div class="modal-instrucoes oculto" id="modalRanking">
-        <div class="conteudo-instrucoes">
-          <div class="cabecalho-instrucoes">
-            <h1 class="titulo-instrucoes">🏆 Ranking</h1>
-            <p class="subtitulo-instrucoes">Veja os melhores tempos dos jogadores!</p>
-          </div>
-
-          <div id="listaRanking">
-            <!-- Conteúdo do ranking será inserido aqui via JS -->
-          </div>
-
-          <button class="botao-comecar-jogo" onclick="fecharRanking()">
-            FECHAR
-          </button>
-        </div>
-      </div>
-
 
       <ul class="etapas-instrucoes">
         <li class="etapa-instrucao">
@@ -452,11 +434,16 @@
         </li>
       </ul>
 
+
       <button class="botao-comecar-jogo" onclick="fecharInstrucoes()">
         COMEÇAR A JOGAR!
       </button>
     </div>
+
+    
   </div>
+
+
   <script>
     /*oq for de coisa visual de js vai fica aq outro arquivo eh pras funcionalidade do jogo*/
     function alternarTema() {
@@ -479,6 +466,15 @@
     function fecharInstrucoes() {
       document.getElementById('modalInstrucoes').classList.add('oculto');
     };
+
+    function mostrarPerfil() {
+      document.getElementById('modalLogin').classList.remove('oculto');
+    };
+
+    function fecharLogin() {
+      document.getElementById('modalLogin').classList.add('oculto');
+    };
+
 
   </script>
 
