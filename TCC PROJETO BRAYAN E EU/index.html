@@ -73,6 +73,25 @@
       color: white;
     }
 
+    [data-theme="dark"] .input-autenticacao {
+      background-color: #2a2a2a;
+      color: #f0f0f0;
+      border: 1px solid #555;
+    }
+
+    [data-theme="dark"] .input-autenticacao:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+    }
+
+    [data-theme="dark"] .link-registrar {
+      color: #aabbee;
+    }
+
+    [data-theme="dark"] .link-registrar:hover {
+      color: #4a90e2;
+    }
+
     /* variaveis globais do tema claro */
     :root {
       --fundo-principal: #d4c3d8;
@@ -337,6 +356,39 @@
       background: #357ab7;
       transform: translateY(-2px);
     }
+
+    .input-autenticacao {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      border: 1px solid #bbb;
+      font-size: 16px;
+      background-color: #f8f8f8;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .input-autenticacao:focus {
+      outline: none;
+      border-color: #5d70c4;
+      box-shadow: 0 0 8px rgba(93, 112, 196, 0.4);
+    }
+
+    .link-registrar {
+      background: none;
+      border: none;
+      margin-top: 20px;
+      color: #5d70c4;
+      font-size: 16px;
+      font-weight: bold;
+      text-decoration: underline;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .link-registrar:hover {
+      color: #4a90e2;
+    }
   </style>
 </head>
 
@@ -348,7 +400,7 @@
       <button class="botao-icone" onclick="mostrarInstrucoes()">
         <i class="fas fa-question"></i>
       </button>
-      <button class="botao-icone" onclick="alternarTema()">
+      <button class="botao-icone botao-tema" onclick="alternarTema()">
         <i class="fas fa-moon"></i>
       </button>
     </div>
@@ -366,8 +418,7 @@
   </header>
 
   <div class="selecionarDificuldade">
-    <button class="botao-dificuldade 
-    " onclick="definirDificuldade('facil')">FÁCIL</button>
+    <button class="botao-dificuldade" onclick="definirDificuldade('facil')">FÁCIL</button>
     <button class="botao-dificuldade" onclick="definirDificuldade('medio')">MÉDIO</button>
     <button class="botao-dificuldade" onclick="definirDificuldade('dificil')">DIFÍCIL</button>
   </div>
@@ -389,6 +440,39 @@
       </div>
     </div>
   </footer>
+  <!-- Modal de Login -->
+  <div class="modal-instrucoes oculto" id="modalLogin">
+    <div class="conteudo-instrucoes" style="position: relative;">
+      <button class="botao-fechar" onclick="fecharLogin()">✖</button>
+      <div class="cabecalho-instrucoes">
+        <h1 class="titulo-instrucoes">LOGIN</h1>
+        <p class="subtitulo-instrucoes">Entre com seu e-mail e senha</p>
+      </div>
+
+      <input type="email" placeholder="Email" class="input-autenticacao">
+      <input type="password" placeholder="Senha" class="input-autenticacao">
+
+      <button class="botao-comecar-jogo" onclick="fecharLogin()">ENTRAR</button>
+      <button class="link-registrar" onclick="mostrarRegistro()">Não tem uma conta? Registrar</button>
+    </div>
+  </div>
+
+  <!-- Modal de Registro -->
+  <div class="modal-instrucoes oculto" id="modalRegistro">
+    <div class="conteudo-instrucoes" style="position: relative;">
+      <button class="botao-fechar" onclick="fecharRegistro()">✖</button>
+      <div class="cabecalho-instrucoes">
+        <h1 class="titulo-instrucoes">REGISTRO</h1>
+        <p class="subtitulo-instrucoes">Crie sua conta com e-mail, senha e nome de usuário</p>
+      </div>
+
+      <input type="email" placeholder="Email" class="input-autenticacao">
+      <input type="text" placeholder="Nome de usuário" class="input-autenticacao">
+      <input type="password" placeholder="Senha" class="input-autenticacao">
+
+      <button class="botao-comecar-jogo" onclick="fecharRegistro()">REGISTRAR</button>
+    </div>
+  </div>
 
   <!-- Modal de Instruções -->
   <div class="modal-instrucoes" id="modalInstrucoes">
@@ -440,7 +524,7 @@
       </button>
     </div>
 
-    
+
   </div>
 
 
@@ -474,6 +558,15 @@
     function fecharLogin() {
       document.getElementById('modalLogin').classList.add('oculto');
     };
+
+    function mostrarRegistro() {
+      document.getElementById('modalLogin').classList.add('oculto');
+      document.getElementById('modalRegistro').classList.remove('oculto');
+    }
+
+    function fecharRegistro() {
+      document.getElementById('modalRegistro').classList.add('oculto');
+    }
 
 
   </script>
