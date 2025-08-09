@@ -74,7 +74,7 @@
     }
 
     [data-theme="dark"] .input-autenticacao {
-      background-color: #2a2a2a;
+      background-color: #1e1e2f;
       color: #f0f0f0;
       border: 1px solid #555;
     }
@@ -91,6 +91,62 @@
     [data-theme="dark"] .link-registrar:hover {
       color: #4a90e2;
     }
+
+
+    /* #1e1e2f cor principal dos fundos escuros */
+
+    [data-theme="dark"] .instrucoes {
+      background: rgba(0, 0, 0, 0.85);
+    }
+
+    [data-theme="dark"] .conteudo-instrucoes {
+      background: #1e1e2f;
+      color: #dcdcdc;
+    }
+
+    [data-theme="dark"] .subtitulo-instrucoes {
+      color: #bbbbbb;
+    }
+
+    [data-theme="dark"] .etapas-instrucoes {
+      background-color: #2c2c3f;
+      color: #dcdcdc;
+    }
+
+    [data-theme="dark"] .etapa-instrucao {
+      color: #eeeeee;
+    }
+
+    [data-theme="dark"] .numero-etapa {
+      color: #dcdcdc;
+    }
+
+    [data-theme="dark"] .texto-etapa {
+      color: #dcdcdc;
+    }
+
+    [data-theme="dark"] .caixa-exemplo {
+      background: #2c2c3f;
+      color: #e0e0e0;
+    }
+
+    [data-theme="dark"] .palavra-exemplo {
+      color: #e4dbbf;
+    }
+
+    [data-theme="dark"] .anagramas-exemplo {
+      color: #bbbbbb;
+    }
+
+    [data-theme="dark"] .botao-comecar-jogo {
+      background: #42a5f5;
+      color: white;
+    }
+
+    [data-theme="dark"] .botao-comecar-jogo:hover {
+      background: #1e88e5;
+    }
+
 
     /* variaveis globais do tema claro */
     :root {
@@ -236,7 +292,7 @@
       transform: translateY(-2px);
     }
 
-    .modal-instrucoes {
+    .instrucoes {
       position: fixed;
       top: 0;
       left: 0;
@@ -249,7 +305,7 @@
       opacity: 1;
     }
 
-    .modal-instrucoes.oculto {
+    .instrucoes.oculto {
       opacity: 0;
       visibility: hidden;
       transition: all 0.3s ease;
@@ -265,7 +321,7 @@
       overflow-y: auto;
       scrollbar-width: none;
       -ms-overflow-style: none;
-      animation: entradaModal 0.3s ease;
+      animation: entrada 0.3s ease;
     }
 
     .conteudo-instrucoes::-webkit-scrollbar {
@@ -353,7 +409,7 @@
     }
 
     .botao-comecar-jogo:hover {
-      background: #357ab7;
+      background: #1e88e5;
       transform: translateY(-2px);
     }
 
@@ -440,8 +496,8 @@
       </div>
     </div>
   </footer>
-  <!-- Modal de Login -->
-  <div class="modal-instrucoes oculto" id="modalLogin">
+  <!-- Login -->
+  <div class="instrucoes oculto" id="Login">
     <div class="conteudo-instrucoes" style="position: relative;">
       <button class="botao-fechar" onclick="fecharLogin()">✖</button>
       <div class="cabecalho-instrucoes">
@@ -457,8 +513,8 @@
     </div>
   </div>
 
-  <!-- Modal de Registro -->
-  <div class="modal-instrucoes oculto" id="modalRegistro">
+  <!-- Registro -->
+  <div class="instrucoes oculto" id="Registro">
     <div class="conteudo-instrucoes" style="position: relative;">
       <button class="botao-fechar" onclick="fecharRegistro()">✖</button>
       <div class="cabecalho-instrucoes">
@@ -474,8 +530,8 @@
     </div>
   </div>
 
-  <!-- Modal de Instruções -->
-  <div class="modal-instrucoes" id="modalInstrucoes">
+  <!-- Instruções -->
+  <div class="instrucoes" id="Instrucoes">
     <div class="conteudo-instrucoes">
       <div class="cabecalho-instrucoes">
         <h1 class="titulo-instrucoes">ANAGRAMOU!</h1>
@@ -544,28 +600,28 @@
     }
 
     function mostrarInstrucoes() {
-      document.getElementById('modalInstrucoes').classList.remove('oculto');
+      document.getElementById('Instrucoes').classList.remove('oculto');
     };
 
     function fecharInstrucoes() {
-      document.getElementById('modalInstrucoes').classList.add('oculto');
+      document.getElementById('Instrucoes').classList.add('oculto');
     };
 
     function mostrarPerfil() {
-      document.getElementById('modalLogin').classList.remove('oculto');
+      document.getElementById('Login').classList.remove('oculto');
     };
 
     function fecharLogin() {
-      document.getElementById('modalLogin').classList.add('oculto');
+      document.getElementById('Login').classList.add('oculto');
     };
 
     function mostrarRegistro() {
-      document.getElementById('modalLogin').classList.add('oculto');
-      document.getElementById('modalRegistro').classList.remove('oculto');
+      document.getElementById('Login').classList.add('oculto');
+      document.getElementById('Registro').classList.remove('oculto');
     }
 
     function fecharRegistro() {
-      document.getElementById('modalRegistro').classList.add('oculto');
+      document.getElementById('Registro').classList.add('oculto');
     }
 
 
