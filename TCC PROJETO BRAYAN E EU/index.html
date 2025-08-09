@@ -445,6 +445,13 @@
     .link-registrar:hover {
       color: #4a90e2;
     }
+
+    .botao-sair {
+      font-size: 20px;
+      background-color: #fcfafa;
+      border:  none;
+
+    }
   </style>
 </head>
 
@@ -499,7 +506,7 @@
   <!-- Login -->
   <div class="instrucoes oculto" id="Login">
     <div class="conteudo-instrucoes" style="position: relative;">
-      <button class="botao-fechar" onclick="fecharLogin()">✖</button>
+      <button  class="botao-sair" onclick="fecharLogin()">✖</button>
       <div class="cabecalho-instrucoes">
         <h1 class="titulo-instrucoes">LOGIN</h1>
         <p class="subtitulo-instrucoes">Entre com seu e-mail e senha</p>
@@ -516,7 +523,7 @@
   <!-- Registro -->
   <div class="instrucoes oculto" id="Registro">
     <div class="conteudo-instrucoes" style="position: relative;">
-      <button class="botao-fechar" onclick="fecharRegistro()">✖</button>
+      <button  class="botao-sair" onclick="fecharRegistro()">✖</button>
       <div class="cabecalho-instrucoes">
         <h1 class="titulo-instrucoes">REGISTRO</h1>
         <p class="subtitulo-instrucoes">Crie sua conta com e-mail, senha e nome de usuário</p>
@@ -526,7 +533,7 @@
       <input type="text" placeholder="Nome de usuário" class="input-autenticacao">
       <input type="password" placeholder="Senha" class="input-autenticacao">
 
-      <button class="botao-comecar-jogo" onclick="fecharRegistro()">REGISTRAR</button>
+      <button class="botao-comecar-jogo" onclick="enviarDadosRegistro()">REGISTRAR</button>
     </div>
   </div>
 
@@ -620,9 +627,7 @@
       document.getElementById('Registro').classList.remove('oculto');
     }
 
-    function fecharRegistro() {
-      document.getElementById('Registro').classList.add('oculto');
-    }
+
 
 
   </script>
