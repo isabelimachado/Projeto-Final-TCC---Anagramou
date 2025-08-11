@@ -460,6 +460,26 @@
       font-weight: bold;
 
     }
+
+    .divdotimer {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .timerr {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px;
+      border-radius: 12px;
+      background-color: #ffffff;
+      color: #333333;
+      font-size: 18px;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
   </style>
 </head>
 
@@ -488,10 +508,19 @@
     </div>
   </header>
 
+
   <div class="selecionarDificuldade">
     <button class="botao-dificuldade" onclick="definirDificuldade('facil')">FÁCIL</button>
     <button class="botao-dificuldade" onclick="definirDificuldade('medio')">MÉDIO</button>
     <button class="botao-dificuldade" onclick="definirDificuldade('dificil')">DIFÍCIL</button>
+  </div>
+
+
+  <div class="divdotimer" id="timerContainer">
+    <div class="timerr" id="timer">
+      <i class="fas fa-clock"></i>
+      <p id="timeDisplay">0:00</p>
+    </div>
   </div>
 
   <footer class="rodape">
@@ -511,6 +540,7 @@
       </div>
     </div>
   </footer>
+
   <!-- Login -->
   <div class="instrucoes oculto" id="Login">
     <div class="conteudo-instrucoes" style="position: relative;">
@@ -529,6 +559,8 @@
       </div>
     </div>
   </div>
+
+
 
   <!-- Registro -->
   <div class="instrucoes oculto" id="Registro">
