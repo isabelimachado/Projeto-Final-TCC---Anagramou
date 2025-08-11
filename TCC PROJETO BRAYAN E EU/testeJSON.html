@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teste FireBase</title>
+  <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js"></script>
+  
+  <script>
+    const palavraDoDia = document.getElementById("palavraDoDia")  
+    db.collection("palavraDoDia").doc("anagrama1").get().then((doc) => {
+      if(doc.exists){
+        const dados = doc.data();
+        palavraDoDia.textContent = dados.texto;
+      } else{
+        palavraDoDia.textContent = "inexistente";
+      }
+    }).catch((error) => {
+    console.error("erro ao tentar achar o elemento:", error);
+    palavraDoDia.textContent = "erro ao carregar.";
+  });
+  </script>
+
+  <style>
+    body{
+      background-color: wheat;
+      align-items: center;
+      text-align: center;
+      justify-content: center; 
+    }
+  </style>
+</head>
+<body>
+  <p class="palavraDoDia">Debug</p>
+  <span class="p1">1</span><br>
+  <span class="p2">2</span><br>
+  <span class="p3">3</span><br>
+  <span class="p4">4</span><br>
+  <span class="p5">5</span><br>
+</body>
+
+</html>
