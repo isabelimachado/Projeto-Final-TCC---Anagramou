@@ -299,6 +299,7 @@
       transform: translateY(-2px);
     }
 
+
     .instrucoes {
       position: fixed;
       top: 0;
@@ -320,40 +321,52 @@
 
     .conteudo-instrucoes {
       background: #fcfafa;
-      padding: 40px;
-      border-radius: 20px;
+      padding: 25px;
+      border-radius: 15px;
       width: 90%;
-      max-width: 600px;
-      max-height: 720px;
-      overflow-y: auto;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
+      max-width: 500px;
       animation: entrada 0.3s ease;
-    }
-
-    .conteudo-instrucoes::-webkit-scrollbar {
-      display: none;
     }
 
     .cabecalho-instrucoes {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
     }
 
     .titulo-instrucoes {
       font-weight: 1000;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       color: #5d70c4;
+      font-size: 1.8rem;
     }
 
     .subtitulo-instrucoes {
-      font-size: 16.2px;
+      font-size: 14px;
       color: #333333;
       font-weight: 510;
     }
 
+    .caixa-exemplo {
+      background: #d4c3d8;
+      color: rgb(0, 0, 0);
+      padding: 15px;
+      border-radius: 12px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .palavra-exemplo {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .anagramas-exemplo {
+      font-size: 14px;
+    }
+
     .etapas-instrucoes {
-      margin-bottom: 30px;
+      margin-bottom: 20px;
       background-color: #d4c3d8;
       border-radius: 10px;
     }
@@ -361,55 +374,37 @@
     .etapa-instrucao {
       display: flex;
       align-items: flex-start;
-      gap: 15px;
-      margin-bottom: 20px;
-      padding: 20px;
+      gap: 12px;
+      margin-bottom: 15px;
+      padding: 15px;
       transition: all 0.3s ease;
       color: black;
     }
 
     .numero-etapa {
       color: black;
-      width: 35px;
-      height: 35px;
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
       font-weight: 700;
       display: flex;
       align-items: center;
       justify-content: center;
+      font-size: 14px;
     }
 
     .texto-etapa {
-      font-size: 16px;
-    }
-
-    .caixa-exemplo {
-      background: #d4c3d8;
-      color: rgb(0, 0, 0);
-      padding: 20px;
-      border-radius: 15px;
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    .palavra-exemplo {
-      font-size: 32px;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-
-    .anagramas-exemplo {
-      font-size: 17.3px;
+      font-size: 14px;
     }
 
     .botao-comecar-jogo {
       width: 100%;
-      padding: 18px;
+      padding: 15px;
       background: #4a90e2;
       color: white;
       border: none;
       border-radius: 12px;
-      font-size: 20.8px;
+      font-size: 18px;
       font-weight: 700;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -466,6 +461,9 @@
       display: flex;
       justify-content: center;
       margin-top: 20px;
+      justify-content: flex-end;
+      /*joga pra direita e o outro eh o tamanho da div pra direita*/
+      padding-right: 20px;
     }
 
     .timerr {
@@ -666,8 +664,9 @@
     };
 
     function mostrarRegistro() {
-      document.getElementById('Login').classList.add('oculto');
       document.getElementById('Registro').classList.remove('oculto');
+      document.getElementById('Login').classList.add('oculto');
+
     }
 
 
