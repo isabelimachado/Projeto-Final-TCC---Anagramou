@@ -147,6 +147,13 @@
       background: #1e88e5;
     }
 
+    [data-theme="dark"] .botao-sair {
+      background: #1e1e2f;
+      color: white;
+    }
+
+
+
 
     /* variaveis globais do tema claro */
     :root {
@@ -437,9 +444,9 @@
       color: #5d70c4;
       font-size: 16px;
       font-weight: bold;
-      text-decoration: underline;
       cursor: pointer;
       transition: color 0.3s;
+
     }
 
     .link-registrar:hover {
@@ -449,7 +456,8 @@
     .botao-sair {
       font-size: 20px;
       background-color: #fcfafa;
-      border:  none;
+      border: none;
+      font-weight: bold;
 
     }
   </style>
@@ -506,7 +514,7 @@
   <!-- Login -->
   <div class="instrucoes oculto" id="Login">
     <div class="conteudo-instrucoes" style="position: relative;">
-      <button  class="botao-sair" onclick="fecharLogin()">✖</button>
+      <button class="botao-sair" onclick="fecharX()">✖</button>
       <div class="cabecalho-instrucoes">
         <h1 class="titulo-instrucoes">LOGIN</h1>
         <p class="subtitulo-instrucoes">Entre com seu e-mail e senha</p>
@@ -516,14 +524,16 @@
       <input type="password" placeholder="Senha" class="input-autenticacao">
 
       <button class="botao-comecar-jogo" onclick="fecharLogin()">ENTRAR</button>
-      <button class="link-registrar" onclick="mostrarRegistro()">Não tem uma conta? Registrar</button>
+      <div style="display: flex; justify-content: center;">
+        <button class="link-registrar" onclick="mostrarRegistro()">Não tem uma conta? Registrar</button>
+      </div>
     </div>
   </div>
 
   <!-- Registro -->
   <div class="instrucoes oculto" id="Registro">
     <div class="conteudo-instrucoes" style="position: relative;">
-      <button  class="botao-sair" onclick="fecharRegistro()">✖</button>
+      <button class="botao-sair" onclick="fecharX()">✖</button>
       <div class="cabecalho-instrucoes">
         <h1 class="titulo-instrucoes">REGISTRO</h1>
         <p class="subtitulo-instrucoes">Crie sua conta com e-mail, senha e nome de usuário</p>
@@ -618,8 +628,9 @@
       document.getElementById('Login').classList.remove('oculto');
     };
 
-    function fecharLogin() {
+    function fecharX() {
       document.getElementById('Login').classList.add('oculto');
+      document.getElementById('Registro').classList.add('oculto');
     };
 
     function mostrarRegistro() {
