@@ -7,7 +7,8 @@
   <title>ANAGRAMOU!</title>
   <link rel="shortcut icon" type="image/x-icon" href="/TCC PROJETO BRAYAN E EU/logo.ico">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-  <script type="module" src="scriptblabla.js"></script>
+
+  <script type="module" src="script.js"></script>
   <!--font awesome dos simbolos dos ngc-->
 
   <style>
@@ -541,17 +542,16 @@
   </footer>
 
   <!-- Login -->
+  <!-- Modal de Login -->
   <div class="instrucoes oculto" id="Login">
-    <div class="conteudo-instrucoes" style="position: relative;">
+    <div class="conteudo-instrucoes">
       <button class="botao-sair" onclick="fecharX()">✖</button>
       <div class="cabecalho-instrucoes">
         <h1 class="titulo-instrucoes">LOGIN</h1>
         <p class="subtitulo-instrucoes">Entre com seu e-mail e senha</p>
       </div>
-
-      <input type="email" placeholder="Email" class="input-autenticacao">
-      <input type="password" placeholder="Senha" class="input-autenticacao">
-
+      <input type="email" placeholder="Email" class="input-autenticacao" />
+      <input type="password" placeholder="Senha" class="input-autenticacao" />
       <button class="botao-comecar-jogo" onclick="EnviarLogin()">ENTRAR</button>
       <div style="display: flex; justify-content: center;">
         <button class="link-registrar" onclick="mostrarRegistro()">Não tem uma conta? Registrar</button>
@@ -559,21 +559,17 @@
     </div>
   </div>
 
-
-
-  <!-- Registro -->
+  <!-- Modal de Registro -->
   <div class="instrucoes oculto" id="Registro">
-    <div class="conteudo-instrucoes" style="position: relative;">
+    <div class="conteudo-instrucoes">
       <button class="botao-sair" onclick="fecharX()">✖</button>
       <div class="cabecalho-instrucoes">
         <h1 class="titulo-instrucoes">REGISTRO</h1>
         <p class="subtitulo-instrucoes">Crie sua conta com e-mail, senha e nome de usuário</p>
       </div>
-
-      <input type="email" placeholder="Email" class="input-autenticacao" > 
-      <input type="text" placeholder="Nome de usuário" class="input-autenticacao">
-      <input type="password" placeholder="Senha" class="input-autenticacao">
-
+      <input type="email" placeholder="Email" class="input-autenticacao" />
+      <input type="text" placeholder="Nome de usuário" class="input-autenticacao" />
+      <input type="password" placeholder="Senha" class="input-autenticacao" />
       <button class="botao-comecar-jogo" onclick="EnviarRegistro()">REGISTRAR</button>
     </div>
   </div>
@@ -633,6 +629,8 @@
 
 
   <script>
+
+
     /*oq for de coisa visual de js vai fica aq outro arquivo eh pras funcionalidade do jogo*/
     function alternarTema() {
       const body = document.body; //contsante do body pq vai ser alteradi
@@ -669,9 +667,6 @@
       document.getElementById('Login').classList.add('oculto');
 
     }
-
-
-
 
   </script>
 
