@@ -4,24 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Teste FireBase</title>
-  <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js"></script>
-  
-  <script>
-    const palavraDoDia = document.getElementById("palavraDoDia")  
-    db.collection("palavraDoDia").doc("anagrama1").get().then((doc) => {
-      if(doc.exists){
-        const dados = doc.data();
-        palavraDoDia.textContent = dados.texto;
-      } else{
-        palavraDoDia.textContent = "inexistente";
-      }
-    }).catch((error) => {
-    console.error("erro ao tentar achar o elemento:", error);
-    palavraDoDia.textContent = "erro ao carregar.";
-  });
-  </script>
-
+  <script src="controleVariaveis.js"></script>
+  <script type="module" src="controller.js"></script>
   <style>
     body{
       background-color: wheat;
@@ -29,15 +13,32 @@
       text-align: center;
       justify-content: center; 
     }
+    #palavraDoDia{
+      animation: slide-in 2s linear infinite;
+    }
+    @keyframes slide-in {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
   </style>
 </head>
 <body>
-  <p class="palavraDoDia">Debug</p>
-  <span class="p1">1</span><br>
-  <span class="p2">2</span><br>
-  <span class="p3">3</span><br>
-  <span class="p4">4</span><br>
-  <span class="p5">5</span><br>
+  <p id="palavraDoDia">Debug</p>
+  <form onsubmit="return false" method="post" >
+    <input type="text" name="verificar" size="10" id="text"><br>
+    <input type="submit" onclick="Teste()" value="verificar" >
+  </form>
+  <br>
+  <span id="p1">1</span><br>
+  <span id="p2">2</span><br>
+  <span id="p3">3</span><br>
+  <span id="p4">4</span><br>
+  <span id="p5">5</span><br>
 </body>
 
 </html>
