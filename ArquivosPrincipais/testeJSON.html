@@ -6,6 +6,7 @@
   <title>Teste FireBase</title>
   <script src="controleVariaveis.js"></script>
   <script type="module" src="controller.js"></script>
+  <script type="module" src="openai.js"></script>
   <style>
     body{
       background-color: wheat;
@@ -14,17 +15,33 @@
       justify-content: center; 
     }
     #palavraDoDia{
-      animation: slide-in 2s linear infinite;
+      animation: slide-in 10s linear infinite;
     }
     @keyframes slide-in {
-  from {
-    transform: rotate(0deg);
-  }
+    from {
+      transform: rotateY(0deg);
+    }
 
-  to {
-    transform: rotate(360deg);
+    to {
+      transform: rotateY(360deg);
+    }
   }
-}
+  #mcDivertida{
+    width: 100px;
+    height: 100px;
+    background-color: gray;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    margin: auto;
+    animation-name: "";
+    animation-duration: 1s;
+  }
+  #p1{
+    display: none;
+  }
   </style>
 </head>
 <body>
@@ -34,11 +51,14 @@
     <input type="submit" onclick="Teste()" value="verificar" >
   </form>
   <br>
-  <span id="p1">1</span><br>
+  <div id="mcDivertida">
+    <span id="p1"></span>
+  </div>
   <span id="p2">2</span><br>
   <span id="p3">3</span><br>
   <span id="p4">4</span><br>
   <span id="p5">5</span><br>
+  <span id="p6">6</span><br>
 </body>
 
 </html>

@@ -7,6 +7,7 @@ const anagrama2 = document.getElementById("p2");
 const anagrama3 = document.getElementById("p3");
 const anagrama4 = document.getElementById("p4");
 const anagrama5 = document.getElementById("p5");
+const anagrama6 = document.getElementById("p6");
 
 const firebaseConfig = {
   apiKey: "AIzaSyByESGl7b8-X74bPX3GXpArf5SixfEQ_Ew",
@@ -40,6 +41,7 @@ async function buscarDados() {
     const anagrama3Valor = data.anagrama3;
     const anagrama4Valor = data.anagrama4;
     const anagrama5Valor = data.anagrama5;
+    const anagrama6Valor = data.anagrama6;
 
     palavraDoDia.textContent = palavra;
     anagrama1.textContent = anagrama1Valor;
@@ -47,7 +49,7 @@ async function buscarDados() {
     anagrama3.textContent = anagrama3Valor;
     anagrama4.textContent = anagrama4Valor;
     anagrama5.textContent = anagrama5Valor;
-
+    anagrama6.textContent = anagrama6Valor;
     const pesquisa = query(
       collection(db, "ANAGRAMOU!"),
       where("palavraDoDia", "==", palavra)
@@ -65,6 +67,7 @@ async function buscarDados() {
       console.log("Anagrama3: " + anagrama3Valor);
       console.log("Anagrama4: " + anagrama4Valor);
       console.log("Anagrama5: " + anagrama5Valor);
+      console.log("Anagrama6: " + anagrama6Valor);
     });
 
   } catch (error) {

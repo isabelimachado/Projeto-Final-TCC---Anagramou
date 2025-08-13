@@ -41,7 +41,8 @@ async function salvarNoFirebase(palavra, anagramas) {
       anagrama2: anagramas[1] || '',
       anagrama3: anagramas[2] || '',
       anagrama4: anagramas[3] || '',
-      anagrama5: anagramas[4] || ''
+      anagrama5: anagramas[4] || '',
+      anagrama6: anagramas[5] || ''
     };
 
     await docRef.set(data); // so ve se ta algo dentro
@@ -70,8 +71,8 @@ fs.readFile(filePath, 'utf8', async (err, data) => { // tentar levar o diretorio
         continue;
       }
       anagramas = encontrarAnagramas(palavraSelecionada, palavras);
-      if (anagramas.length >= 5) {
-        anagramas = anagramas.slice(0, 5);
+      if (anagramas.length >= 6) {
+        anagramas = anagramas.slice(0, 6);
         break;
       }
     }
