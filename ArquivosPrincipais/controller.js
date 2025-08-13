@@ -73,3 +73,70 @@ async function buscarDados() {
 }
 
 buscarDados();
+
+
+  async function registrar(email, nome, senha) {
+    try {
+      const usuariosColecao = collection(db, "usuarios");
+      const snapshot = await getDocs(usuariosColecao); 
+
+      let maiorId = 0; // pra descobrir a maior quantidade de id q ja tem pra cria um atual
+      snapshot.forEach(doc => {
+        const idNum = parseInt(doc.id);
+        if (!isNaN(idNum) && idNum > maiorId) maiorId = idNum;
+      });
+
+      const novoId = (maiorId + 1).toString();
+
+      await setDoc(doc(db, "usuarios", novoId), {
+        email: email,
+        nome: nome,
+        senha: senha,
+        tempo: null
+      });
+
+      alert("Usuário registrado com sucesso!");
+    } catch (err) {
+      alert("Erro ao registrar: " + err.message);
+    }
+  }
+  async function login(email, senha) {
+    try {
+      const q = query(collection(db, "usuarios"), where("email", "==", email));
+      const querySnapshot = await getDocs(q);
+
+      if (querySnapshot.empty) {
+        alert("Usuário não encontrado!");
+        return;
+      }
+
+      let usuarioEncontrado = false;
+      querySnapshot.forEach((doc) => {
+        if (doc.data().senha === senha) {
+          usuarioEncontrado = true;
+        }
+      });
+
+      if (usuarioEncontrado) {
+        alert("Login realizado com sucesso!");
+      } else {
+        alert("Senha incorreta!");
+      }
+    } catch (err) {
+      alert("Erro no login: " + err.message);
+    }
+  }
+
+  window.EnviarRegistro = function () {
+    const email = document.getElementById("emailRegistro").value;
+    const nome = document.getElementById("nomeRegistro").value;
+    const senha = document.getElementById("senhaRegistro").value;
+    registrar(email, nome, senha);
+  };
+
+  window.EnviarLogin = function () {
+    const email = document.getElementById("emailLogin").value;
+    const senha = document.getElementById("senhaLogin").value;
+    login(email, senha);
+  };
+
