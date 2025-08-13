@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teste FireBase</title>
+  <script src="controleVariaveis.js"></script>
+  <script type="module" src="controller.js"></script>
+  <style>
+    body{
+      background-color: wheat;
+      align-items: center;
+      text-align: center;
+      justify-content: center; 
+    }
+    #palavraDoDia{
+      animation: slide-in 2s linear infinite;
+    }
+    @keyframes slide-in {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+  </style>
+</head>
+<body>
+  <p id="palavraDoDia">Debug</p>
+  <form onsubmit="return false" method="post" >
+    <input type="text" name="verificar" size="10" id="text"><br>
+    <input type="submit" onclick="Teste()" value="verificar" >
+  </form>
+  <br>
+  <span id="p1">1</span><br>
+  <span id="p2">2</span><br>
+  <span id="p3">3</span><br>
+  <span id="p4">4</span><br>
+  <span id="p5">5</span><br>
+</body>
+
+</html>
