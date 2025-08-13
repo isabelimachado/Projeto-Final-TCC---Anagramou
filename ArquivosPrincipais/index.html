@@ -70,12 +70,12 @@
     }
 
     [data-theme="dark"] .link-rodape:hover {
-      background: #007bff;
+      background: #292b2e;
       color: white;
     }
 
     [data-theme="dark"] .input-autenticacao {
-      background-color: #1e1e2f;
+      background-color: #1a1a1a;
       color: #f0f0f0;
       border: 1px solid #555;
     }
@@ -94,14 +94,12 @@
     }
 
 
-    /* #1e1e2f cor principal dos fundos escuros */
-
     [data-theme="dark"] .instrucoes {
       background: rgba(0, 0, 0, 0.85);
     }
 
     [data-theme="dark"] .conteudo-instrucoes {
-      background: #1e1e2f;
+      background: var(--fundo-principal);
       color: #dcdcdc;
     }
 
@@ -110,12 +108,13 @@
     }
 
     [data-theme="dark"] .etapas-instrucoes {
-      background-color: #2c2c3f;
+      background-color: #3a3a41;
       color: #dcdcdc;
     }
 
     [data-theme="dark"] .etapa-instrucao {
       color: #eeeeee;
+      
     }
 
     [data-theme="dark"] .numero-etapa {
@@ -127,7 +126,7 @@
     }
 
     [data-theme="dark"] .caixa-exemplo {
-      background: #2c2c3f;
+      background: #3a3a41;
       color: #e0e0e0;
     }
 
@@ -139,22 +138,22 @@
       color: #bbbbbb;
     }
 
-    [data-theme="dark"] .botao-comecar-jogo {
-      background: #42a5f5;
-      color: white;
-    }
-
-    [data-theme="dark"] .botao-comecar-jogo:hover {
-      background: #1e88e5;
-    }
-
     [data-theme="dark"] .botao-sair {
-      background: #1e1e2f;
+      background:var(--fundo-principal);
       color: white;
     }
 
+    [data-theme="dark"] .divdobrayan {
+      background-color: #413e3e;
+    }
 
+    [data-theme="dark"] .botaoderesposta {
+      background-color: #3b3a3a;
+    }
 
+    [data-theme="dark"] .botaoderesposta:hover {
+      background-color: #252424;
+    }
 
     /* variaveis globais do tema claro */
     :root {
@@ -291,7 +290,7 @@
       transition: all 0.3s ease;
       padding: 10px 15px;
       border-radius: 8px;
-      background: #ece5e5;
+      background: #e0e2e2;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
@@ -402,7 +401,7 @@
     .botao-comecar-jogo {
       width: 100%;
       padding: 15px;
-      background: #4a90e2;
+      background: #336094;
       color: white;
       border: none;
       border-radius: 12px;
@@ -413,7 +412,7 @@
     }
 
     .botao-comecar-jogo:hover {
-      background: #1e88e5;
+      background: #114d81;
       transform: translateY(-2px);
     }
 
@@ -462,8 +461,9 @@
       width: 100%;
       display: flex;
       justify-content: center;
-      margin-top: 20px;
+      top: 35rem;
       justify-content: flex-end;
+      position: absolute;
       /*joga pra direita e o outro eh o tamanho da div pra direita*/
       padding-right: 20px;
     }
@@ -483,7 +483,7 @@
 
     .divdobrayan {
       width: 75%;
-      height: 250px;
+      height: 330px;
       background-color: white;
       border-radius: 12px;
       display: flex;
@@ -508,17 +508,32 @@
       text-align: center;
       margin: 10px;
       color: white;
-      box-sizing: border-box;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
       padding: 0 15px;
+      animation-name: rodar;
+      animation-duration: 4s;
     }
 
-    .inputall {
+    @keyframes rodar {
+      from {
+        transform: rotateX(0deg);
+      }
+
+      to {
+        transform: rotateX(360deg);
+      }
+    }
+
+    .inputzao {
       display: flex;
       justify-content: flex-start;
       align-items: center;
       width: 100%;
       max-width: 500px;
       margin: 20px auto;
+      position: relative;
+      bottom: 10px
+        /*div de fundo pr coloca o bota o botao do lado do input*/
     }
 
     .input-jogar {
@@ -535,23 +550,23 @@
       transition: all 0.3s ease;
     }
 
-    .botao-enviar-resposta {
-      background-color: #4CAF50;
+    .botaoderesposta {
+      background-color: #a085a7;
       border: none;
       border-radius: 50%;
       padding: 12px;
       color: white;
       font-size: 20px;
       cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.2s ease;
+      transition: background-color 0.4s ease, transform 0.3s ease;
       display: flex;
       align-items: center;
       justify-content: center;
       margin-left: 10px;
     }
 
-    .botao-enviar-resposta:hover {
-      background-color: #388E3C;
+    .botaoderesposta:hover {
+      background-color: #67546b;
       transform: scale(1.1);
     }
   </style>
@@ -584,9 +599,9 @@
 
 
   <div class="selecionarDificuldade">
-    <button class="botao-dificuldade" onclick="definirDificuldade('facil')">FÁCIL</button>
-    <button class="botao-dificuldade" onclick="definirDificuldade('medio')">MÉDIO</button>
-    <button class="botao-dificuldade" onclick="definirDificuldade('dificil')">DIFÍCIL</button>
+    <button class="botao-dificuldade" onclick="('facil')">FÁCIL</button>
+    <button class="botao-dificuldade" onclick="('medio')">MÉDIO</button>
+    <button class="botao-dificuldade" onclick="('dificil')">DIFÍCIL</button> <!--funçoes dos niveis ?? brayan scrr-->
   </div>
 
   <div class="divdobrayan">
@@ -607,11 +622,19 @@
     <div class="campos">
       <p>palavra q vai aparecer</p>
     </div>
+
+    <div class="campos">
+      <p>palavra q vai aparecer</p>
+    </div>
+
+    <div class="campos">
+      <p>palavra q vai aparecer</p>
+    </div>
   </div>
 
-  <div class="inputall">
-    <input class="input-jogar" placeholder="Digite sua resposta">
-    <button class="botao-enviar-resposta" onclick=""> <!--fazer a funcao pra envia brayan ve isso ai -->
+  <div class="inputzao">
+    <input class="input-jogar" placeholder="digite sua resposta">
+    <button class="botaoderesposta" onclick=""> <!--fazer a funcao pra envia brayan ve isso ai -->
       <i class="fas fa-paper-plane"></i>
     </button>
   </div>
@@ -621,7 +644,7 @@
   <div class=" divdotimer" id="timerContainer">
     <div class="timerr" id="timer">
       <i class="fas fa-clock"></i>
-      <p id="timeDisplay">0:00</p>
+      <p id="timeDisplay">0:00</p> <!--ve pra isso funcionakkk, e guarda o time do usuario no banco pq ta guardando null por enquanto-->
     </div>
   </div>
 
