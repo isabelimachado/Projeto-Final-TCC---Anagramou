@@ -63,7 +63,7 @@ async function palavrasUsadas() {
   return usadas; 
 }
 
-async function salvarNoFirebase(palavra, anagramas, significadoPrincipal) {
+async function salvarNoFirebase(palavra, anagramas, significado) {
   try {
     const hoje = new Date().toISOString().split('T')[0];
     const docRef = db.collection('palavraDoDia').doc(hoje);
@@ -76,7 +76,7 @@ async function salvarNoFirebase(palavra, anagramas, significadoPrincipal) {
     
     const data = {
       palavra,
-      significado: significadoPrincipal, // Apenas o significado da palavra principal
+      significado, // Apenas o significado da palavra principal
       anagrama1: anagramas[0] || '',
       anagrama2: anagramas[1] || '',
       anagrama3: anagramas[2] || '',
@@ -122,15 +122,15 @@ fs.readFile(filePath, 'utf8', async (err, data) => {
     console.log(`Anagramas encontrados: ${anagramas.join(', ')}`);
     
     // Obter apenas o significado da palavra principal
-    const significadoPrincipal = await obterSignificadoPrincipal(palavraSelecionada);
+    const significado = await obterSignificadoPrincipal(palavraSelecionada);
     
     // Salvar no Firebase
-    await salvarNoFirebase(palavraSelecionada, anagramas, significadoPrincipal);
+    await salvarNoFirebase(palavraSelecionada, anagramas, significado);
     
     // Mostrar resultados
     console.log('\n=== RESULTADOS ===');
     console.log(`Palavra: ${palavraSelecionada}`);
-    console.log(`Significado: ${significadoPrincipal}`);
+    console.log(`Significado: ${significado}`);
     console.log(`Anagramas: ${anagramas.join(', ')}`);
     
   } catch (erro) {

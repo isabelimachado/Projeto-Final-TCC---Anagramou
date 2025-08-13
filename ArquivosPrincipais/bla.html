@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Palavra do Dia - Firebase</title>
+  <script src="tentativaIA.js"></script>
+  <script type="module" src="controller.js"></script>
+  <style>
+    body{
+      background-color: wheat;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    
+    #palavraDoDia{
+      animation: slide-in 2s linear infinite;
+      font-size: 2rem;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 10px;
+    }
+    
+    #significado {
+      font-size: 1.2rem;
+      color: #666;
+      margin-bottom: 20px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    @keyframes slide-in {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    
+    form {
+      margin: 20px 0;
+      padding: 20px;
+      background: rgba(255,255,255,0.8);
+      border-radius: 10px;
+    }
+    
+    input[type="text"] {
+      padding: 10px;
+      font-size: 16px;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+    
+    input[type="submit"] {
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    
+    input[type="submit"]:hover {
+      background: #45a049;
+    }
+    
+    .anagramas {
+      margin-top: 20px;
+      padding: 20px;
+      background: rgba(255,255,255,0.8);
+      border-radius: 10px;
+    }
+    
+    .anagrama {
+      display: inline-block;
+      margin: 5px;
+      padding: 10px 15px;
+      background: #2196F3;
+      color: white;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+    
+    .resultado {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 5px;
+    }
+    
+    .correto {
+      background: #d4edda;
+      color: #155724;
+    }
+    
+    .incorreto {
+      background: #f8d7da;
+      color: #721c24;
+    }
+    
+    .loading {
+      color: #666;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <h1> Palavra do Dia</h1>
+  
+  <p id="palavraDoDia" class="loading">Carregando...</p>
+  <p id="significado"></p>
+  
+  <div class="anagramas">
+    <h3>Anagramas para descobrir:</h3>
+    <div id="anagramas-lista"></div>
+  </div>
+  
+  <form onsubmit="return false" method="post">
+    <input type="text" name="verificar" size="15" id="text" placeholder="Digite um anagrama">
+    <input type="submit" onclick="Teste()" value="Verificar">
+  </form>
+  
+  <div id="resultado"></div>
+  
+  <br>
+  <div class="anagramas">
+    <h3>Anagramas encontrados:</h3>
+    <span class="anagrama" id="p1">?</span>
+    <span class="anagrama" id="p2">?</span>
+    <span class="anagrama" id="p3">?</span>
+    <span class="anagrama" id="p4">?</span>
+    <span class="anagrama" id="p5">?</span>
+  </div>
+</body>
+</html>
