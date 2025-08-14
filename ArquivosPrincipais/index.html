@@ -110,7 +110,7 @@
   </footer>
 
 
-  <!-- Login -->
+  <!-- login uau -->
 
   <div class="instrucoes oculto" id="Login">
     <div class="conteudo-instrucoes">
@@ -128,7 +128,7 @@
     </div>
   </div>
 
-  <!--Registro -->
+  <!--registro -->
   <div class="instrucoes oculto" id="Registro">
     <div class="conteudo-instrucoes">
       <button class="botao-sair" onclick="fecharX()">✖</button>
@@ -143,13 +143,15 @@
     </div>
   </div>
 
-  <!-- Instruções -->
+  <!-- como q joga/instruções -->
   <div class="instrucoes" id="Instrucoes">
     <div class="conteudo-instrucoes">
       <div class="cabecalho-instrucoes">
         <h1 class="titulo-instrucoes">ANAGRAMOU!</h1>
         <p class="subtitulo-instrucoes">Descubra todos os anagramas da palavra principal</p>
       </div>
+
+      <!--quando puder da uma olhadinha nesses textinhos pra ve se ta bom ou adiciona algo-->
 
       <div class="caixa-exemplo">
         <div class="palavra-exemplo">CASAR</div>
@@ -207,7 +209,7 @@
     </div>
 
     <ul class="listaranking" id="rankingList">
-      <!-- Itens do ranking serão inseridos aqui via JavaScript -->
+      <!-- itens do ranking serão inseridos aqui pelo controller -->
     </ul>
   </div>
 
@@ -234,8 +236,7 @@
       }
     }
 
-
-
+    //funcoes so pra abrir e fechar as coisas de antes
     function mostrarInstrucoes() {
       document.getElementById('Instrucoes').classList.remove('oculto');
     };
