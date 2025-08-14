@@ -115,7 +115,7 @@
 
     [data-theme="dark"] .etapa-instrucao {
       color: #eeeeee;
-      
+
     }
 
     [data-theme="dark"] .numero-etapa {
@@ -140,7 +140,7 @@
     }
 
     [data-theme="dark"] .botao-sair {
-      background:var(--fundo-principal);
+      background: var(--fundo-principal);
       color: white;
     }
 
@@ -569,6 +569,92 @@
       background-color: #67546b;
       transform: scale(1.1);
     }
+
+    .ranking-panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 280px;
+      height: 100%;
+      background: #ffffff;
+      color: #333;
+      box-shadow: -4px 0 10px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      z-index: 9999;
+    }
+
+    .ranking-panel.show {
+      transform: translateX(0);
+    }
+
+    .ranking-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #5d70c4;
+      color: white;
+      padding: 15px;
+      font-weight: bold;
+    }
+
+    .ranking-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .close-btn {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .ranking-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .ranking-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 15px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .ranking-list li span {
+      font-size: 14px;
+    }
+
+    .ranking-list li.first {
+      background: gold;
+      font-weight: bold;
+    }
+
+    .ranking-list li.second {
+      background: silver;
+      font-weight: bold;
+    }
+
+    .ranking-list li.third {
+      background: #cd7f32;
+      /* bronze */
+      font-weight: bold;
+    }
+
+    .ranking-list .loading {
+      text-align: center;
+      padding: 20px;
+      font-style: italic;
+    }
   </style>
 </head>
 
@@ -639,15 +725,28 @@
     </button>
   </div>
 
-  <!--Ranking-->
-
+  <div class="ranking-panel" id="rankingPanel">
+    <div class="ranking-header">
+      <div class="ranking-title">
+        <i class="fas fa-trophy"></i>
+        Ranking
+      </div>
+      <button class="close-btn" onclick="fecharRanking()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <ul class="ranking-list" id="rankingList">
+      <div class="loading">Carregando ranking...</div>
+    </ul>
+  </div>
 
 
 
   <div class=" divdotimer" id="timerContainer">
     <div class="timerr" id="timer">
       <i class="fas fa-clock"></i>
-      <p id="timeDisplay">0:00</p> <!--ve pra isso funcionakkk, e guarda o time do usuario no banco pq ta guardando null por enquanto-->
+      <p id="timeDisplay">0:00</p>
+      <!--ve pra isso funcionakkk, e guarda o time do usuario no banco pq ta guardando null por enquanto-->
     </div>
   </div>
 
@@ -669,6 +768,20 @@
       </div>
     </div>
   </footer>
+
+  <div class="ranking-panel oculto" id="rankingPanel">
+    <div class="ranking-header">
+      <div class="ranking-title">
+        <i class="fas fa-trophy"></i> Ranking
+      </div>
+      <button class="close-btn" onclick="fecharRanking()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <ul class="ranking-list" id="rankingList">
+      <li class="loading">Carregando ranking...</li>
+    </ul>
+  </div>
 
   <!-- Login -->
 
@@ -754,89 +867,11 @@
     </div>
   </div>
 
-
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-    import { getFirestore, collection, query, where, getDocs, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyByESGl7b8-X74bPX3GXpArf5SixfEQ_Ew",
-      authDomain: "anagramou.firebaseapp.com",
-      projectId: "anagramou",
-      storageBucket: "anagramou.firebasestorage.app",
-      messagingSenderId: "518755435289",
-      appId: "1:518755435289:web:b33e54e698718914323b88",
-      measurementId: "G-BBQX4DEE5V"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    async function registrar(email, nome, senha) {
-      try {
-        const usuariosColecao = collection(db, "usuarios");
-        const snapshot = await getDocs(usuariosColecao); // pega os usuarios dos documentos
-
-        let maiorId = 0; // pra descobrir a maior quantidade de id q ja tem pra cria um atual
-        snapshot.forEach(doc => {
-          const idNum = parseInt(doc.id);
-          if (!isNaN(idNum) && idNum > maiorId) maiorId = idNum;
-        });
-
-        const novoId = (maiorId + 1).toString();
-
-        await setDoc(doc(db, "usuarios", novoId), {
-          email: email,
-          nome: nome,
-          senha: senha,
-          tempo: null
-        });
-
-        alert("Usuário registrado com sucesso!");
-      } catch (err) {
-        alert("Erro ao registrar: " + err.message);
-      }
-    }
-    async function login(email, senha) {
-      try {
-        const q = query(collection(db, "usuarios"), where("email", "==", email));
-        const querySnapshot = await getDocs(q);
-
-        if (querySnapshot.empty) {
-          alert("Usuário não encontrado!");
-          return;
-        }
-
-        let usuarioEncontrado = false;
-        querySnapshot.forEach((doc) => {
-          if (doc.data().senha === senha) {
-            usuarioEncontrado = true;
-          }
-        });
-
-        if (usuarioEncontrado) {
-          alert("Login realizado com sucesso!");
-        } else {
-          alert("Senha incorreta!");
-        }
-      } catch (err) {
-        alert("Erro no login: " + err.message);
-      }
-    }
-
-    // Funções para os botões
-    window.EnviarRegistro = function () {
-      const email = document.getElementById("emailRegistro").value;
-      const nome = document.getElementById("nomeRegistro").value;
-      const senha = document.getElementById("senhaRegistro").value;
-      registrar(email, nome, senha);
-    };
-
-    window.EnviarLogin = function () {
-      const email = document.getElementById("emailLogin").value;
-      const senha = document.getElementById("senhaLogin").value;
-      login(email, senha);
-    };
+    import { alternarRanking } from './rankingController.js';
+    window.alternarRanking = alternarRanking;
   </script>
+
   <script>
 
 
@@ -853,6 +888,8 @@
         iconeTema.className = 'fas fa-sun';
       }
     }
+
+
 
     function mostrarInstrucoes() {
       document.getElementById('Instrucoes').classList.remove('oculto');
@@ -875,6 +912,15 @@
       document.getElementById('Registro').classList.remove('oculto');
       document.getElementById('Login').classList.add('oculto');
 
+    }
+
+    function carregarRanking() {
+      const painel = document.getElementById('rankingPanel');
+      painel.classList.add('show');
+    }
+
+    function fecharRanking() {
+      document.getElementById('rankingPanel').classList.remove('show');
     }
 
   </script>

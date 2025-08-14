@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-import { getFirestore, collection, doc, getDoc, getDocs, query, where } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js';
+import { getFirestore, collection, doc, getDoc, getDocs, query, where, orderBy,limit } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js';
 
 const palavraDoDia = document.getElementById("palavraDoDia");
 const anagrama1 = document.getElementById("p1");
@@ -143,29 +143,58 @@ window.EnviarLogin = function () {
   login(email, senha);
 };
 
-async function carregarRanking() {
-  const rankingContainer = document.getElementById("ranking-container");
-  rankingContainer.innerHTML = ""; // limpa antes de recarregar
+export async function carregarRanking() {
+  const rankingDiv = document.getElementById("rankingPanel");
+  rankingDiv.innerHTML = "<p>Carregando...</p>";
 
   try {
-    // Pega a coleção "usuarios" ordenada por pontuação (se quiser)
-    const q = query(collection(db, "usuarios"), orderBy("pontuacao", "desc"));
-    const querySnapshot = await getDocs(q);
+    const q = query(collection(db, "usuarios"), orderBy("time"), limit(10));
+    const snapshot = await getDocs(q);
 
-    querySnapshot.forEach((doc) => {
-      const dados = doc.data();
-
-      // Cria div de cada jogador
-      const item = document.createElement("div");
-      item.classList.add("ranking-item");
-      item.innerHTML = `
-          <p><strong>Nome:</strong> ${dados.nome || "Sem nome"}</p>
-          <p><strong>Time:</strong> ${dados.time || "Sem time"}</p>
-        `;
-      rankingContainer.appendChild(item);
+    const dados = [];
+    snapshot.forEach(doc => {
+      dados.push(doc.data());
     });
-  } catch (erro) {
-    console.error("Erro ao carregar ranking:", erro);
+
+    mostrarRanking(dados);
+  } catch (error) {
+    console.error("Erro ao carregar ranking:", error);
+    rankingDiv.innerHTML = "<p>Erro ao carregar ranking.</p>";
   }
 }
 
+function mostrarRanking(ranking) {
+  const rankingDiv = document.getElementById("rankingPanel");
+  rankingDiv.innerHTML = `
+    <div class="ranking-header">
+      <div class="ranking-title">
+        <i class="fas fa-trophy"></i> Ranking
+      </div>
+      <button class="close-btn" onclick="fecharRanking()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  `;
+
+  ranking.forEach((usuario, index) => {
+    rankingDiv.innerHTML += `
+      <div class="item-ranking">
+        <span class="posicao">${index + 1}°</span>
+        <span class="nome">${usuario.nome}</span>
+        <span class="time">${usuario.time}</span>
+        <span class="pontos">${usuario.pontuacao}</span>
+      </div>
+    `;
+  });
+}
+
+// FUNÇÃO PARA ABRIR O PAINEL
+export function abrirRanking() {
+  document.getElementById("rankingPanel").classList.remove("oculto");
+  carregarRanking();
+}
+
+// FUNÇÃO PARA FECHAR O PAINEL
+export function fecharRanking() {
+  document.getElementById("rankingPanel").classList.add("oculto");
+}
