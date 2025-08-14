@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-import { getFirestore, collection, doc, getDoc, getDocs, query, where, orderBy,limit } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js';
+import { getFirestore, collection, doc, getDoc, getDocs, query, where, orderBy, limit, setDoc } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js';
 
 const palavraDoDia = document.getElementById("palavraDoDia");
 const anagrama1 = document.getElementById("p1");
@@ -143,58 +143,55 @@ window.EnviarLogin = function () {
   login(email, senha);
 };
 
-export async function carregarRanking() {
-  const rankingDiv = document.getElementById("rankingPanel");
-  rankingDiv.innerHTML = "<p>Carregando...</p>";
+async function carregarRanking() {
+  const lista = document.getElementById("rankingList"); //pega as coisas pelo ID la do ranking do html numa variavel
+  lista.innerHTML = "<li>Carregando...</li>"; //primeira coisa ao entrar
 
   try {
-    const q = query(collection(db, "usuarios"), orderBy("time"), limit(10));
-    const snapshot = await getDocs(q);
+    const q = query(collection(db, "usuarios"), orderBy("tempo"), limit(10)); //pega os dados do usuario -> tempo -> limite de 10 ver isso pra mudar
+    const snapshot = await getDocs(q); 
 
     const dados = [];
     snapshot.forEach(doc => {
-      dados.push(doc.data());
+      dados.push(doc.data()); //coloca em variavel percorrer os documentos bla bla, pra no fim coloca na variavel dados e mostrar no ranking
     });
 
+    console.log("Ranking carregado:", dados);
     mostrarRanking(dados);
   } catch (error) {
     console.error("Erro ao carregar ranking:", error);
-    rankingDiv.innerHTML = "<p>Erro ao carregar ranking.</p>";
+    lista.innerHTML = "<li>Erro ao carregar ranking.</li>";
   }
 }
 
 function mostrarRanking(ranking) {
-  const rankingDiv = document.getElementById("rankingPanel");
-  rankingDiv.innerHTML = `
-    <div class="ranking-header">
-      <div class="ranking-title">
-        <i class="fas fa-trophy"></i> Ranking
-      </div>
-      <button class="close-btn" onclick="fecharRanking()">
-        <i class="fas fa-times"></i>
-      </button>
-    </div>
-  `;
+  const lista = document.getElementById("rankingList");
+  lista.innerHTML = ""; //isso daqui  eh pra deixa vazio pra dps adiciona as informaçoes do banco+html
 
-  ranking.forEach((usuario, index) => {
-    rankingDiv.innerHTML += `
-      <div class="item-ranking">
+  ranking.forEach((usuario, index) => { //percore cada um e bota na lista com html pra mostrar
+    lista.innerHTML += ` 
+      <li class="item-ranking">
         <span class="posicao">${index + 1}°</span>
-        <span class="nome">${usuario.nome}</span>
-        <span class="time">${usuario.time}</span>
-        <span class="pontos">${usuario.pontuacao}</span>
-      </div>
+        <span class="nome">${usuario.nome || "Sem nome"}</span>
+        <span class="tempo">${usuario.tempo ?? "—"}s</span>
+      </li>
     `;
-  });
+  }); 
 }
 
-// FUNÇÃO PARA ABRIR O PAINEL
-export function abrirRanking() {
-  document.getElementById("rankingPanel").classList.remove("oculto");
-  carregarRanking();
+//funcoes so pra fecha e abrir o painel, dps no final eh pra leva no html
+function alternarRanking() {
+  const painel = document.getElementById("rankingPanel");
+  painel.classList.toggle("oculto");
+
+  if (!painel.classList.contains("oculto")) {
+    carregarRanking();
+  }
 }
 
-// FUNÇÃO PARA FECHAR O PAINEL
-export function fecharRanking() {
+function fecharRanking() {
   document.getElementById("rankingPanel").classList.add("oculto");
 }
+
+window.alternarRanking = alternarRanking;
+window.fecharRanking = fecharRanking;

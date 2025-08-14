@@ -11,7 +11,7 @@
   <script type="module" src="controller.js"></script>
   <script src="controleVariaveis.js"></script>
   <!--font awesome dos simbolos dos ngc-->
-    <link rel="stylesheet" type="text/css" href="estilo.css"> 
+  <link rel="stylesheet" type="text/css" href="estilo.css">
 </head>
 
 <body>
@@ -33,7 +33,7 @@
       <button class="botao-icone" onclick="mostrarPerfil()">
         <i class="fas fa-user"></i>
       </button>
-      <button class="botao-icone" onclick="carregarRanking()">
+      <button class="botao-icone" onclick="alternarRanking()">
         <i class="fas fa-chart-bar"></i>
       </button>
     </div>
@@ -81,22 +81,6 @@
     </button>
   </div>
 
-  <div class="PainelRaking" id="rankingPanel">
-    <div class="header-rankinguau">
-      <div class="tituloranking">
-        <i class="fas fa-trophy"></i>
-        Ranking
-      </div>
-      <button class="botao-fecharranking" onclick="fecharRanking()">
-        <i class="fas fa-times"></i>
-      </button>
-    </div>
-    <ul class="listaranking" id="rankingList">
-      <div class="car">Carregando ranking...</div>
-    </ul>
-  </div>
-
-
 
   <div class=" divdotimer" id="timerContainer">
     <div class="timerr" id="timer">
@@ -125,19 +109,6 @@
     </div>
   </footer>
 
-  <div class="PainelRaking oculto" id="rankingPanel">
-    <div class="header-rankinguau">
-      <div class="tituloranking">
-        <i class="fas fa-trophy"></i> Ranking
-      </div>
-      <button class="botao-fecharranking" onclick="fecharRanking()">
-        <i class="fas fa-times"></i>
-      </button>
-    </div>
-    <ul class="listaranking" id="rankingList">
-      <li class="car">Carregando ranking...</li>
-    </ul>
-  </div>
 
   <!-- Login -->
 
@@ -223,9 +194,27 @@
     </div>
   </div>
 
+  <!--ranking haha-->
+  <div class="PainelRaking oculto" id="rankingPanel">
+    <div class="header-rankinguau">
+      <div class="tituloranking">
+        <i class="fas fa-trophy"></i>
+        Ranking
+      </div>
+      <button class="botao-fecharranking" onclick="fecharRanking()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <ul class="listaranking" id="rankingList">
+      <!-- Itens do ranking serão inseridos aqui via JavaScript -->
+    </ul>
+  </div>
+
   <script type="module">
-    import { alternarRanking } from './rankingController.js';
+    import { alternarRanking, fecharRanking } from './controller.js';
     window.alternarRanking = alternarRanking;
+    window.fecharRanking = fecharRanking;
   </script>
 
   <script>
@@ -268,15 +257,6 @@
       document.getElementById('Registro').classList.remove('oculto');
       document.getElementById('Login').classList.add('oculto');
 
-    }
-
-    function carregarRanking() {
-      const painel = document.getElementById('rankingPanel');
-      painel.classList.add('show');
-    }
-
-    function fecharRanking() {
-      document.getElementById('rankingPanel').classList.remove('show');
     }
 
   </script>
