@@ -68,17 +68,16 @@ async function buscarDados() {
       console.log("Anagrama4: " + anagrama4Valor);
       console.log("Anagrama5: " + anagrama5Valor);
       console.log("Anagrama6: " + anagrama6Valor);
-    });
-
+    })
   } catch (error) {
-    console.error("Erro ao buscar dados:", error);
+    console.error("Erro ao buscar dados:",error);
   }
 }
 
 buscarDados();
+console.log(buscarDados())
 
-
-async function registrar(email, nome, senha) {
+/* async function registrar(email, nome, senha) {
   try {
     const usuariosColecao = collection(db, "usuarios");
     const snapshot = await getDocs(usuariosColecao);
@@ -194,4 +193,4 @@ function fecharRanking() {
 }
 
 window.alternarRanking = alternarRanking;
-window.fecharRanking = fecharRanking;
+window.fecharRanking = fecharRanking; */

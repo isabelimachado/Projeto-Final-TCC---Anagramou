@@ -481,7 +481,7 @@ body {
     box-sizing: border-box;
 }
 
-.campos {
+#campos1{
     background-color: #1a1a1a;
     height: 50px;
     width: 35%;
@@ -494,18 +494,132 @@ body {
     color: white;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
     padding: 0 15px;
-    animation-name: rodar;
-    animation-duration: 4s;
+    animation-name: "";
+    animation-duration: 1s;
 }
-
-@keyframes rodar {
+#campos2{
+    background-color: #1a1a1a;
+    height: 50px;
+    width: 35%;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 10px;
+    color: white;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    padding: 0 15px;
+    animation-name: "";
+    animation-duration: 1s;
+}
+#campos3{
+    background-color: #1a1a1a;
+    height: 50px;
+    width: 35%;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 10px;
+    color: white;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    padding: 0 15px;
+    animation-name: "";
+    animation-duration: 1s;
+}
+#campos4{
+    background-color: #1a1a1a;
+    height: 50px;
+    width: 35%;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 10px;
+    color: white;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    padding: 0 15px;
+    animation-name: "";
+    animation-duration: 1s;
+}
+#campos5{
+    background-color: #1a1a1a;
+    height: 50px;
+    width: 35%;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 10px;
+    color: white;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    padding: 0 15px;
+    animation-name: "";
+    animation-duration: 1s;
+}
+#campos6{
+    background-color: #1a1a1a;
+    height: 50px;
+    width: 35%;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 10px;
+    color: white;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    padding: 0 15px;
+    animation-name: "";
+    animation-duration: 1s;
+}
+#p1{
+    display: none;
+    animation-name: "";
+    animation-duration: 1s;
+}
+#p2{
+    display: none;
+    animation-name: "";
+    animation-duration: 1s;
+}
+#p3{
+    display: none;
+    animation-name: "";
+    animation-duration: 1s;
+}
+#p4{
+    display: none;
+    animation-name: "";
+    animation-duration: 1s;
+}
+#p5{
+    display: none;
+    animation-name: "";
+    animation-duration: 1s;
+}
+#p6{
+    display: none;
+    animation-name: "";
+    animation-duration: 1s;
+}
+@keyframes aoAcertar {
     from {
-        transform: rotateX(0deg);
+        transform: rotateY(0deg);
     }
 
     to {
-        transform: rotateX(360deg);
+        transform: rotateY(360deg);
     }
+}
+@keyframes AnimPulando{
+    0%   { transform: translateY(0); }
+    50%  { transform: translateY(-5px); } 
+    100% { transform: translateY(0); }     
 }
 
 .inputzao {
@@ -520,7 +634,7 @@ body {
         /*div de fundo pr coloca o bota o botao do lado do input*/
 }
 
-.input-jogar {
+#input-jogar {
     width: 100%;
     max-width: 400px;
     height: 45px;

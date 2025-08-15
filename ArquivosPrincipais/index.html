@@ -7,11 +7,10 @@
   <title>ANAGRAMOU!</title>
   <link rel="shortcut icon" type="image/x-icon" href="/TCC PROJETO BRAYAN E EU/logo.ico">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-
-  <script type="module" src="controller.js"></script>
-  <script src="controleVariaveis.js"></script>
   <!--font awesome dos simbolos dos ngc-->
   <link rel="stylesheet" type="text/css" href="estilo.css">
+  <script type="module" src="controller.js"></script>
+  <script src="controleVariaveis.js"></script>
 </head>
 
 <body>
@@ -47,36 +46,35 @@
   </div>
 
   <div class="divdobrayan">
-    <div class="campos">
-      <p>palavra q vai aparecer</p>
+    <span id="palavraDoDia"> </span>  <!-- tentar puxar isso pra cima  -->
+    <div id="campos1">   <!-- tem q fazer cada campo separado pq vou pegar pelo index dai tipo se eu virar uma class, consequemente vou acabar virando todas tendeu? -->
+      <span id="p1">1</span><br>
     </div>
 
-    <div class="campos">
-      <p>palavra q vai aparecer</p>
-
+    <div id="campos2">
+      <span id="p2">2</span><br>
     </div>
 
-    <div class="campos">
-      <p>palavra q vai aparecer</p>
-
+    <div id="campos3">
+      <span id="p3">3</span><br>
     </div>
 
-    <div class="campos">
-      <p>palavra q vai aparecer</p>
+    <div id="campos4">
+      <span id="p4">4</span><br>
     </div>
 
-    <div class="campos">
-      <p>palavra q vai aparecer</p>
+    <div id="campos5">
+      <span id="p5">5</span><br>
     </div>
 
-    <div class="campos">
-      <p>palavra q vai aparecer</p>
+    <div id="campos6">
+      <span id="p6">6</span><br>
     </div>
   </div>
 
   <div class="inputzao">
-    <input class="input-jogar" placeholder="digite sua resposta">
-    <button class="botaoderesposta" onclick=""> <!--fazer a funcao pra envia brayan ve isso ai -->
+    <input id="input-jogar" placeholder="digite sua resposta"> <!-- muda o estilo pra id dps -->
+    <button class="botaoderesposta" onclick=" InputResposta()">  <!--fazer a funcao pra envia brayan ve isso ai -->
       <i class="fas fa-paper-plane"></i>
     </button>
   </div>
@@ -212,12 +210,12 @@
       <!-- itens do ranking serão inseridos aqui pelo controller -->
     </ul>
   </div>
-
+<!-- 
   <script type="module">
     import { alternarRanking, fecharRanking } from './controller.js';
     window.alternarRanking = alternarRanking;
     window.fecharRanking = fecharRanking;
-  </script>
+  </script> -->
 
   <script>
 
@@ -263,5 +261,4 @@
   </script>
 
 </body>
-
 </html>
