@@ -607,6 +607,33 @@ body {
     animation-name: "";
     animation-duration: 1s;
 }
+/* // isa desculpa pela desorganização mas vo deixar aq o ranking */
+  #gaveta {
+      position: fixed;
+      top: 0;
+      right: -300px; /* pra evitar aparecer */
+      width: 300px;
+      height: 100%;
+      background: #222;
+      color: white;
+      padding: 20px;
+      transition: right 0.3s ease; 
+      box-shadow: -2px 0 8px rgba(0,0,0,0.4);
+    }
+    #gaveta.aberta {
+      right: 0;
+    }
+   #divJogador{
+        right: -300px;
+        width: 90%;
+        height: 10%;
+        background-color: rgb(167, 55, 55);
+        margin-top: 10px;
+    }
+    #divJogador.aberta{
+        right: 0;
+    }
+/* troca esses parametros pra outro lugar se quiser*/
 @keyframes aoAcertar {
     from {
         transform: rotateY(0deg);

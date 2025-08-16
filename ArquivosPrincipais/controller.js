@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 import { getFirestore, collection, doc, getDoc, getDocs, query, where, orderBy, limit, setDoc } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js';
-
+// FUNÇÃO DA PALAVRA DO DIA//
 const palavraDoDia = document.getElementById("palavraDoDia");
 const anagrama1 = document.getElementById("p1");
 const anagrama2 = document.getElementById("p2");
@@ -8,7 +8,6 @@ const anagrama3 = document.getElementById("p3");
 const anagrama4 = document.getElementById("p4");
 const anagrama5 = document.getElementById("p5");
 const anagrama6 = document.getElementById("p6");
-
 const firebaseConfig = {
   apiKey: "AIzaSyByESGl7b8-X74bPX3GXpArf5SixfEQ_Ew",
   authDomain: "anagramou.firebaseapp.com",
@@ -77,6 +76,34 @@ async function buscarDados() {
 buscarDados();
 console.log(buscarDados())
 
+async function MostrarDados() {
+  try {
+    const querySnapshot = await getDocs(collection(db, "usuarios"));
+    
+    querySnapshot.forEach(doc => {
+      const infos = doc.data();
+
+      // cria div e elementos
+      const divPlayer = document.createElement("div");
+      divPlayer.id = "divJogador";
+
+      const pNome = document.createElement("p");
+      pNome.textContent = infos.nome;
+
+      const pTempo = document.createElement("p");
+      pTempo.textContent = infos.tempo;
+
+      divPlayer.appendChild(pNome);
+      divPlayer.appendChild(pTempo);
+
+      document.getElementById("gaveta").appendChild(divPlayer);
+    });
+
+  } catch (err) {
+    console.error("Achei nada!!", err);
+  }
+}
+MostrarDados();
 /* async function registrar(email, nome, senha) {
   try {
     const usuariosColecao = collection(db, "usuarios");

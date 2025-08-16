@@ -32,7 +32,7 @@
       <button class="botao-icone" onclick="mostrarPerfil()">
         <i class="fas fa-user"></i>
       </button>
-      <button class="botao-icone" onclick="alternarRanking()">
+      <button class="botao-icone" onclick="mostrarRanking()">
         <i class="fas fa-chart-bar"></i>
       </button>
     </div>
@@ -115,7 +115,7 @@
       <button class="botao-sair" onclick="fecharX()">✖</button>
       <div class="cabecalho-instrucoes">
         <h1 class="titulo-instrucoes">LOGIN</h1>
-        <p class="subtitulo-instrucoes">Entre com seu e-mail e senha</p>
+        <p class="subtitulo-instrucoes">Entre com seu e-mail e senha para marcar seu tempo!</p>
       </div>
       <input type="email" placeholder="Email" id="emailLogin" class="input-autenticacao" />
       <input type="password" placeholder="Senha" id="senhaLogin" class="input-autenticacao" />
@@ -235,30 +235,13 @@
     }
 
     //funcoes so pra abrir e fechar as coisas de antes
-    function mostrarInstrucoes() {
-      document.getElementById('Instrucoes').classList.remove('oculto');
-    };
-
-    function fecharInstrucoes() {
-      document.getElementById('Instrucoes').classList.add('oculto');
-    };
-
-    function mostrarPerfil() {
-      document.getElementById('Login').classList.remove('oculto');
-    };
-
-    function fecharX() {
-      document.getElementById('Login').classList.add('oculto');
-      document.getElementById('Registro').classList.add('oculto');
-    };
-
-    function mostrarRegistro() {
-      document.getElementById('Registro').classList.remove('oculto');
-      document.getElementById('Login').classList.add('oculto');
-
-    }
-
   </script>
+  <!-- como isso ta fora da tela vou deixar aq  -->
+  <div id="gaveta">
+    <button id="fechar" onclick="fecharGaveta()">aperte aq pra fechar! </button>
+    <br>informações brutas dps tu altera isso aq ok:
+
+  </div>
 
 </body>
 </html>
