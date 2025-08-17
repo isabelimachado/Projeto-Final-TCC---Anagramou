@@ -21,6 +21,19 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+//
+let usuarioEncontrado = false;
+//
+// FUNÇÕES QUE EXISTEM PRA FACILITAR TRABALHO
+window.FecharJanelaAbrirGaveta = function(){
+    document.getElementById("gaveta").classList.toggle("aberta");
+    document.getElementById("divJogador").classList.toggle("aberta");
+}
+window.fecharX = function() {
+    document.getElementById('Login').classList.add('oculto');
+    document.getElementById('Registro').classList.add('oculto');
+};
+//
 async function buscarDados() {
   const hoje = new Date().toISOString().split('T')[0];
   const docRef = doc(db, "palavraDoDia", hoje);
@@ -78,7 +91,9 @@ console.log(buscarDados())
 
 async function MostrarDados() {
   try {
-    const querySnapshot = await getDocs(collection(db, "usuarios"));
+     const usuariosRef = collection(db, "usuarios");
+    const q = query(usuariosRef, orderBy("tempo", "desc")); // decrescente
+    const querySnapshot = await getDocs(q);
     
     querySnapshot.forEach(doc => {
       const infos = doc.data();
@@ -98,61 +113,76 @@ async function MostrarDados() {
 
       document.getElementById("gaveta").appendChild(divPlayer);
     });
-
   } catch (err) {
     console.error("Achei nada!!", err);
   }
 }
 MostrarDados();
-/* async function registrar(email, nome, senha) {
-  try {
-    const usuariosColecao = collection(db, "usuarios");
-    const snapshot = await getDocs(usuariosColecao);
 
-    let maiorId = 0; // pra descobrir a maior quantidade de id q ja tem pra cria um atual
-    snapshot.forEach(doc => {
-      const idNum = parseInt(doc.id);
-      if (!isNaN(idNum) && idNum > maiorId) maiorId = idNum;
-    });
+async function criarProprioPlacar(email){
+  try{
+    const pesquisa = query(collection(db, "usuarios"), where("email", "==", email));
+    const snapshot = await getDocs(pesquisa);
+    snapshot.forEach(doc =>{
+      const dados = doc.data();
+      const nome = dados.nome;
+      const tempo = dados.tempo;
+      const divPlayer = document.createElement("div");
+      divPlayer.id = "divJogador";
+      divPlayer.style.backgroundColor = "#15ff00ff";
+      
+      const pNome = document.createElement("p");
+     pNome.textContent = "SEU RECORDE:\n" + nome;
+    pNome.style.whiteSpace = "pre-line"; 
 
-    const novoId = (maiorId + 1).toString();
+      const pTempo = document.createElement("p");
+      pTempo.textContent = tempo;
 
-    await setDoc(doc(db, "usuarios", novoId), {
-      email: email,
-      nome: nome,
-      senha: senha,
-      tempo: null
-    });
+      divPlayer.appendChild(pNome);
+      divPlayer.appendChild(pTempo);
 
-    alert("Usuário registrado com sucesso!");
-  } catch (err) {
-    alert("Erro ao registrar: " + err.message);
+      document.getElementById("gaveta").appendChild(divPlayer);      
+    })
+  }catch(error){
+    console.log("erro")
   }
 }
-async function login(email, senha) {
-  try {
-    const q = query(collection(db, "usuarios"), where("email", "==", email));
-    const querySnapshot = await getDocs(q);
 
-    if (querySnapshot.empty) {
-      alert("Usuário não encontrado!");
-      return;
-    }
-
-    let usuarioEncontrado = false;
-    querySnapshot.forEach((doc) => {
-      if (doc.data().senha === senha) {
-        usuarioEncontrado = true;
+async function registro(email,nome,senha,tempo){
+  console.log(tempo)
+  let usuarioExiste = false
+  let contador = -1
+  try{
+    const usuariosBanco  = collection(db, "usuarios");
+    const tentarPegarDocs = await getDocs(usuariosBanco)
+    // deixar em funcs separadas
+    tentarPegarDocs.forEach(doc =>{
+      const dados = doc.data();
+      const emailBanco  = dados.email;
+      if( email === emailBanco){
+        console.log("ja existe esse usuario")
+        usuarioExiste = true;
       }
+    })
+    ///
+      tentarPegarDocs.forEach(doc =>{
+        contador += 1;
+    })
+    if(usuarioExiste){
+        return;
+      }
+    const contadorId = contador + 1
+    /////////////
+    await setDoc(doc(db, "usuarios", String(contadorId) ), {
+      email : email,
+      nome : nome,
+      senha : senha,
+      tempo: tempo,
     });
-
-    if (usuarioEncontrado) {
-      alert("Login realizado com sucesso!");
-    } else {
-      alert("Senha incorreta!");
-    }
-  } catch (err) {
-    alert("Erro no login: " + err.message);
+    alert("Registro Completo!")
+    login(email,senha);
+  }catch(err){
+    console.log("Erro ao registrar")
   }
 }
 
@@ -160,8 +190,36 @@ window.EnviarRegistro = function () {
   const email = document.getElementById("emailRegistro").value;
   const nome = document.getElementById("nomeRegistro").value;
   const senha = document.getElementById("senhaRegistro").value;
-  registrar(email, nome, senha);
+  const tempo = document.getElementById("timeDisplay").textContent;
+  registro(email, nome, senha,tempo);
 };
+
+async function login(email, senha) {
+  try {
+    const pesquisa = query(collection(db, "usuarios"), where("email", "==", email));
+    const querySnapshot = await getDocs(pesquisa);
+
+    if (querySnapshot.empty) {
+      alert("Usuário não encontrado!");
+      return;
+    }
+    querySnapshot.forEach((doc) => {
+      if (doc.data().senha === senha) {
+        usuarioEncontrado = true;
+      }
+    });
+    if (usuarioEncontrado) {
+      alert("Login realizado com sucesso!");
+      criarProprioPlacar(email);
+      fecharX()
+      FecharJanelaAbrirGaveta();
+    } else {
+      alert("Senha incorreta ou não registrado!");
+    }
+  } catch (err) {
+    alert("Erro no login: " + err.message);
+  }
+}
 
 window.EnviarLogin = function () {
   const email = document.getElementById("emailLogin").value;
@@ -169,7 +227,7 @@ window.EnviarLogin = function () {
   login(email, senha);
 };
 
-async function carregarRanking() {
+/* async function carregarRanking() {
   const lista = document.getElementById("rankingList"); //pega as coisas pelo ID la do ranking do html numa variavel
   lista.innerHTML = "<li>Carregando...</li>"; //primeira coisa ao entrar
 
@@ -189,8 +247,8 @@ async function carregarRanking() {
     lista.innerHTML = "<li>Erro ao carregar ranking.</li>";
   }
 }
-
-function mostrarRanking(ranking) {
+ */
+/* function mostrarRanking(ranking) {
   const lista = document.getElementById("rankingList");
   lista.innerHTML = ""; //isso daqui  eh pra deixa vazio pra dps adiciona as informaçoes do banco+html
 
@@ -214,10 +272,10 @@ function alternarRanking() {
     carregarRanking();
   }
 }
-
-function fecharRanking() {
+ */
+/* function fecharRanking() {
   document.getElementById("rankingPanel").classList.add("oculto");
 }
 
 window.alternarRanking = alternarRanking;
-window.fecharRanking = fecharRanking; */
+window.fecharRanking = fecharRanking;  */
