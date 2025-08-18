@@ -36,7 +36,7 @@ window.fecharX = function() {
 //
 async function buscarDados() {
   const hoje = new Date().toISOString().split('T')[0];
-  const docRef = doc(db, "palavraDoDia", hoje);
+  const docRef = doc(db, "palavraDoDiaMedia", hoje);
 
   try {
     const docSnap = await getDoc(docRef);

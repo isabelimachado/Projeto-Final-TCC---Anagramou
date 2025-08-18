@@ -28,7 +28,7 @@ async function palavrasUsadas() {  // função assincrona
 async function salvarNoFirebase(palavra, anagramas) {
   try {
     const hoje = new Date().toISOString().split('T')[0]; // deixa em formato XXXX-XX-XX
-    const docRef = db.collection('palavraDoDia').doc(hoje); // so pea a data
+    const docRef = db.collection('palavraDoDiaFacil').doc(hoje); // so pea a data
 
     const docSnapshot = await docRef.get();
     if (docSnapshot.exists) { // se existe retorna nada
