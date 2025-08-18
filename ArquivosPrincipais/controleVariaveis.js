@@ -19,11 +19,11 @@ function mostrarRegistro() {
     document.getElementById('Login').classList.add('oculto');
 }
 function mostrarRanking(){
-    document.getElementById("gaveta").classList.toggle("aberta");
+    document.getElementById("ranking").classList.toggle("aberta");
     document.getElementById("divJogador").classList.toggle("aberta");
 }
 function fecharGaveta(){
-    document.getElementById("gaveta").classList.remove("aberta");
+    document.getElementById("ranking").classList.remove("aberta");
     document.getElementById("divJogador").classList.remove("aberta");
 }
 

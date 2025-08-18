@@ -26,7 +26,7 @@ let usuarioEncontrado = false;
 //
 // FUNÇÕES QUE EXISTEM PRA FACILITAR TRABALHO
 window.FecharJanelaAbrirGaveta = function(){
-    document.getElementById("gaveta").classList.toggle("aberta");
+    document.getElementById("ranking").classList.toggle("aberta");
     document.getElementById("divJogador").classList.toggle("aberta");
 }
 window.fecharX = function() {
@@ -111,7 +111,7 @@ async function MostrarDados() {
       divPlayer.appendChild(pNome);
       divPlayer.appendChild(pTempo);
 
-      document.getElementById("gaveta").appendChild(divPlayer);
+      document.getElementById("ranking").appendChild(divPlayer);
     });
   } catch (err) {
     console.error("Achei nada!!", err);
@@ -141,7 +141,7 @@ async function criarProprioPlacar(email){
       divPlayer.appendChild(pNome);
       divPlayer.appendChild(pTempo);
 
-      document.getElementById("gaveta").appendChild(divPlayer);      
+      document.getElementById("ranking").appendChild(divPlayer);      
     })
   }catch(error){
     console.log("erro")

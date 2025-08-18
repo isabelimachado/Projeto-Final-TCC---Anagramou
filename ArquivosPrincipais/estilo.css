@@ -481,7 +481,7 @@ body {
     box-sizing: border-box;
 }
 
-#campos1{
+#campos1 {
     background-color: #1a1a1a;
     height: 50px;
     width: 35%;
@@ -497,157 +497,169 @@ body {
     animation-name: "";
     animation-duration: 1s;
 }
-#campos2{
-    background-color: #1a1a1a;
-    height: 50px;
-    width: 35%;
-    border-radius: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin: 10px;
-    color: white;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    padding: 0 15px;
-    animation-name: "";
-    animation-duration: 1s;
-}
-#campos3{
-    background-color: #1a1a1a;
-    height: 50px;
-    width: 35%;
-    border-radius: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin: 10px;
-    color: white;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    padding: 0 15px;
-    animation-name: "";
-    animation-duration: 1s;
-}
-#campos4{
-    background-color: #1a1a1a;
-    height: 50px;
-    width: 35%;
-    border-radius: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin: 10px;
-    color: white;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    padding: 0 15px;
-    animation-name: "";
-    animation-duration: 1s;
-}
-#campos5{
-    background-color: #1a1a1a;
-    height: 50px;
-    width: 35%;
-    border-radius: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin: 10px;
-    color: white;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    padding: 0 15px;
-    animation-name: "";
-    animation-duration: 1s;
-}
-#campos6{
-    background-color: #1a1a1a;
-    height: 50px;
-    width: 35%;
-    border-radius: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin: 10px;
-    color: white;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    padding: 0 15px;
-    animation-name: "";
-    animation-duration: 1s;
-}
-#p1{
-    display: none;
-    animation-name: "";
-    animation-duration: 1s;
-}
-#p2{
-    display: none;
-    animation-name: "";
-    animation-duration: 1s;
-}
-#p3{
-    display: none;
-    animation-name: "";
-    animation-duration: 1s;
-}
-#p4{
-    display: none;
-    animation-name: "";
-    animation-duration: 1s;
-}
-#p5{
-    display: none;
-    animation-name: "";
-    animation-duration: 1s;
-}
-#p6{
-    display: none;
-    animation-name: "";
-    animation-duration: 1s;
-}
-/* // isa desculpa pela desorganização mas vo deixar aq o ranking */
-  #gaveta {
-      position: fixed;
-      top: 0;
-      right: -300px; /* pra evitar aparecer */
-      width: 300px;
-      height: 100%;
-      background: #222;
-      color: white;
-      padding: 20px;
-      transition: right 0.3s ease; 
-      box-shadow: -2px 0 8px rgba(0,0,0,0.4);
-    }
-    #gaveta.aberta {
-      right: 0;
-    }
-   #divJogador{
-        right: -300px;
-        width: 90%;
-        height: 10%;
-        background-color: rgb(167, 55, 55);
-        margin-top: 10px;
-    }
-    #divJogador.aberta{
-        right: 0;
-    }
-/* troca esses parametros pra outro lugar se quiser*/
-@keyframes aoAcertar {
-    from {
-        transform: rotateY(0deg);
-    }
 
-    to {
-        transform: rotateY(360deg);
-    }
+#campos2 {
+    background-color: #1a1a1a;
+    height: 50px;
+    width: 35%;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 10px;
+    color: white;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    padding: 0 15px;
+    animation-name: "";
+    animation-duration: 1s;
 }
-@keyframes AnimPulando{
-    0%   { transform: translateY(0); }
-    50%  { transform: translateY(-5px); } 
-    100% { transform: translateY(0); }     
+
+#campos3 {
+    background-color: #1a1a1a;
+    height: 50px;
+    width: 35%;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 10px;
+    color: white;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    padding: 0 15px;
+    animation-name: "";
+    animation-duration: 1s;
 }
+
+#campos4 {
+    background-color: #1a1a1a;
+    height: 50px;
+    width: 35%;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 10px;
+    color: white;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    padding: 0 15px;
+    animation-name: "";
+    animation-duration: 1s;
+}
+
+#campos5 {
+    background-color: #1a1a1a;
+    height: 50px;
+    width: 35%;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 10px;
+    color: white;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    padding: 0 15px;
+    animation-name: "";
+    animation-duration: 1s;
+}
+
+#campos6 {
+    background-color: #1a1a1a;
+    height: 50px;
+    width: 35%;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 10px;
+    color: white;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    padding: 0 15px;
+    animation-name: "";
+    animation-duration: 1s;
+}
+
+#p1 {
+    display: none;
+    animation-name: "";
+    animation-duration: 1s;
+}
+
+#p2 {
+    display: none;
+    animation-name: "";
+    animation-duration: 1s;
+}
+
+#p3 {
+    display: none;
+    animation-name: "";
+    animation-duration: 1s;
+}
+
+#p4 {
+    display: none;
+    animation-name: "";
+    animation-duration: 1s;
+}
+
+#p5 {
+    display: none;
+    animation-name: "";
+    animation-duration: 1s;
+}
+
+#p6 {
+    display: none;
+    animation-name: "";
+    animation-duration: 1s;
+}
+
+
+/*RANKING MUDAR*/
+#ranking {
+    position: fixed; 
+    top: 0;
+    right: -400px;
+    width: 300px;
+    height: 100%;
+    background: #fcfcfc;
+    color: white;
+    padding: 30px;
+    transition: right 0.3s ease;
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.4);
+}
+
+#ranking.aberta {
+    right: 0;
+}
+
+.botaoRanking {
+    border: none;
+    font-size: 20px;
+}
+
+#divJogador {
+    right: -300px;
+    width: 90%;
+    height: 10%;
+    background-color: rgb(167, 55, 55);
+    margin-top: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+#divJogador.aberta {
+    right: 0;
+}
+
+
+/*o input de enviar e o botao pra enviar */
+
 
 .inputzao {
     display: flex;
@@ -695,52 +707,28 @@ body {
     transform: scale(1.1);
 }
 
-.PainelRaking {
-    position: fixed;
-    top: 50%;
-    right: 20px;
-    transform: translateY(-50%);
-    width: 250px;
-    max-height: 400px;
-    background-color: #000000;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 10px;
-    overflow-y: auto;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
+
+/* troca esses parametros pra outro lugar se quiser*/
+@keyframes aoAcertar {
+    from {
+        transform: rotateY(0deg);
+    }
+
+    to {
+        transform: rotateY(360deg);
+    }
 }
 
-.PainelRaking.oculto {
-    display: none;
-}
+@keyframes AnimPulando {
+    0% {
+        transform: translateY(0);
+    }
 
-.header-rankinguau {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-    font-weight: bold;
-    font-size: 18px;
-}
+    50% {
+        transform: translateY(-5px);
+    }
 
-.listaranking {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.item-ranking {
-    display: flex;
-    justify-content: space-between;
-    padding: 5px 0;
-    border-bottom: 1px solid #ddd;
-    font-size: 16px;
-}
-
-.botao-fecharranking {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
+    100% {
+        transform: translateY(0);
+    }
 }
