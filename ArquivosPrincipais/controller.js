@@ -92,7 +92,7 @@ console.log(buscarDados())
 async function MostrarDados() {
   try {
      const usuariosRef = collection(db, "usuarios");
-    const q = query(usuariosRef, orderBy("tempo", "desc")); // decrescente
+    const q = query(usuariosRef, orderBy("tempo", "asc")); // decrescente
     const querySnapshot = await getDocs(q);
     
     querySnapshot.forEach(doc => {

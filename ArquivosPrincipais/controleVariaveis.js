@@ -71,7 +71,7 @@ function InputResposta(){
         else{
             console.log("nao há resposta")
         }
-        if(contador == 6){
+        if(contador >= 6){
             mostrarPerfil()
         }
     }
