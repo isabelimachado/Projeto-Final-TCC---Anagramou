@@ -682,46 +682,41 @@ body {
 
 .inputzao {
     display: flex;
-    justify-content: flex-start;
     align-items: center;
-    margin: 20px auto;
-    position: relative;
-    bottom: 10px
-        /*div de fundo pr coloca o bota o botao do lado do input*/
+    gap: 10px;
+    max-width: 400px;
+    margin: 25px  auto;
 }
 
 #input-jogar {
-    width: 120%;
-    height: 45px;
-    padding: 0 20px;
+    flex: 1;
+    padding: 12px 100px;
+    text-align: center;
     font-size: 16px;
-    border: 2px solid #ccc;
-    border-radius: 25px;
-    background-color: #f5f5f5;
-    color: #333;
+    border: 2px solid #ddd;
+    border-radius: 8px;
     outline: none;
-    transition: all 0.3s ease;
+    transition: border-color 0.3s ease;
 }
 
+
 .botaoderesposta {
-    background-color: #a085a7;
-    border: none;
-    border-radius: 50%;
-    padding: 12px;
+    padding: 12px 15px;
+    background-color: #8b7291;
     color: white;
-    font-size: 20px;
+    border: none;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.4s ease, transform 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: 10px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
 }
 
 .botaoderesposta:hover {
-    background-color: #67546b;
-    transform: scale(1.1);
+    background-color: #4e3d52;
+
 }
+
+
 
 
 /* troca esses parametros pra outro lugar se quiser*/

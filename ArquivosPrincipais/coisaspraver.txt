@@ -1,0 +1,19 @@
+1-arrumar o timer
+
+2-arrumar o style dos campos
+
+3-arrumar style dos ranking
+-tambem arrumar no ranking oq vai aparecer de acordo com o nivel
+-arrumar a ordem q aparece no ranking, no caso do primeiro aparece qm fez no menor tempo e assim por diante
+
+4-adicionar as verificiações de email/senha
+
+5-arruma os alert de login e registrar
+
+6-arrumar o login
+
+7-arruma input e botao pra enviar AAAAAAAAAAAAAAAAAA
+
+8-em vez de ser tudo na msm pagina, criar o facil/medio/dificil .html 
+
+muda as variaveis do controller pq segundo o brayan ta estranho
