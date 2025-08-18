@@ -681,8 +681,6 @@ body {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    width: 100%;
-    max-width: 500px;
     margin: 20px auto;
     position: relative;
     bottom: 10px
@@ -690,8 +688,7 @@ body {
 }
 
 #input-jogar {
-    width: 100%;
-    max-width: 400px;
+    width: 120%;
     height: 45px;
     padding: 0 20px;
     font-size: 16px;
