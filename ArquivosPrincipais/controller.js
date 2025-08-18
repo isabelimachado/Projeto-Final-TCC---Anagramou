@@ -1,6 +1,12 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 import { getFirestore, collection, doc, getDoc, getDocs, query, where, orderBy, limit, setDoc } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js';
-// FUNÇÃO DA PALAVRA DO DIA//
+
+let facil = true
+let medio = false
+let dificil = false 
+
+let palavra = "palavraDoDiaFacil"
+
 const palavraDoDia = document.getElementById("palavraDoDia");
 const anagrama1 = document.getElementById("p1");
 const anagrama2 = document.getElementById("p2");
@@ -8,6 +14,54 @@ const anagrama3 = document.getElementById("p3");
 const anagrama4 = document.getElementById("p4");
 const anagrama5 = document.getElementById("p5");
 const anagrama6 = document.getElementById("p6");
+
+window.Facil = function () {
+  medio = false
+  dificil = false
+  facil = true
+  if(facil == true){
+    palavra = "palavraDoDiaFacil"
+    anagrama1.style.display = "none"
+    anagrama2.style.display = "none"
+    anagrama3.style.display = "none"
+    anagrama4.style.display = "none"
+    anagrama5.style.display = "none"
+    anagrama6.style.display = "none"
+    buscarDados(); 
+  }
+};
+window.Medio = function () {
+  dificil = false
+  facil = false
+  medio = true
+  if(medio == true){
+    palavra = "palavraDoDiaMedia"
+    anagrama1.style.display = "none"
+    anagrama2.style.display = "none"
+    anagrama3.style.display = "none"
+    anagrama4.style.display = "none"
+    anagrama5.style.display = "none"
+    anagrama6.style.display = "none"
+    buscarDados(); 
+  }
+};
+window.Dificil = function () {
+  medio = false
+  facil = false
+  dificil = true
+  if(dificil == true){
+    palavra = "palavraDoDiaDificil"
+    anagrama1.style.display = "none"
+    anagrama2.style.display = "none"
+    anagrama3.style.display = "none"
+    anagrama4.style.display = "none"
+    anagrama5.style.display = "none"
+    anagrama6.style.display = "none"
+    buscarDados(); 
+  }
+};
+
+// FUNÇÃO DA PALAVRA DO DIA//
 const firebaseConfig = {
   apiKey: "AIzaSyByESGl7b8-X74bPX3GXpArf5SixfEQ_Ew",
   authDomain: "anagramou.firebaseapp.com",
@@ -36,7 +90,7 @@ window.fecharX = function() {
 //
 async function buscarDados() {
   const hoje = new Date().toISOString().split('T')[0];
-  const docRef = doc(db, "palavraDoDiaFacil", hoje);
+  const docRef = doc(db, palavra, hoje);
 
   try {
     const docSnap = await getDoc(docRef);
