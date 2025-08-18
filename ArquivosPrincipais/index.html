@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ANAGRAMOU!</title>
-  <link rel="shortcut icon" type="image/x-icon" href="/TCC PROJETO BRAYAN E EU/logo.ico">
+  <link rel="shortcut icon" type="image/x-icon" href="logo.ico">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
   <!--font awesome dos simbolos dos ngc-->
   <link rel="stylesheet" type="text/css" href="estilo.css">
@@ -44,10 +44,15 @@
     <button class="botao-dificuldade" onclick="('medio')">MÉDIO</button>
     <button class="botao-dificuldade" onclick="('dificil')">DIFÍCIL</button> <!--funçoes dos niveis ?? brayan scrr-->
   </div>
+  
+
+  <div class="divdapalavra">
+    <span class="palavradodia" id="palavraDoDia"> </span> <!-- tentar puxar isso pra cima  -->
+  </div>
 
   <div class="divdobrayan">
-    <span id="palavraDoDia"> </span>  <!-- tentar puxar isso pra cima  -->
-    <div id="campos1">   <!-- tem q fazer cada campo separado pq vou pegar pelo index dai tipo se eu virar uma class, consequemente vou acabar virando todas tendeu? -->
+    <div id="campos1">
+      <!-- tem q fazer cada campo separado pq vou pegar pelo index dai tipo se eu virar uma class, consequemente vou acabar virando todas tendeu? -->
       <span id="p1">1</span><br>
     </div>
 
@@ -74,7 +79,7 @@
 
   <div class="inputzao">
     <input id="input-jogar" placeholder="digite sua resposta"> <!-- muda o estilo pra id dps -->
-    <button class="botaoderesposta" onclick=" InputResposta()">  <!--fazer a funcao pra envia brayan ve isso ai -->
+    <button class="botaoderesposta" onclick=" InputResposta()">
       <i class="fas fa-paper-plane"></i>
     </button>
   </div>
@@ -152,7 +157,7 @@
 
       <div class="caixa-exemplo">
         <div class="palavra-exemplo">CASAR</div>
-        <div class="anagramas-exemplo">Exemplo: SACRA, ARCAS, ARCAR...</div>
+        <div class="anagramas-exemplo">Exemplo: SACRA, ARCAS, SACAR...</div>
       </div>
 
 
@@ -193,31 +198,8 @@
     </div>
   </div>
 
-  <!--ranking haha-->
-  <div class="PainelRaking oculto" id="rankingPanel">
-    <div class="header-rankinguau">
-      <div class="tituloranking">
-        <i class="fas fa-trophy"></i>
-        Ranking
-      </div>
-      <button class="botao-fecharranking" onclick="fecharRanking()">
-        <i class="fas fa-times"></i>
-      </button>
-    </div>
-
-    <ul class="listaranking" id="rankingList">
-      <!-- itens do ranking serão inseridos aqui pelo controller -->
-    </ul>
-  </div>
-<!-- 
-  <script type="module">
-    import { alternarRanking, fecharRanking } from './controller.js';
-    window.alternarRanking = alternarRanking;
-    window.fecharRanking = fecharRanking;
-  </script> -->
 
   <script>
-
 
     /*oq for de coisa visual de js vai fica aq outro arquivo eh pras funcionalidade do jogo*/
     function alternarTema() {
@@ -232,15 +214,18 @@
         iconeTema.className = 'fas fa-sun';
       }
     }
-
     //funcoes so pra abrir e fechar as coisas de antes
   </script>
+
   <!-- como isso ta fora da tela vou deixar aq  -->
-  <div id="gaveta">
-    <button id="fechar" onclick="fecharGaveta()">aperte aq pra fechar! </button>
-    <br>informações brutas dps tu altera isso aq ok:
+  <!--ranking uau-->
+  <div id="ranking">
+    <button class="botaoRanking" id="fechar" onclick="fecharGaveta()">X</button>
+
+    <h2 style="color: black; text-align: center;">RANKING DIÁRIO</h2>
 
   </div>
 
 </body>
+
 </html>
