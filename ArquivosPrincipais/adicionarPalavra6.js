@@ -16,7 +16,7 @@ function encontrarAnagramas(palavra, lista) { // função que passa a palavra + 
 }
 
 async function palavrasUsadas() {  // função assincrona
-  const snapshot = await db.collection('palavraDoDia').get(); // executa uma vez e espera a coleção palavraDoDia e seus dados
+  const snapshot = await db.collection('palavraDoDiaMedio').get(); // executa uma vez e espera a coleção palavraDoDia e seus dados
   const usadas = [];
   snapshot.forEach(doc => {
     const data = doc.data(); // todos os fields do documento
@@ -28,7 +28,7 @@ async function palavrasUsadas() {  // função assincrona
 async function salvarNoFirebase(palavra, anagramas) {
   try {
     const hoje = new Date().toISOString().split('T')[0]; // deixa em formato XXXX-XX-XX
-    const docRef = db.collection('palavraDoDia').doc(hoje); // so pea a data
+    const docRef = db.collection('palavraDoDiaMedia').doc(hoje); // so pea a data
 
     const docSnapshot = await docRef.get();
     if (docSnapshot.exists) { // se existe retorna nada
@@ -51,7 +51,7 @@ async function salvarNoFirebase(palavra, anagramas) {
   }
 }
 
-const filePath = path.join(__dirname, 'words', 'palavras5letras.json'); // ta pegando o diretorio da palavras com 5 letras
+const filePath = path.join(__dirname, 'words', 'palavras6letras.json'); // ta pegando o diretorio da palavras com 5 letras
 
 fs.readFile(filePath, 'utf8', async (err, data) => { // tentar levar o diretorio do json uma vez
   if (err) {

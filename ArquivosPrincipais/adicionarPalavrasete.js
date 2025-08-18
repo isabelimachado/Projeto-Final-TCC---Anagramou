@@ -28,7 +28,7 @@ async function palavrasUsadas() {  // função assincrona
 async function salvarNoFirebase(palavra, anagramas) {
   try {
     const hoje = new Date().toISOString().split('T')[0]; // deixa em formato XXXX-XX-XX
-    const docRef = db.collection('palavraDoDia').doc(hoje); // so pea a data
+    const docRef = db.collection('palavraDoDiaDificil').doc(hoje); // so pea a data
 
     const docSnapshot = await docRef.get();
     if (docSnapshot.exists) { // se existe retorna nada
@@ -51,7 +51,7 @@ async function salvarNoFirebase(palavra, anagramas) {
   }
 }
 
-const filePath = path.join(__dirname, 'words', 'palavras5letras.json'); // ta pegando o diretorio da palavras com 5 letras
+const filePath = path.join(__dirname, 'words', 'palavras7letras.json'); // ta pegando o diretorio da palavras com 5 letras
 
 fs.readFile(filePath, 'utf8', async (err, data) => { // tentar levar o diretorio do json uma vez
   if (err) {
