@@ -476,9 +476,25 @@ body {
     justify-content: center;
     margin: 10px auto;
     color: black;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     padding: 20px;
     box-sizing: border-box;
+}
+
+.divdapalavra {
+    width: 150px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    height: 35px;
+    background-color: white;
+    text-align: center;
+}
+
+
+.palavradodia {
+    font-weight: bold;
+    color: black;
+    font-size: 23px;
+
 }
 
 #campos1 {
@@ -622,7 +638,7 @@ body {
 
 /*RANKING MUDAR*/
 #ranking {
-    position: fixed; 
+    position: fixed;
     top: 0;
     right: -400px;
     width: 300px;

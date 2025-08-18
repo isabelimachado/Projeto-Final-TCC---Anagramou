@@ -55,7 +55,7 @@ async function buscarDados() {
     const anagrama5Valor = data.anagrama5;
     const anagrama6Valor = data.anagrama6;
 
-    palavraDoDia.textContent = palavra;
+    palavraDoDia.textContent = palavra.toUpperCase();
     anagrama1.textContent = anagrama1Valor;
     anagrama2.textContent = anagrama2Valor;
     anagrama3.textContent = anagrama3Valor;
@@ -227,55 +227,3 @@ window.EnviarLogin = function () {
   login(email, senha);
 };
 
-/* async function carregarRanking() {
-  const lista = document.getElementById("rankingList"); //pega as coisas pelo ID la do ranking do html numa variavel
-  lista.innerHTML = "<li>Carregando...</li>"; //primeira coisa ao entrar
-
-  try {
-    const q = query(collection(db, "usuarios"), orderBy("tempo"), limit(10)); //pega os dados do usuario -> tempo -> limite de 10 ver isso pra mudar
-    const snapshot = await getDocs(q); 
-
-    const dados = [];
-    snapshot.forEach(doc => {
-      dados.push(doc.data()); //coloca em variavel percorrer os documentos bla bla, pra no fim coloca na variavel dados e mostrar no ranking
-    });
-
-    console.log("Ranking carregado:", dados);
-    mostrarRanking(dados);
-  } catch (error) {
-    console.error("Erro ao carregar ranking:", error);
-    lista.innerHTML = "<li>Erro ao carregar ranking.</li>";
-  }
-}
- */
-/* function mostrarRanking(ranking) {
-  const lista = document.getElementById("rankingList");
-  lista.innerHTML = ""; //isso daqui  eh pra deixa vazio pra dps adiciona as informaçoes do banco+html
-
-  ranking.forEach((usuario, index) => { //percore cada um e bota na lista com html pra mostrar
-    lista.innerHTML += ` 
-      <li class="item-ranking">
-        <span class="posicao">${index + 1}°</span>
-        <span class="nome">${usuario.nome || "Sem nome"}</span>
-        <span class="tempo">${usuario.tempo ?? "—"}s</span>
-      </li>
-    `;
-  }); 
-}
-
-//funcoes so pra fecha e abrir o painel, dps no final eh pra leva no html
-function alternarRanking() {
-  const painel = document.getElementById("rankingPanel");
-  painel.classList.toggle("oculto");
-
-  if (!painel.classList.contains("oculto")) {
-    carregarRanking();
-  }
-}
- */
-/* function fecharRanking() {
-  document.getElementById("rankingPanel").classList.add("oculto");
-}
-
-window.alternarRanking = alternarRanking;
-window.fecharRanking = fecharRanking;  */
