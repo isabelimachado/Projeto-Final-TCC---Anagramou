@@ -47,7 +47,6 @@ function VirarDiv(anagramaCerto) {
 }
 function InputResposta(){
     input = document.getElementById("input-jogar").value;
-
     ag1 = document.getElementById("p1").textContent
     ag2 = document.getElementById("p2").textContent
     ag3 = document.getElementById("p3").textContent
@@ -70,6 +69,10 @@ function InputResposta(){
         }
         else{
             console.log("nao há resposta")
+
+        }
+        if(i == 1 && !listaAchou.includes(input)){
+            alert("ACERTA CECILIA")
         }
         if(contador >= 6){
             mostrarPerfil()
