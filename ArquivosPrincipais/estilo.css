@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap');
-a{
+
+a {
     text-decoration: none;
     color: black;
 }
@@ -173,12 +174,11 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 25px;
-    margin-bottom: -40px;
     flex-wrap: nowrap;
+    margin-bottom: 10px;
 }
 
-.botoes-esquerda,
-.botoes-direita {
+.botoes-esquerda, .botoes-direita {
     display: flex;
     gap: 15px;
 }
@@ -212,7 +212,7 @@ body {
     display: flex;
     justify-content: center;
     gap: 20px;
-    margin: 20px 0;
+    margin: -20px 0 30px 0; 
     border-top: 1px solid rgba(255, 255, 255, 0.3);
     padding-top: 10px;
 }
@@ -227,12 +227,6 @@ body {
     font-size: 16px;
     cursor: pointer;
     transition: all 0.2s ease;
-}
-
-.botao-dificuldade.ativo {
-    border: 2px solid var(--borda-ativa);
-    color: #2d2d2d;
-    background: #f9f9f9;
 }
 
 .rodape {
@@ -300,6 +294,7 @@ body {
     align-items: center;
     justify-content: center;
     opacity: 1;
+    z-index: 2000;
 }
 
 .instrucoes.oculto {
@@ -358,6 +353,7 @@ body {
     margin-bottom: 20px;
     background-color: #d4c3d8;
     border-radius: 10px;
+    
 }
 
 .etapa-instrucao {
@@ -368,6 +364,7 @@ body {
     padding: 15px;
     transition: all 0.3s ease;
     color: black;
+    
 }
 
 .numero-etapa {
@@ -477,7 +474,7 @@ body {
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    margin: 10px auto;
+    margin: 10px auto 50px auto; 
     color: black;
     padding: 20px;
     box-sizing: border-box;
@@ -500,7 +497,7 @@ body {
 
 }
 
-#campos1 {
+#campos1, #campos2, #campos3, #campos4, #campos5, #campos6 {
     background-color: #1a1a1a;
     height: 50px;
     width: 35%;
@@ -509,132 +506,15 @@ body {
     align-items: center;
     justify-content: center;
     text-align: center;
-    margin: 10px;
+    margin: 8px;
     color: white;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
     padding: 0 15px;
-    animation-name: "";
     animation-duration: 1s;
 }
 
-#campos2 {
-    background-color: #1a1a1a;
-    height: 50px;
-    width: 35%;
-    border-radius: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin: 10px;
-    color: white;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    padding: 0 15px;
-    animation-name: "";
-    animation-duration: 1s;
-}
-
-#campos3 {
-    background-color: #1a1a1a;
-    height: 50px;
-    width: 35%;
-    border-radius: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin: 10px;
-    color: white;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    padding: 0 15px;
-    animation-name: "";
-    animation-duration: 1s;
-}
-
-#campos4 {
-    background-color: #1a1a1a;
-    height: 50px;
-    width: 35%;
-    border-radius: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin: 10px;
-    color: white;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    padding: 0 15px;
-    animation-name: "";
-    animation-duration: 1s;
-}
-
-#campos5 {
-    background-color: #1a1a1a;
-    height: 50px;
-    width: 35%;
-    border-radius: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin: 10px;
-    color: white;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    padding: 0 15px;
-    animation-name: "";
-    animation-duration: 1s;
-}
-
-#campos6 {
-    background-color: #1a1a1a;
-    height: 50px;
-    width: 35%;
-    border-radius: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin: 10px;
-    color: white;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    padding: 0 15px;
-    animation-name: "";
-    animation-duration: 1s;
-}
-
-#p1 {
+#p1, #p2, #p3, #p4, #p5, #p6 {
     display: none;
-    animation-name: "";
-    animation-duration: 1s;
-}
-
-#p2 {
-    display: none;
-    animation-name: "";
-    animation-duration: 1s;
-}
-
-#p3 {
-    display: none;
-    animation-name: "";
-    animation-duration: 1s;
-}
-
-#p4 {
-    display: none;
-    animation-name: "";
-    animation-duration: 1s;
-}
-
-#p5 {
-    display: none;
-    animation-name: "";
-    animation-duration: 1s;
-}
-
-#p6 {
-    display: none;
-    animation-name: "";
     animation-duration: 1s;
 }
 
@@ -651,6 +531,7 @@ body {
     padding: 30px;
     transition: right 0.3s ease;
     box-shadow: -2px 0 8px rgba(0, 0, 0, 0.4);
+    z-index: 1000
 }
 
 #ranking.aberta {
@@ -685,9 +566,10 @@ body {
     align-items: center;
     gap: 10px;
     max-width: 400px;
-    margin: 50px  auto;
+    margin: -40px auto 0 auto;
+    position: relative; 
+    z-index: 10; 
 }
-
 #input-jogar {
     flex: 1;
     padding: 12px 100px;
@@ -715,7 +597,6 @@ body {
     background-color: #4e3d52;
 
 }
-
 
 
 

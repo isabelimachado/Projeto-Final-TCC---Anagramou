@@ -40,50 +40,49 @@
 
 
   <div class="selecionarDificuldade">
-    <button class="botao-dificuldade" ><a href=index.html>FÁCIL</a></button>
+    <button class="botao-dificuldade"><a href=index.html>FÁCIL</a></button>
     <button class="botao-dificuldade"><a href=anagramaMedio.html>MÉDIO</a></button>
     <button class="botao-dificuldade"><a href=anagramaDificil.html>DÍFICIL</a></button>
   </div>
 
 
   <div class="divdapalavra">
-    <span class="palavradodia" id="palavraDoDia"> </span> <!-- tentar puxar isso pra cima  -->
+    <span class="palavradodia" id="palavraDoDia">EXEMPLO</span>
   </div>
 
   <div class="divdobrayan">
     <div id="campos1">
-      <!-- tem q fazer cada campo separado pq vou pegar pelo index dai tipo se eu virar uma class, consequemente vou acabar virando todas tendeu? -->
-      <span id="p1">1</span><br>
+      <span id="p1">1</span>
     </div>
 
     <div id="campos2">
-      <span id="p2">2</span><br>
+      <span id="p2">2</span>
     </div>
 
     <div id="campos3">
-      <span id="p3">3</span><br>
+      <span id="p3">3</span>
     </div>
 
     <div id="campos4">
-      <span id="p4">4</span><br>
+      <span id="p4">4</span>
     </div>
 
     <div id="campos5">
-      <span id="p5">5</span><br>
+      <span id="p5">5</span>
     </div>
 
     <div id="campos6">
-      <span id="p6">6</span><br>
+      <span id="p6">6</span>
     </div>
   </div>
-  <br>
 
   <div class="inputzao">
-    <input id="input-jogar" placeholder="digite seu palpite" />
+    <input id="input-jogar" type="text" placeholder="Digite seu palpite" />
     <button class="botaoderesposta" onclick="InputResposta()">
       <i class="fas fa-paper-plane"></i>
     </button>
   </div>
+
 
 
 
@@ -146,6 +145,61 @@
       <button class="botao-comecar-jogo" onclick="EnviarRegistro()">REGISTRAR</button>
     </div>
   </div>
+
+  <!-- como q joga/instruções -->
+  <div class="instrucoes" id="Instrucoes">
+    <div class="conteudo-instrucoes">
+      <div class="cabecalho-instrucoes">
+        <h1 class="titulo-instrucoes">ANAGRAMOU!</h1>
+        <p class="subtitulo-instrucoes">Descubra todos os anagramas da palavra principal</p>
+      </div>
+
+      <!--quando puder da uma olhadinha nesses textinhos pra ve se ta bom ou adiciona algo-->
+
+      <div class="caixa-exemplo">
+        <div class="palavra-exemplo">CASAR</div>
+        <div class="anagramas-exemplo">Exemplo: SACRA, ARCAS, SACAR...</div>
+      </div>
+
+
+      <ul class="etapas-instrucoes">
+        <li class="etapa-instrucao">
+          <div class="numero-etapa">1</div>
+          <div class="texto-etapa">
+            <b>Escolha a dificuldade:</b> Fácil, Médio ou Difícil. Cada nível tem uma palavra diferente com
+            seus anagramas.
+          </div>
+        </li>
+        <li class="etapa-instrucao">
+          <div class="numero-etapa">2</div>
+          <div class="texto-etapa">
+            <b>Encontre todos os anagramas:</b> use todas as letras da palavra principal para formar novas
+            palavras válidas.
+          </div>
+        </li>
+        <li class="etapa-instrucao">
+          <div class="numero-etapa">3</div>
+          <div class="texto-etapa">
+            <b>Clique no campo de texto:</b> para começar o timer e digite os anagramas da palavra principal.
+          </div>
+        </li>
+        <li class="etapa-instrucao">
+          <div class="numero-etapa">4</div>
+          <div class="texto-etapa">
+            <b>Complete o desafio:</b> Encontre todos os anagramas possíveis no menor tempo e apareça no
+            ranking!
+          </div>
+        </li>
+      </ul>
+
+
+      <button class="botao-comecar-jogo" onclick="fecharInstrucoes()">
+        COMEÇAR A JOGAR!
+      </button>
+    </div>
+  </div>
+
+
   <script>
 
     /*oq for de coisa visual de js vai fica aq outro arquivo eh pras funcionalidade do jogo*/
