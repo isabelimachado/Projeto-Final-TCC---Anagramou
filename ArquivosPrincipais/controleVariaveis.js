@@ -71,32 +71,20 @@ function InputResposta(){
             console.log("nao há resposta")
 
         }
-        if(i == 1 && !listaAchou.includes(input)){
-            alert("ACERTA CECILIA")
-        }
-        if(contador >= 6){
-            mostrarPerfil()
-        }
     }
 }
+
 document.addEventListener("DOMContentLoaded", () => { 
     const input = document.getElementById("input-jogar");
     const tempo = document.getElementById("timeDisplay");
     let timer = 0;
-    let intervalId = null;
-
     input.addEventListener("focus", () => {
-        if (contador < 6) {
-            if (!intervalId) { 
-                intervalId = setInterval(() => {
-                    const min = Math.floor(timer / 60);
-                    const sec = timer % 60;
-                    tempo.textContent = `${min}:${sec < 10 ? '0' : ''}${sec}`;
-                    timer++;
-                }, 1000);
-            }
-        }else{
-            clearInterval(intervalId)
+        if(!intervalo){
+            intervalo = setInterval( () => {
+                const min = Math.floor(timer / 60);
+                const sec = timer % 60
+                tempo.textContent =  `${min}:${sec < 10 ? '0' : ''}${sec}`;
+            }, 1000)
         }
-    });
+    });  
 });
