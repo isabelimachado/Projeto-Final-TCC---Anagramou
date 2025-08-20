@@ -487,6 +487,7 @@ body {
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     height: 35px;
+    margin-bottom: 10px;
     background-color: white;
     text-align: center;
 }
@@ -496,12 +497,13 @@ body {
     font-weight: bold;
     color: black;
     font-size: 23px;
+    font-size: 27px;
 
 }
 
 #campos1, #campos2, #campos3, #campos4, #campos5, #campos6 {
-    background-color: #3a3542; /* Roxo médio */
-    color: #f7f4fa;   /* Quase branco com leve lilás */
+    background-color: #3a3542;
+    color: #f7f4fa;   
     height: 50px;
     width: 35%;
     border-radius: 30px;
@@ -511,13 +513,13 @@ body {
     text-align: center;
     margin: 8px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
-    padding: 0 15px;
     animation-duration: 1s;
 }
 
 #p1, #p2, #p3, #p4, #p5, #p6 {
     display: none;
     animation-duration: 1s;
+    font-weight:bold;
 }
 
 

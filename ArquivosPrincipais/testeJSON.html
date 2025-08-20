@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Teste FireBase</title>
   <script>
-     window.addEventListener("DOMContentLoaded", () => {
+    window.addEventListener("DOMContentLoaded", () => {
     let lista = [];
     const teste = document.getElementById("ceci").textContent;
     lista = teste.split('');
@@ -14,6 +14,10 @@
 
     for(let i = 0; i < lista.length; i++){ 
       const botao = document.createElement("button");
+       const divLetra = document.createElement('div');
+                divLetra.className = 'letra';
+                divLetra.textContent = palavra[i];
+                container.appendChild(divLetra);
       botao.textContent = lista[i]
       document.getElementById("div").appendChild(botao);
       botao.addEventListener("click", function() {

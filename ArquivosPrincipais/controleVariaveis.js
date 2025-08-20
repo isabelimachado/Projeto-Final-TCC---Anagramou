@@ -7,7 +7,6 @@ function fecharInstrucoes() {
     document.getElementById('Instrucoes').classList.add('oculto');
 }
 
-
 function fecharInstrucoes() {
     document.getElementById('Instrucoes').classList.add('oculto');
 };
