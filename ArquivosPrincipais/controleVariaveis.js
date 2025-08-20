@@ -1,6 +1,4 @@
-let contador = 0
 const listaAchou = []
-
 function mostrarInstrucoes() {
     document.getElementById('Instrucoes').classList.remove('oculto');
 };
@@ -61,30 +59,44 @@ function InputResposta(){
         if(input.includes(lista[i]) && !listaAchou.includes(input)){
             listaAchou.push(input)
             console.log("há algo")
-            contador += 1
-            console.log(contador)
             VirarDiv(input)
+            break;
         }else if(listaAchou.includes(input)){
             console.log("isso ja foi colocado!!")
+           
         }
         else{
             console.log("nao há resposta")
-
+           
         }
     }
+    document.getElementById("input-jogar").addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+        e.preventDefault();
+        InputResposta();
+    }
+    });
 }
+
 
 document.addEventListener("DOMContentLoaded", () => { 
     const input = document.getElementById("input-jogar");
     const tempo = document.getElementById("timeDisplay");
+    let intervalo = null;
     let timer = 0;
+
     input.addEventListener("focus", () => {
-        if(!intervalo){
-            intervalo = setInterval( () => {
+        if (!intervalo) {
+            intervalo = setInterval(() => {
                 const min = Math.floor(timer / 60);
-                const sec = timer % 60
-                tempo.textContent =  `${min}:${sec < 10 ? '0' : ''}${sec}`;
-            }, 1000)
+                const sec = timer % 60;
+                tempo.textContent = `${min}:${sec < 10 ? '0' : ''}${sec}`;
+                timer++;
+                if (listaAchou.length === 6) {
+                    clearInterval(intervalo);
+                    intervalo = null;
+                }
+            }, 1000);
         }
-    });  
+    });
 });

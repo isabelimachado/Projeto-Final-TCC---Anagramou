@@ -10,9 +10,9 @@
     const teste = document.getElementById("ceci").textContent;
     lista = teste.split('');
    
+      const p = document.createElement("p");
 
     for(let i = 0; i < lista.length; i++){ 
-      const p = document.createElement("p");
       const botao = document.createElement("button");
       botao.textContent = lista[i]
       document.getElementById("div").appendChild(botao);

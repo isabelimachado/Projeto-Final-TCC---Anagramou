@@ -1,5 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-import { getFirestore, collection, doc, getDoc, getDocs, query, where, orderBy, limit, setDoc,  } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js';
+import { getFirestore, collection, doc, getDoc, getDocs, query, where, orderBy, setDoc,  } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js';
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword} from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js';
 // FUNÇÃO DA PALAVRA DO DIA//
 const firebaseConfig = {
   apiKey: "AIzaSyByESGl7b8-X74bPX3GXpArf5SixfEQ_Ew",
@@ -13,6 +14,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app)
 
 const palavraDoDia = document.getElementById("palavraDoDia");
 const anagrama1 = document.getElementById("p1");
@@ -250,41 +252,46 @@ async function criarProprioPlacar(email){
   }
 }
 
-async function registro(email,nome,senha,tempo){
-  console.log(tempo)
-  let usuarioExiste = false
-  let contador = -1
-  try{
-    const usuariosBanco  = collection(db, "usuarios");
-    const tentarPegarDocs = await getDocs(usuariosBanco)
-    // deixar em funcs separadas
-    tentarPegarDocs.forEach(doc =>{
-      const dados = doc.data();
-      const emailBanco  = dados.email;
-      if( email === emailBanco){
-        console.log("ja existe esse usuario")
-        usuarioExiste = true;
-      }
-    })
-    ///
-      tentarPegarDocs.forEach(doc =>{
-        contador += 1;
-    })
-    if(usuarioExiste){
-        return;
-      }
-    const contadorId = contador + 1
-    /////////////
-    await setDoc(doc(db, "usuarios", String(contadorId) ), {
-      email : email,
-      nome : nome,
-      senha : senha,
+async function registro(email, nome, senha, tempo) {
+  try {
+    const auth = getAuth();
+    const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
+    const user = userCredential.user;
+    await setDoc(doc(db, "usuarios", user.uid), {
+      nome: nome,
       tempo: tempo,
+      email: email
     });
-    alert("Registro Completo!")
-    login(email,senha);
-  }catch(err){
-    console.log("Erro ao registrar")
+
+    alert("o E-mail foi registrado com sucesso!");
+  } catch (error) {
+    console.error("Erro ao registrar!:", error.message);
+  }
+}
+
+async function login(email, senha) {
+  try {
+    const auth = getAuth();
+    const userCredential = await signInWithEmailAndPassword(auth, email, senha);
+    const user = userCredential.user;
+
+    const docRef = doc(db, "usuarios", user.uid);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const dados = docSnap.data();
+
+      alert(`Bem-vindo, ${dados.nome}!`);
+      criarProprioPlacar(email);
+      fecharX()
+      FecharJanelaAbrirGaveta();
+      return dados;
+    } else {
+      console.log("Usuário logado!");
+    }
+  } catch (error) {
+    console.error("Erro no login:", error.message);
+    alert("Email ou senha incorretos!");
   }
 }
 
@@ -295,33 +302,6 @@ window.EnviarRegistro = function () {
   const tempo = document.getElementById("timeDisplay").textContent;
   registro(email, nome, senha,tempo);
 };
-
-async function login(email, senha) {
-  try {
-    const pesquisa = query(collection(db, "usuarios"), where("email", "==", email));
-    const querySnapshot = await getDocs(pesquisa);
-
-    if (querySnapshot.empty) {
-      alert("Usuário não encontrado!");
-      return;
-    }
-    querySnapshot.forEach((doc) => {
-      if (doc.data().senha === senha) {
-        usuarioEncontrado = true;
-      }
-    });
-    if (usuarioEncontrado) {
-      alert("Login realizado com sucesso!");
-      criarProprioPlacar(email);
-      fecharX()
-      FecharJanelaAbrirGaveta();
-    } else {
-      alert("Senha incorreta ou não registrado!");
-    }
-  } catch (err) {
-    alert("Erro no login: " + err.message);
-  }
-}
 
 window.EnviarLogin = function () {
   const email = document.getElementById("emailLogin").value;
