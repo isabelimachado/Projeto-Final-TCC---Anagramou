@@ -468,7 +468,7 @@ body {
 .divdobrayan {
     width: 75%;
     height: 330px;
-    background-color: white;
+    background-color: #f1f1f1;
     border-radius: 12px;
     display: flex;
     flex-wrap: wrap;
@@ -498,7 +498,8 @@ body {
 }
 
 #campos1, #campos2, #campos3, #campos4, #campos5, #campos6 {
-    background-color: #1a1a1a;
+    background-color: #3a3542; /* Roxo médio */
+    color: #f7f4fa;   /* Quase branco com leve lilás */
     height: 50px;
     width: 35%;
     border-radius: 30px;
@@ -507,8 +508,7 @@ body {
     justify-content: center;
     text-align: center;
     margin: 8px;
-    color: white;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
     padding: 0 15px;
     animation-duration: 1s;
 }
