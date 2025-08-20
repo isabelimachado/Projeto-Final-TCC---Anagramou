@@ -1,7 +1,13 @@
 const listaAchou = []
 function mostrarInstrucoes() {
     document.getElementById('Instrucoes').classList.remove('oculto');
-};
+}
+
+function fecharInstrucoes() {
+    document.getElementById('Instrucoes').classList.add('oculto');
+}
+
+
 function fecharInstrucoes() {
     document.getElementById('Instrucoes').classList.add('oculto');
 };
@@ -16,11 +22,11 @@ function mostrarRegistro() {
     document.getElementById('Registro').classList.remove('oculto');
     document.getElementById('Login').classList.add('oculto');
 }
-function mostrarRanking(){
+function mostrarRanking() {
     document.getElementById("ranking").classList.toggle("aberta");
     document.getElementById("divJogador").classList.toggle("aberta");
 }
-function fecharGaveta(){
+function fecharGaveta() {
     document.getElementById("ranking").classList.remove("aberta");
     document.getElementById("divJogador").classList.remove("aberta");
 }
@@ -36,14 +42,15 @@ function VirarDiv(anagramaCerto) {
     for (let i = 0; i < listaPalavras.length; i++) {
         if (listaPalavras[i].textContent === anagramaCerto) {
             listaPalavras[i].style.display = "flex";
-            listaPalavras[i].style.animationName = "AnimPulando"
-        if(listaCampos[i]){
-            listaCampos[i].style.animationName = "aoAcertar";
-        }
+            listaPalavras[i].style.textTransform = "uppercase";
+            listaPalavras[i].style.animationName = "AnimPulando";
+            if (listaCampos[i]) {
+                listaCampos[i].style.animationName = "aoAcertar";
+            }
         }
     }
 }
-function InputResposta(){
+function InputResposta() {
     input = document.getElementById("input-jogar").value;
     ag1 = document.getElementById("p1").textContent
     ag2 = document.getElementById("p2").textContent
@@ -52,11 +59,11 @@ function InputResposta(){
     ag5 = document.getElementById("p5").textContent
     ag6 = document.getElementById("p6").textContent
 
-    console.log(ag1,ag2,ag3,ag4,ag5,ag6)
-    lista = [ag1,ag2,ag3,ag4,ag5,ag6]
-    
-    for(let i = 0; i < lista.length; i++){
-        if(input.includes(lista[i]) && !listaAchou.includes(input)){
+    console.log(ag1, ag2, ag3, ag4, ag5, ag6)
+    lista = [ag1, ag2, ag3, ag4, ag5, ag6]
+
+    for (let i = 0; i < lista.length; i++) {
+        if (input.includes(lista[i]) && !listaAchou.includes(input)) {
             listaAchou.push(input)
             console.log("há algo")
             VirarDiv(input)
@@ -65,7 +72,7 @@ function InputResposta(){
             console.log("isso ja foi colocado!!")
            
         }
-        else{
+        else {
             console.log("nao há resposta")
            
         }
