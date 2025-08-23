@@ -97,7 +97,7 @@ window.buscarDadosMedio = async function () {
     const docSnap = await getDoc(docRef);
 
     if (!docSnap.exists()) {
-      palavraDoDia.textContent = "Não atualizado ainda!";
+      palavraDoDia.textContent = "nada";
       return;
     }
 
@@ -149,7 +149,7 @@ window.buscarDadosDificil = async function () {
     const docSnap = await getDoc(docRef);
 
     if (!docSnap.exists()) {
-      palavraDoDia.textContent = "Não atualizado ainda!";
+      palavraDoDia.textContent = "nada";
       return;
     }
 
