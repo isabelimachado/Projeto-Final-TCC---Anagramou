@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-import { getFirestore, collection, doc, getDoc, getDocs, query, where, orderBy, setDoc,  } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js';
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword} from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js';
+import { getFirestore, collection, doc, getDoc, getDocs, query, where, orderBy, setDoc, } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js';
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js';
 // FUNÇÃO DA PALAVRA DO DIA//
 const firebaseConfig = {
   apiKey: "AIzaSyByESGl7b8-X74bPX3GXpArf5SixfEQ_Ew",
@@ -28,16 +28,16 @@ const anagrama6 = document.getElementById("p6");
 let usuarioEncontrado = false;
 //
 // FUNÇÕES QUE EXISTEM PRA FACILITAR TRABALHO
-window.FecharJanelaAbrirGaveta = function(){
-    document.getElementById("ranking").classList.toggle("aberta");
-    document.getElementById("divJogador").classList.toggle("aberta");
+window.FecharJanelaAbrirGaveta = function () {
+  document.getElementById("ranking").classList.toggle("aberta");
+  document.getElementById("divJogador").classList.toggle("aberta");
 }
-window.fecharX = function() {
-    document.getElementById('Login').classList.add('oculto');
-    document.getElementById('Registro').classList.add('oculto');
+window.fecharX = function () {
+  document.getElementById('Login').classList.add('oculto');
+  document.getElementById('Registro').classList.add('oculto');
 };
 //
-window.buscarDadosFacil = async function() {
+window.buscarDadosFacil = async function () {
   const hoje = new Date().toISOString().split('T')[0];
   const docRef = doc(db, "palavraDoDiaFacil", hoje);
 
@@ -45,7 +45,7 @@ window.buscarDadosFacil = async function() {
     const docSnap = await getDoc(docRef);
 
     if (!docSnap.exists()) {
-      palavraDoDia.textContent = "Não atualizado ainda!";
+      palavraDoDia.textContent = "Nada";
       return;
     }
 
@@ -85,11 +85,11 @@ window.buscarDadosFacil = async function() {
       console.log("Anagrama6: " + anagrama6Valor);
     })
   } catch (error) {
-    console.error("Erro ao buscar dados:",error);
+    console.error("Erro ao buscar dados:", error);
   }
 }
 
-window.buscarDadosMedio = async function(){
+window.buscarDadosMedio = async function () {
   const hoje = new Date().toISOString().split('T')[0];
   const docRef = doc(db, "palavraDoDiaMedia", hoje);
 
@@ -137,11 +137,11 @@ window.buscarDadosMedio = async function(){
       console.log("Anagrama6: " + anagrama6Valor);
     })
   } catch (error) {
-    console.error("Erro ao buscar dados:",error);
+    console.error("Erro ao buscar dados:", error);
   }
 }
 
-window.buscarDadosDificil = async function() {
+window.buscarDadosDificil = async function () {
   const hoje = new Date().toISOString().split('T')[0];
   const docRef = doc(db, "palavraDoDiaDificil", hoje);
 
@@ -189,16 +189,16 @@ window.buscarDadosDificil = async function() {
       console.log("Anagrama6: " + anagrama6Valor);
     })
   } catch (error) {
-    console.error("Erro ao buscar dados:",error);
+    console.error("Erro ao buscar dados:", error);
   }
 }
 
 async function MostrarDados() {
   try {
-     const usuariosRef = collection(db, "usuarios");
+    const usuariosRef = collection(db, "usuarios");
     const q = query(usuariosRef, orderBy("tempo", "asc")); // decrescente
     const querySnapshot = await getDocs(q);
-    
+
     querySnapshot.forEach(doc => {
       const infos = doc.data();
 
@@ -223,21 +223,21 @@ async function MostrarDados() {
 }
 MostrarDados();
 
-async function criarProprioPlacar(email){
-  try{
+async function criarProprioPlacar(email) {
+  try {
     const pesquisa = query(collection(db, "usuarios"), where("email", "==", email));
     const snapshot = await getDocs(pesquisa);
-    snapshot.forEach(doc =>{
+    snapshot.forEach(doc => {
       const dados = doc.data();
       const nome = dados.nome;
       const tempo = dados.tempo;
       const divPlayer = document.createElement("div");
       divPlayer.id = "divJogador";
       divPlayer.style.backgroundColor = "#15ff00ff";
-      
+
       const pNome = document.createElement("p");
-     pNome.textContent = "SEU RECORDE:\n" + nome;
-    pNome.style.whiteSpace = "pre-line"; 
+      pNome.textContent = "SEU RECORDE:\n" + nome;
+      pNome.style.whiteSpace = "pre-line";
 
       const pTempo = document.createElement("p");
       pTempo.textContent = tempo;
@@ -245,31 +245,61 @@ async function criarProprioPlacar(email){
       divPlayer.appendChild(pNome);
       divPlayer.appendChild(pTempo);
 
-      document.getElementById("ranking").appendChild(divPlayer);      
+      document.getElementById("ranking").appendChild(divPlayer);
     })
-  }catch(error){
+  } catch (error) {
     console.log("erro")
   }
 }
 
 async function registro(email, nome, senha, tempo) {
+  const mensagemErro = document.getElementById("mensagemErroRegistro");
+  mensagemErro.textContent = "";
+  mensagemErro.classList.remove("ativo");
+
   try {
-    const auth = getAuth();
     const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
     const user = userCredential.user;
-    await setDoc(doc(db, "usuarios", user.uid), {
-      nome: nome,
-      tempo: tempo,
-      email: email
-    });
+    await setDoc(doc(db, "usuarios", user.uid), { nome, tempo, email });
 
-    alert("o E-mail foi registrado com sucesso!");
+    mensagemErro.textContent = "✅ E-mail registrado com sucesso!";
+    mensagemErro.classList.add("ativo");
+
   } catch (error) {
-    console.error("Erro ao registrar!:", error.message);
+    let msg;
+    switch (error.code) {
+      case 'auth/email-already-in-use':
+        msg = "Este e-mail já está em uso.";
+        break;
+      case 'auth/invalid-email':
+        msg = "O e-mail digitado é inválido.";
+        break;
+      case 'auth/weak-password':
+        msg = "Senha fraca. Use no mínimo 6 caracteres.";
+        break;
+      default:
+        msg = error.message || "Erro desconhecido!";
+    }
+
+    mensagemErro.textContent = msg;
+    mensagemErro.classList.add("ativo");
+    console.log("Erro no registro: " + msg);
   }
+
+  // Some automaticamente após 4 segundos
+  setTimeout(() => {
+    mensagemErro.classList.remove("ativo");
+    mensagemErro.textContent = "";
+  }, 4000);
 }
 
 async function login(email, senha) {
+  const mensagemErro = document.getElementById("mensagemErroLogin");
+
+  // limpa erros anteriores
+  mensagemErro.textContent = "";
+  mensagemErro.classList.remove("ativo");
+
   try {
     const auth = getAuth();
     const userCredential = await signInWithEmailAndPassword(auth, email, senha);
@@ -280,27 +310,60 @@ async function login(email, senha) {
 
     if (docSnap.exists()) {
       const dados = docSnap.data();
-
-      alert(`Bem-vindo, ${dados.nome}!`);
       criarProprioPlacar(email);
-      fecharX()
+      fecharX();
       FecharJanelaAbrirGaveta();
+
+      // Mensagem de sucesso opcional
+      mensagemErro.textContent = `Bem-vindo, ${dados.nome}!`;
+      mensagemErro.style.backgroundColor = "#52c41a"; // verde para sucesso
+      mensagemErro.classList.add("ativo");
+
+      // some após 3 segundos
+      setTimeout(() => {
+        mensagemErro.classList.remove("ativo");
+        mensagemErro.style.backgroundColor = "#ff4d4f"; // volta ao vermelho padrão
+      }, 3000);
+
       return dados;
-    } else {
-      console.log("Usuário logado!");
     }
   } catch (error) {
-    console.error("Erro no login:", error.message);
-    alert("Email ou senha incorretos!");
+    let msg;
+    switch (error.code) {
+      case 'auth/invalid-credential':
+        msg = "Usuário não encontrado. Verifique o e-mail ou senha.";
+        break;
+      case 'auth/wrong-password':
+        msg = "Senha incorreta.";
+        break;
+      case 'auth/invalid-email':
+        msg = "O e-mail digitado é inválido.";
+        break;
+      default:
+        msg = error.message || "Erro desconhecido!";
+    }
+
+    mensagemErro.textContent = msg;
+    mensagemErro.classList.add("ativo");
+    console.log("Erro no login: " + msg);
   }
 }
+
+document.getElementById("emailLogin").addEventListener("input", () => {
+  const mensagemErro = document.getElementById("mensagemErroLogin");
+  mensagemErro.classList.remove("ativo");
+});
+document.getElementById("senhaLogin").addEventListener("input", () => {
+  const mensagemErro = document.getElementById("mensagemErroLogin");
+  mensagemErro.classList.remove("ativo");
+});
 
 window.EnviarRegistro = function () {
   const email = document.getElementById("emailRegistro").value;
   const nome = document.getElementById("nomeRegistro").value;
   const senha = document.getElementById("senhaRegistro").value;
   const tempo = document.getElementById("timeDisplay").textContent;
-  registro(email, nome, senha,tempo);
+  registro(email, nome, senha, tempo);
 };
 
 window.EnviarLogin = function () {
