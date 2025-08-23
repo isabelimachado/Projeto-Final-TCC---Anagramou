@@ -252,6 +252,27 @@ async function criarProprioPlacar(email) {
   }
 }
 
+export function errorFirebase(code) {
+  switch (code) {
+    case 'auth/invalid-email':
+      return 'O email está em um formato inválido.';
+    case 'auth/user-not-found':
+      return 'Usuário não encontrado. Verifique o email.';
+    case 'auth/invalid-credential':
+      return 'Senha incorreta. Tente novamente.';
+    case 'auth/email-already-in-use':
+      return 'Este email já está em uso.';
+    case 'auth/weak-password':
+      return 'A senha precisa ter pelo menos 6 caracteres.';
+    case 'auth/too-many-requests':
+      return 'Muitas tentativas. Tente novamente mais tarde.';
+    case 'auth/missing-password':
+      return 'Digite a senha.';
+    default:
+      return `Erro ao autenticar: ${code}`;
+  }
+}
+
 async function registro(email, nome, senha, tempo) {
   const mensagemErro = document.getElementById("mensagemErroRegistro");
   mensagemErro.textContent = "";
@@ -262,31 +283,17 @@ async function registro(email, nome, senha, tempo) {
     const user = userCredential.user;
     await setDoc(doc(db, "usuarios", user.uid), { nome, tempo, email });
 
-    mensagemErro.textContent = "✅ E-mail registrado com sucesso!";
+    mensagemErro.textContent = "Usuário registrado com sucesso!";
+    mensagemErro.style.backgroundColor = "#52c41a"; // verde sucesso
     mensagemErro.classList.add("ativo");
 
   } catch (error) {
-    let msg;
-    switch (error.code) {
-      case 'auth/email-already-in-use':
-        msg = "Este e-mail já está em uso.";
-        break;
-      case 'auth/invalid-email':
-        msg = "O e-mail digitado é inválido.";
-        break;
-      case 'auth/weak-password':
-        msg = "Senha fraca. Use no mínimo 6 caracteres.";
-        break;
-      default:
-        msg = error.message || "Erro desconhecido!";
-    }
-
+    const msg = errorFirebase(error.code);
     mensagemErro.textContent = msg;
     mensagemErro.classList.add("ativo");
     console.log("Erro no registro: " + msg);
   }
 
-  // Some automaticamente após 4 segundos
   setTimeout(() => {
     mensagemErro.classList.remove("ativo");
     mensagemErro.textContent = "";
@@ -295,8 +302,6 @@ async function registro(email, nome, senha, tempo) {
 
 async function login(email, senha) {
   const mensagemErro = document.getElementById("mensagemErroLogin");
-
-  // limpa erros anteriores
   mensagemErro.textContent = "";
   mensagemErro.classList.remove("ativo");
 
@@ -314,49 +319,24 @@ async function login(email, senha) {
       fecharX();
       FecharJanelaAbrirGaveta();
 
-      // Mensagem de sucesso opcional
+      mensagemErro.style.backgroundColor = "#52c41a"; // verde sucesso
       mensagemErro.textContent = `Bem-vindo, ${dados.nome}!`;
-      mensagemErro.style.backgroundColor = "#52c41a"; // verde para sucesso
-      mensagemErro.classList.add("ativo");
+      mensagemErro.classList.add("ativo"); //isso se der certo login
 
-      // some após 3 segundos
       setTimeout(() => {
         mensagemErro.classList.remove("ativo");
-        mensagemErro.style.backgroundColor = "#ff4d4f"; // volta ao vermelho padrão
-      }, 3000);
+      }, 3000); //tempo da mensagem sumir
 
       return dados;
     }
   } catch (error) {
-    let msg;
-    switch (error.code) {
-      case 'auth/invalid-credential':
-        msg = "Usuário não encontrado. Verifique o e-mail ou senha.";
-        break;
-      case 'auth/wrong-password':
-        msg = "Senha incorreta.";
-        break;
-      case 'auth/invalid-email':
-        msg = "O e-mail digitado é inválido.";
-        break;
-      default:
-        msg = error.message || "Erro desconhecido!";
-    }
-
+    const msg = errorFirebase(error.code);
     mensagemErro.textContent = msg;
     mensagemErro.classList.add("ativo");
     console.log("Erro no login: " + msg);
   }
 }
 
-document.getElementById("emailLogin").addEventListener("input", () => {
-  const mensagemErro = document.getElementById("mensagemErroLogin");
-  mensagemErro.classList.remove("ativo");
-});
-document.getElementById("senhaLogin").addEventListener("input", () => {
-  const mensagemErro = document.getElementById("mensagemErroLogin");
-  mensagemErro.classList.remove("ativo");
-});
 
 window.EnviarRegistro = function () {
   const email = document.getElementById("emailRegistro").value;
