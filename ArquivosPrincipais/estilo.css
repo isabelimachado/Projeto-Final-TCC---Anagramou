@@ -13,43 +13,27 @@ a {
 
 }
 
-[data-theme="dark"] body {
-    background: var(--fundo-principal);
+[data-theme="dark"] body,
+[data-theme="dark"] .titulo,
+[data-theme="dark"] .botao-dificuldade,
+[data-theme="dark"] .botao-dificuldade.ativo,
+[data-theme="dark"] .texto-rodape p {
     color: var(--texto-principal);
 }
 
-[data-theme="dark"] .cabecalho .botao-icone {
+[data-theme="dark"] .cabecalho .botao-icone,
+[data-theme="dark"] .rodape {
     background: #2c2c2c;
     color: var(--texto-principal);
 }
 
-[data-theme="dark"] .cabecalho .botao-icone:hover {
-    background: #444444;
-}
-
-[data-theme="dark"] .titulo {
-    color: var(--texto-principal);
-}
-
-[data-theme="dark"] .botao-dificuldade {
-    background: var(--botao-fundo);
-    color: var(--texto-principal);
-}
-
+[data-theme="dark"] .cabecalho .botao-icone:hover,
 [data-theme="dark"] .botao-dificuldade.ativo {
-    border-color: var(--borda-ativa);
-    color: var(--texto-principal);
     background: #444444;
 }
 
 [data-theme="dark"] .rodape {
-    background: #2c2c2c;
-    color: var(--texto-principal);
     box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.6);
-}
-
-[data-theme="dark"] .texto-rodape p {
-    color: var(--texto-principal);
 }
 
 [data-theme="dark"] .link-rodape {
@@ -60,7 +44,7 @@ a {
 
 [data-theme="dark"] .link-rodape:hover {
     background: #292b2e;
-    color: white;
+    color: whitesmoke;
 }
 
 [data-theme="dark"] .input-autenticacao {
@@ -82,7 +66,6 @@ a {
     color: #4a90e2;
 }
 
-
 [data-theme="dark"] .instrucoes {
     background: rgba(0, 0, 0, 0.85);
 }
@@ -92,26 +75,20 @@ a {
     color: #dcdcdc;
 }
 
-[data-theme="dark"] .subtitulo-instrucoes {
+[data-theme="dark"] .subtitulo-instrucoes,
+[data-theme="dark"] .anagramas-exemplo {
     color: #bbbbbb;
 }
 
-[data-theme="dark"] .etapas-instrucoes {
+[data-theme="dark"] .etapas-instrucoes,
+[data-theme="dark"] .texto-etapa,
+[data-theme="dark"] .numero-etapa {
     background-color: #3a3a41;
     color: #dcdcdc;
 }
 
 [data-theme="dark"] .etapa-instrucao {
     color: #eeeeee;
-
-}
-
-[data-theme="dark"] .numero-etapa {
-    color: #dcdcdc;
-}
-
-[data-theme="dark"] .texto-etapa {
-    color: #dcdcdc;
 }
 
 [data-theme="dark"] .caixa-exemplo {
@@ -121,10 +98,6 @@ a {
 
 [data-theme="dark"] .palavra-exemplo {
     color: #e4dbbf;
-}
-
-[data-theme="dark"] .anagramas-exemplo {
-    color: #bbbbbb;
 }
 
 [data-theme="dark"] .botao-sair {
@@ -142,6 +115,21 @@ a {
 
 [data-theme="dark"] .botaoderesposta:hover {
     background-color: #252424;
+}
+
+[data-theme="dark"] #campos1,
+[data-theme="dark"] #campos2,
+[data-theme="dark"] #campos3,
+[data-theme="dark"] #campos4,
+[data-theme="dark"] #campos5,
+[data-theme="dark"] #campos6 {
+    background-color: #faeaea93;
+}
+
+[data-theme="dark"] .botao-dificuldade,
+[data-theme="dark"] #input-jogar,
+[data-theme="dark"] .divdapalavra {
+    background-color: whitesmoke;
 }
 
 /* variaveis globais do tema claro */
@@ -666,18 +654,18 @@ body {
 
 #mensagemErroRegistro,
 #mensagemErroLogin {
-    position: absolute; 
-    top: 10px; 
-    left: 50%; 
+    position: absolute;
+    top: 10px;
+    left: 50%;
     transform: translateX(-50%);
-    color: #fff; 
-    background-color: #ff4d4f; 
+    color: #fff;
+    background-color: #ff4d4f;
     border-radius: 8px;
     padding: 10px 20px;
     font-size: 14px;
     font-weight: 500;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    display: none; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: none;
     opacity: 0;
     transition: opacity 0.4s ease, top 0.4s ease;
     z-index: 1000;
