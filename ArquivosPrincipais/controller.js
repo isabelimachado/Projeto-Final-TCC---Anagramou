@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-import { getFirestore, collection, doc, getDoc, getDocs, query, where, orderBy, setDoc,  } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js';
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword} from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js';
+import { getFirestore, collection, doc, getDoc, getDocs, query, where, orderBy, setDoc, } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js';
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js';
 // FUNÇÃO DA PALAVRA DO DIA//
 const firebaseConfig = {
   apiKey: "AIzaSyByESGl7b8-X74bPX3GXpArf5SixfEQ_Ew",
@@ -28,16 +28,16 @@ const anagrama6 = document.getElementById("p6");
 let usuarioEncontrado = false;
 //
 // FUNÇÕES QUE EXISTEM PRA FACILITAR TRABALHO
-window.FecharJanelaAbrirGaveta = function(){
-    document.getElementById("ranking").classList.toggle("aberta");
-    document.getElementById("divJogador").classList.toggle("aberta");
+window.FecharJanelaAbrirGaveta = function () {
+  document.getElementById("ranking").classList.toggle("aberta");
+  document.getElementById("divJogador").classList.toggle("aberta");
 }
-window.fecharX = function() {
-    document.getElementById('Login').classList.add('oculto');
-    document.getElementById('Registro').classList.add('oculto');
+window.fecharX = function () {
+  document.getElementById('Login').classList.add('oculto');
+  document.getElementById('Registro').classList.add('oculto');
 };
 //
-window.buscarDadosFacil = async function() {
+window.buscarDadosFacil = async function () {
   const hoje = new Date().toISOString().split('T')[0];
   const docRef = doc(db, "palavraDoDiaFacil", hoje);
 
@@ -45,7 +45,7 @@ window.buscarDadosFacil = async function() {
     const docSnap = await getDoc(docRef);
 
     if (!docSnap.exists()) {
-      palavraDoDia.textContent = "Não atualizado ainda!";
+      palavraDoDia.textContent = "Nada";
       return;
     }
 
@@ -85,11 +85,11 @@ window.buscarDadosFacil = async function() {
       console.log("Anagrama6: " + anagrama6Valor);
     })
   } catch (error) {
-    console.error("Erro ao buscar dados:",error);
+    console.error("Erro ao buscar dados:", error);
   }
 }
 
-window.buscarDadosMedio = async function(){
+window.buscarDadosMedio = async function () {
   const hoje = new Date().toISOString().split('T')[0];
   const docRef = doc(db, "palavraDoDiaMedia", hoje);
 
@@ -97,7 +97,7 @@ window.buscarDadosMedio = async function(){
     const docSnap = await getDoc(docRef);
 
     if (!docSnap.exists()) {
-      palavraDoDia.textContent = "Não atualizado ainda!";
+      palavraDoDia.textContent = "nada";
       return;
     }
 
@@ -137,11 +137,11 @@ window.buscarDadosMedio = async function(){
       console.log("Anagrama6: " + anagrama6Valor);
     })
   } catch (error) {
-    console.error("Erro ao buscar dados:",error);
+    console.error("Erro ao buscar dados:", error);
   }
 }
 
-window.buscarDadosDificil = async function() {
+window.buscarDadosDificil = async function () {
   const hoje = new Date().toISOString().split('T')[0];
   const docRef = doc(db, "palavraDoDiaDificil", hoje);
 
@@ -149,7 +149,7 @@ window.buscarDadosDificil = async function() {
     const docSnap = await getDoc(docRef);
 
     if (!docSnap.exists()) {
-      palavraDoDia.textContent = "Não atualizado ainda!";
+      palavraDoDia.textContent = "nada";
       return;
     }
 
@@ -189,16 +189,16 @@ window.buscarDadosDificil = async function() {
       console.log("Anagrama6: " + anagrama6Valor);
     })
   } catch (error) {
-    console.error("Erro ao buscar dados:",error);
+    console.error("Erro ao buscar dados:", error);
   }
 }
 
 async function MostrarDados() {
   try {
-     const usuariosRef = collection(db, "usuarios");
+    const usuariosRef = collection(db, "usuarios");
     const q = query(usuariosRef, orderBy("tempo", "asc")); // decrescente
     const querySnapshot = await getDocs(q);
-    
+
     querySnapshot.forEach(doc => {
       const infos = doc.data();
 
@@ -223,21 +223,21 @@ async function MostrarDados() {
 }
 MostrarDados();
 
-async function criarProprioPlacar(email){
-  try{
+async function criarProprioPlacar(email) {
+  try {
     const pesquisa = query(collection(db, "usuarios"), where("email", "==", email));
     const snapshot = await getDocs(pesquisa);
-    snapshot.forEach(doc =>{
+    snapshot.forEach(doc => {
       const dados = doc.data();
       const nome = dados.nome;
       const tempo = dados.tempo;
       const divPlayer = document.createElement("div");
       divPlayer.id = "divJogador";
       divPlayer.style.backgroundColor = "#15ff00ff";
-      
+
       const pNome = document.createElement("p");
-     pNome.textContent = "SEU RECORDE:\n" + nome;
-    pNome.style.whiteSpace = "pre-line"; 
+      pNome.textContent = "SEU RECORDE:\n" + nome;
+      pNome.style.whiteSpace = "pre-line";
 
       const pTempo = document.createElement("p");
       pTempo.textContent = tempo;
@@ -245,31 +245,66 @@ async function criarProprioPlacar(email){
       divPlayer.appendChild(pNome);
       divPlayer.appendChild(pTempo);
 
-      document.getElementById("ranking").appendChild(divPlayer);      
+      document.getElementById("ranking").appendChild(divPlayer);
     })
-  }catch(error){
+  } catch (error) {
     console.log("erro")
   }
 }
 
-async function registro(email, nome, senha, tempo) {
-  try {
-    const auth = getAuth();
-    const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
-    const user = userCredential.user;
-    await setDoc(doc(db, "usuarios", user.uid), {
-      nome: nome,
-      tempo: tempo,
-      email: email
-    });
-
-    alert("o E-mail foi registrado com sucesso!");
-  } catch (error) {
-    console.error("Erro ao registrar!:", error.message);
+export function errorFirebase(code) {
+  switch (code) {
+    case 'auth/invalid-email':
+      return 'O email está em um formato inválido.';
+    case 'auth/user-not-found':
+      return 'Usuário não encontrado. Verifique o email.';
+    case 'auth/invalid-credential':
+      return 'Senha incorreta. Tente novamente.';
+    case 'auth/email-already-in-use':
+      return 'Este email já está em uso.';
+    case 'auth/weak-password':
+      return 'A senha precisa ter pelo menos 6 caracteres.';
+    case 'auth/too-many-requests':
+      return 'Muitas tentativas. Tente novamente mais tarde.';
+    case 'auth/missing-password':
+      return 'Digite a senha.';
+    default:
+      return `Erro ao autenticar: ${code}`;
   }
 }
 
+async function registro(email, nome, senha, tempo) {
+  const mensagemErro = document.getElementById("mensagemErroRegistro");
+  mensagemErro.textContent = "";
+  mensagemErro.classList.remove("ativo");
+
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
+    const user = userCredential.user;
+    await setDoc(doc(db, "usuarios", user.uid), { nome, tempo, email });
+
+    mensagemErro.textContent = "Usuário registrado com sucesso!";
+    mensagemErro.style.backgroundColor = "#52c41a"; // verde sucesso
+    mensagemErro.classList.add("ativo");
+
+  } catch (error) {
+    const msg = errorFirebase(error.code);
+    mensagemErro.textContent = msg;
+    mensagemErro.classList.add("ativo");
+    console.log("Erro no registro: " + msg);
+  }
+
+  setTimeout(() => {
+    mensagemErro.classList.remove("ativo");
+    mensagemErro.textContent = "";
+  }, 4000);
+}
+
 async function login(email, senha) {
+  const mensagemErro = document.getElementById("mensagemErroLogin");
+  mensagemErro.textContent = "";
+  mensagemErro.classList.remove("ativo");
+
   try {
     const auth = getAuth();
     const userCredential = await signInWithEmailAndPassword(auth, email, senha);
@@ -280,27 +315,35 @@ async function login(email, senha) {
 
     if (docSnap.exists()) {
       const dados = docSnap.data();
-
-      alert(`Bem-vindo, ${dados.nome}!`);
       criarProprioPlacar(email);
-      fecharX()
+      fecharX();
       FecharJanelaAbrirGaveta();
+
+      mensagemErro.style.backgroundColor = "#52c41a"; // verde sucesso
+      mensagemErro.textContent = `Bem-vindo, ${dados.nome}!`;
+      mensagemErro.classList.add("ativo"); //isso se der certo login
+
+      setTimeout(() => {
+        mensagemErro.classList.remove("ativo");
+      }, 3000); //tempo da mensagem sumir
+
       return dados;
-    } else {
-      console.log("Usuário logado!");
     }
   } catch (error) {
-    console.error("Erro no login:", error.message);
-    alert("Email ou senha incorretos!");
+    const msg = errorFirebase(error.code);
+    mensagemErro.textContent = msg;
+    mensagemErro.classList.add("ativo");
+    console.log("Erro no login: " + msg);
   }
 }
+
 
 window.EnviarRegistro = function () {
   const email = document.getElementById("emailRegistro").value;
   const nome = document.getElementById("nomeRegistro").value;
   const senha = document.getElementById("senhaRegistro").value;
   const tempo = document.getElementById("timeDisplay").textContent;
-  registro(email, nome, senha,tempo);
+  registro(email, nome, senha, tempo);
 };
 
 window.EnviarLogin = function () {
