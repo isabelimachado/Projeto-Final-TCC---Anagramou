@@ -123,7 +123,7 @@ a {
 [data-theme="dark"] #campos4,
 [data-theme="dark"] #campos5,
 [data-theme="dark"] #campos6 {
-    background-color: #faeaea93;
+    background-color: #faeaeabb;
 }
 
 [data-theme="dark"] .botao-dificuldade,
@@ -412,15 +412,12 @@ body {
     margin-top: 20px;
     color: #5d70c4;
     font-size: 16px;
+    background: none;
     font-weight: bold;
     text-decoration: underline;
     transition: color 0.3s;
 }
 
-.link-registrar:hover {
-    color: #4a90e2;
-
-}
 
 .botao-sair {
     font-size: 20px;
@@ -603,17 +600,6 @@ body {
     color: #ffffff;
     line-height: 1.4;
 }
-
-#divJogador p:first-child {
-    font-size: 18px;
-    color: #ffffff;
-    margin-bottom: 8px;
-}
-
-
-
-
-
 
 #divJogador.aberta {
     right: 0;
