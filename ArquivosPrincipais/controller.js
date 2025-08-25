@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 import { getFirestore, collection, doc, getDoc, getDocs, query, where, orderBy, setDoc, } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js';
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js';
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword,GoogleAuthProvider,signInWithPopup, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js';
 // IA GEMINI
 const API_KEY = "AIzaSyCMozEyqIb-VR62uMWtylxYpzNtTPxrzzQ"; 
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
@@ -18,6 +18,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app)
+const provider = new GoogleAuthProvider();
 
 // GLOBAL PRA FACILITAR CHAMAR EM OUTRAS FUNÇÕES
 const palavraDoDia = document.getElementById("palavraDoDia");
@@ -129,7 +130,7 @@ export function errorFirebase(code) {
       return `Erro ao autenticar: ${code}`;
   }
 }
-
+///////////// AUTENTICAÇÃO//////////////
 async function registro(email, nome, senha, tempo) {
   const mensagemErro = document.getElementById("mensagemErroRegistro");
   mensagemErro.textContent = "";
@@ -195,6 +196,42 @@ async function login(email, senha) {
 }
 
 
+window.LoginGoogle = async function(){
+  auth.languageCode = 'pt';
+   try {
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+
+    console.log("Nome:", user.displayName);
+    console.log("Email:", user.email);
+    console.log("Foto:", user.photoURL);
+    
+    const docRef = doc(db, "usuarios", user.uid);
+    const docSnap = await getDoc(docRef);
+    let dados;
+
+    if(!docSnap.exists()){
+      await setDoc(docRef,{
+        nome: user.displayName,
+        email: user.email,
+        foto: user.photoURL,
+      });
+      docSnap = await getDoc(docRef)
+    }
+  
+    dados = docSnap.data();
+    criarProprioPlacar(user.email); 
+    fecharX();                        
+    FecharJanelaAbrirGaveta();
+    alert("Bem vindo!,"+user.displayName)
+    return dados;
+
+  } catch (err) {
+    console.error("Erro ao logar:", err);
+    throw err;
+  }
+}
+//////////
 window.EnviarRegistro = function () {
   const email = document.getElementById("emailRegistro").value;
   const nome = document.getElementById("nomeRegistro").value;

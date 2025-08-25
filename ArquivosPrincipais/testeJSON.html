@@ -1,86 +1,12 @@
-<!-- <!DOCTYPE html>
-<html lang="pt-br">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Teste FireBase</title>
-  <script>
-    window.addEventListener("DOMContentLoaded", () => {
-    let lista = [];
-    const teste = document.getElementById("ceci").textContent;
-    lista = teste.split('');
-   
-      const p = document.createElement("p");
-
-    for(let i = 0; i < lista.length; i++){ 
-      const botao = document.createElement("button");
-       const divLetra = document.createElement('div');
-                divLetra.className = 'letra';
-                divLetra.textContent = palavra[i];
-                container.appendChild(divLetra);
-      botao.textContent = lista[i]
-      document.getElementById("div").appendChild(botao);
-      botao.addEventListener("click", function() {
-        document.getElementById("campoTexto").value += lista[i];
-        botao.disabled = true;
-        botao.style.color = "black"; 
-        botao.style.backgroundColor = "#ddd"; 
-      });
-    }
-
-    console.log(teste);
-    console.log(lista);
-  });
-  </script>
+  <title>Document</title>
+  <script type="module" src="controller.js"></script>
 </head>
 <body>
-  <div id="div">
-  <p id="ceci">ola</p>
-  </div>
-
-  <input type="text" id="campoTexto" placeholder="Clique em um botão..." />
-</body>
-</html> -->
-
-<!-- 
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <title>Gemini Teste</title>
-</head>
-<body>
-  <h1>Teste Gemini</h1>
-  <button onclick="run()">Perguntar</button>
-  <pre id="resposta"></pre>
-
-  <script>
-    const API_KEY = "AIzaSyCMozEyqIb-VR62uMWtylxYpzNtTPxrzzQ"; 
-    const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
-
-    async function run() {
-      document.getElementById("resposta").textContent = "⏳ Consultando...";
-
-      const res = await fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: "O que é uma laranja?" }] }]
-        })
-      });
-
-      const data = await res.json();
-      console.log(data);
-
-      if (data.candidates && data.candidates[0].content.parts[0].text) {
-        document.getElementById("resposta").textContent =
-          data.candidates[0].content.parts[0].text;
-      } else {
-        document.getElementById("resposta").textContent =
-          "❌ Erro: " + JSON.stringify(data);
-      }
-    }
-  </script>
+    
 </body>
 </html>
--->
