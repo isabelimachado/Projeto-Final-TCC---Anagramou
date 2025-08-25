@@ -196,31 +196,51 @@ window.buscarDadosDificil = async function () {
 async function MostrarDados() {
   try {
     const usuariosRef = collection(db, "usuarios");
-    const q = query(usuariosRef, orderBy("tempo", "asc")); // decrescente
+    const q = query(usuariosRef, orderBy("tempo", "asc")); 
     const querySnapshot = await getDocs(q);
+
+    let posicao = 1; //variavel pra mostra posicao do jogador
 
     querySnapshot.forEach(doc => {
       const infos = doc.data();
 
-      // cria div e elementos
       const divPlayer = document.createElement("div");
-      divPlayer.id = "divJogador";
+      divPlayer.id = "divJogador"; //div que fica o fundo com nome e tempo do jogador
+
+      const posicaoSpan = document.createElement("span");
+      posicaoSpan.className = "jogador-posicao"; //span pra mostra a posicao 
+      
+      if (posicao === 1) posicaoSpan.classList.add("primeiro"); //se tiver na posicao 1 vai adicionar na classe 1 e assim por diante
+      else if (posicao === 2) posicaoSpan.classList.add("segundo");
+      else if (posicao === 3) posicaoSpan.classList.add("terceiro");
+      
+      posicaoSpan.textContent = posicao; //coloca o conteudo da posicao dentro do span
+      //aqui eh so informaçoes do jogador: tempo posicao e ome
+      const infoDiv = document.createElement("div");
 
       const pNome = document.createElement("p");
+      pNome.className = "jogador-nome";
       pNome.textContent = infos.nome;
 
       const pTempo = document.createElement("p");
+      pTempo.className = "jogador-tempo";
       pTempo.textContent = infos.tempo;
 
-      divPlayer.appendChild(pNome);
-      divPlayer.appendChild(pTempo);
+      infoDiv.appendChild(pNome);
+      infoDiv.appendChild(pTempo);
+
+      divPlayer.appendChild(posicaoSpan);
+      divPlayer.appendChild(infoDiv);
 
       document.getElementById("ranking").appendChild(divPlayer);
+
+      posicao++; // sempre vai ter mais posicoes
     });
   } catch (err) {
     console.error("Achei nada!!", err);
   }
 }
+
 MostrarDados();
 
 async function criarProprioPlacar(email) {

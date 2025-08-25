@@ -210,7 +210,7 @@ body {
     padding: 12px 30px;
     border: none;
     border-radius: 6px;
-    background: var(#e0e0e0);
+    background: #e7e4e4;
     color: #4b4b4b;
     font-weight: 700;
     font-size: 16px;
@@ -220,7 +220,7 @@ body {
 
 .rodape {
     width: 100%;
-    background: white;
+    background: #e7e4e4;
     border-radius: 20px 20px 0 0;
     padding: 30px 20px;
     margin-top: 50px;
@@ -261,7 +261,7 @@ body {
     transition: all 0.3s ease;
     padding: 10px 15px;
     border-radius: 8px;
-    background: #e0e2e2;
+    background: white;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
@@ -428,21 +428,17 @@ body {
 }
 
 .divdotimer {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    top: 35rem;
-    justify-content: flex-end;
-    position: absolute;
-    /*joga pra direita e o outro eh o tamanho da div pra direita*/
-    padding-right: 20px;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 100;
 }
 
 .timerr {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 15px 25px;
+    gap: 12px;
+    padding: 16px 24px;
     border-radius: 12px;
     background-color: #ffffff;
     color: #333333;
@@ -484,9 +480,9 @@ body {
 
 .palavradodia {
     color: #1c2833;
-    font-size: 24px;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    letter-spacing: 1px;
+    font-size: 28px;
+    letter-spacing: 3px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     font-family: 'Arial Black', Arial, sans-serif;
 }
 
@@ -535,17 +531,15 @@ body {
     right: -500px;
     width: 420px;
     height: 100%;
-    background-color: #efeef0;
-    backdrop-filter: blur(10px);
+    background-color: #d9bcf3;
     padding: 30px;
     transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    /*transicao suave*/
     box-shadow: -5px 0 25px rgba(0, 0, 0, 0.3);
     z-index: 1000;
     overflow-y: auto;
     border-left: 3px solid rgba(255, 255, 255, 0.2);
 }
-
-
 
 #ranking.aberta {
     right: 0;
@@ -584,7 +578,7 @@ body {
 }
 
 #divJogador {
-    background: rgba(49, 38, 38, 0.95);
+    background: #17202a;
     border-radius: 15px;
     padding: 20px;
     margin-bottom: 15px;
@@ -592,17 +586,48 @@ body {
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    display: flex;
+    align-items: center;
 }
 
-#divJogador p {
-    margin: 0;
-    font-weight: 600;
-    color: #ffffff;
-    line-height: 1.4;
+.jogador-posicao {
+    background: #696363;
+    color: white;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+    margin-right: 15px;
+    box-shadow: 0 3px 10px rgba(116, 112, 113, 0.3);
 }
 
-#divJogador.aberta {
-    right: 0;
+/*melhora isso outra hora*/
+
+.jogador-posicao.primeiro {
+    background: #f39c12;
+}
+
+.jogador-posicao.segundo {
+    background: #a5c0c2;
+}
+
+.jogador-posicao.terceiro {
+    background: #d3540098;
+}
+
+.jogador-nome {
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 3px;
+}
+
+.jogador-tempo {
+    font-weight: 500;
+    font-size: 14px;
 }
 
 
