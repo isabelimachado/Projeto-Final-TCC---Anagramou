@@ -84,12 +84,27 @@ async function MostrarDados() {
       pTempo.className = "jogador-tempo";
       pTempo.textContent = infos.tempo;
 
+      const containerFoto = document.createElement("div");
+      containerFoto.style.width = "125px";
+      containerFoto.style.height = "100px";
+      containerFoto.style.borderRadius = "60px"
+      containerFoto.style.position = "absolute";  
+      containerFoto.style.right = "2px"; 
+
+      const imagensAleatorias = ["imagensAleatorias/gatodandojoia.jpeg", "imagensAleatorias/imagempadrao.webp", "imagensAleatorias/sillycat.webp"]
+      const fotoURL = infos.foto || imagensAleatorias[Math.floor(Math.random() * imagensAleatorias.length)];
+      const pFoto = document.createElement("img");
+      pFoto.src = fotoURL;
+      pFoto.className = "foto-ranking"
+
       infoDiv.appendChild(pNome);
       infoDiv.appendChild(pTempo);
-
+      
       divPlayer.appendChild(posicaoSpan);
       divPlayer.appendChild(infoDiv);
+      divPlayer.appendChild(containerFoto)
 
+      containerFoto.appendChild(pFoto)
       document.getElementById("ranking").appendChild(divPlayer);
 
       posicao++; // sempre vai ter mais posicoes
@@ -235,6 +250,7 @@ window.LoginGoogle = async function(){
         nome: user.displayName,
         email: user.email,
         foto: user.photoURL,
+        tempo: "0:00"
       });
       docSnap = await getDoc(docRef)
     }
