@@ -29,7 +29,7 @@ function fecharGaveta() {
     document.getElementById("ranking").classList.remove("aberta");
     document.getElementById("divJogador").classList.remove("aberta");
 }
-
+/* 
 function VirarDiv(anagramaCerto) {
     const listaCampos = [];
     const listaPalavras = [];
@@ -49,6 +49,7 @@ function VirarDiv(anagramaCerto) {
         }
     }
 }
+
 function InputResposta() {
     input = document.getElementById("input-jogar").value;
     ag1 = document.getElementById("p1").textContent
@@ -76,6 +77,7 @@ function InputResposta() {
            
         }
     }
+
     document.getElementById("input-jogar").addEventListener("keydown", function(e) {
     if (e.key === "Enter") {
         e.preventDefault();
@@ -85,7 +87,7 @@ function InputResposta() {
 }
 
 
-document.addEventListener("DOMContentLoaded", () => { 
+ */document.addEventListener("DOMContentLoaded", () => { 
     const input = document.getElementById("input-jogar");
     const tempo = document.getElementById("timeDisplay");
     let intervalo = null;

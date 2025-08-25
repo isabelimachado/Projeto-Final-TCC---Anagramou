@@ -1,6 +1,9 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 import { getFirestore, collection, doc, getDoc, getDocs, query, where, orderBy, setDoc, } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js';
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js';
+// IA GEMINI
+const API_KEY = "AIzaSyCMozEyqIb-VR62uMWtylxYpzNtTPxrzzQ"; 
+const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 // FUNÇÃO DA PALAVRA DO DIA//
 const firebaseConfig = {
   apiKey: "AIzaSyByESGl7b8-X74bPX3GXpArf5SixfEQ_Ew",
@@ -16,6 +19,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app)
 
+// GLOBAL PRA FACILITAR CHAMAR EM OUTRAS FUNÇÕES
 const palavraDoDia = document.getElementById("palavraDoDia");
 const anagrama1 = document.getElementById("p1");
 const anagrama2 = document.getElementById("p2");
@@ -23,10 +27,7 @@ const anagrama3 = document.getElementById("p3");
 const anagrama4 = document.getElementById("p4");
 const anagrama5 = document.getElementById("p5");
 const anagrama6 = document.getElementById("p6");
-
-//
-let usuarioEncontrado = false;
-//
+const listaAnagrama = [anagrama1, anagrama2, anagrama3, anagrama4, anagrama5, anagrama6];
 // FUNÇÕES QUE EXISTEM PRA FACILITAR TRABALHO
 window.FecharJanelaAbrirGaveta = function () {
   document.getElementById("ranking").classList.toggle("aberta");
@@ -36,167 +37,23 @@ window.fecharX = function () {
   document.getElementById('Login').classList.add('oculto');
   document.getElementById('Registro').classList.add('oculto');
 };
-//
-window.buscarDadosFacil = async function () {
-  const hoje = new Date().toISOString().split('T')[0];
-  const docRef = doc(db, "palavraDoDiaFacil", hoje);
+//////////////////// FLUXO ANAGRAMAS //////////////////////////////
+window.buscarDadosFacil = async function(){
 
-  try {
-    const docSnap = await getDoc(docRef);
-
-    if (!docSnap.exists()) {
-      palavraDoDia.textContent = "Nada";
-      return;
-    }
-
-    const data = docSnap.data();
-    const palavra = data.palavra;
-    const anagrama1Valor = data.anagrama1;
-    const anagrama2Valor = data.anagrama2;
-    const anagrama3Valor = data.anagrama3;
-    const anagrama4Valor = data.anagrama4;
-    const anagrama5Valor = data.anagrama5;
-    const anagrama6Valor = data.anagrama6;
-
-    palavraDoDia.textContent = palavra.toUpperCase();
-    anagrama1.textContent = anagrama1Valor;
-    anagrama2.textContent = anagrama2Valor;
-    anagrama3.textContent = anagrama3Valor;
-    anagrama4.textContent = anagrama4Valor;
-    anagrama5.textContent = anagrama5Valor;
-    anagrama6.textContent = anagrama6Valor;
-    const pesquisa = query(
-      collection(db, "ANAGRAMOU!"),
-      where("palavraDoDia", "==", palavra)
-    );
-
-    const querySnapshot = await getDocs(pesquisa);
-
-    querySnapshot.forEach((doc) => {
-      const dados = doc.data();
-      const palavra = dados.palavra;
-      console.log("Palavra do dia:" + palavra);
-
-      console.log("Anagrama1: " + anagrama1Valor);
-      console.log("Anagrama2: " + anagrama2Valor);
-      console.log("Anagrama3: " + anagrama3Valor);
-      console.log("Anagrama4: " + anagrama4Valor);
-      console.log("Anagrama5: " + anagrama5Valor);
-      console.log("Anagrama6: " + anagrama6Valor);
-    })
-  } catch (error) {
-    console.error("Erro ao buscar dados:", error);
-  }
 }
 
-window.buscarDadosMedio = async function () {
-  const hoje = new Date().toISOString().split('T')[0];
-  const docRef = doc(db, "palavraDoDiaMedia", hoje);
 
-  try {
-    const docSnap = await getDoc(docRef);
 
-    if (!docSnap.exists()) {
-      palavraDoDia.textContent = "nada";
-      return;
-    }
 
-    const data = docSnap.data();
-    const palavra = data.palavra;
-    const anagrama1Valor = data.anagrama1;
-    const anagrama2Valor = data.anagrama2;
-    const anagrama3Valor = data.anagrama3;
-    const anagrama4Valor = data.anagrama4;
-    const anagrama5Valor = data.anagrama5;
-    const anagrama6Valor = data.anagrama6;
 
-    palavraDoDia.textContent = palavra.toUpperCase();
-    anagrama1.textContent = anagrama1Valor;
-    anagrama2.textContent = anagrama2Valor;
-    anagrama3.textContent = anagrama3Valor;
-    anagrama4.textContent = anagrama4Valor;
-    anagrama5.textContent = anagrama5Valor;
-    anagrama6.textContent = anagrama6Valor;
-    const pesquisa = query(
-      collection(db, "ANAGRAMOU!"),
-      where("palavraDoDia", "==", palavra)
-    );
 
-    const querySnapshot = await getDocs(pesquisa);
 
-    querySnapshot.forEach((doc) => {
-      const dados = doc.data();
-      const palavra = dados.palavra;
-      console.log("Palavra do dia:" + palavra);
 
-      console.log("Anagrama1: " + anagrama1Valor);
-      console.log("Anagrama2: " + anagrama2Valor);
-      console.log("Anagrama3: " + anagrama3Valor);
-      console.log("Anagrama4: " + anagrama4Valor);
-      console.log("Anagrama5: " + anagrama5Valor);
-      console.log("Anagrama6: " + anagrama6Valor);
-    })
-  } catch (error) {
-    console.error("Erro ao buscar dados:", error);
-  }
-}
-
-window.buscarDadosDificil = async function () {
-  const hoje = new Date().toISOString().split('T')[0];
-  const docRef = doc(db, "palavraDoDiaDificil", hoje);
-
-  try {
-    const docSnap = await getDoc(docRef);
-
-    if (!docSnap.exists()) {
-      palavraDoDia.textContent = "nada";
-      return;
-    }
-
-    const data = docSnap.data();
-    const palavra = data.palavra;
-    const anagrama1Valor = data.anagrama1;
-    const anagrama2Valor = data.anagrama2;
-    const anagrama3Valor = data.anagrama3;
-    const anagrama4Valor = data.anagrama4;
-    const anagrama5Valor = data.anagrama5;
-    const anagrama6Valor = data.anagrama6;
-
-    palavraDoDia.textContent = palavra.toUpperCase();
-    anagrama1.textContent = anagrama1Valor;
-    anagrama2.textContent = anagrama2Valor;
-    anagrama3.textContent = anagrama3Valor;
-    anagrama4.textContent = anagrama4Valor;
-    anagrama5.textContent = anagrama5Valor;
-    anagrama6.textContent = anagrama6Valor;
-    const pesquisa = query(
-      collection(db, "ANAGRAMOU!"),
-      where("palavraDoDia", "==", palavra)
-    );
-
-    const querySnapshot = await getDocs(pesquisa);
-
-    querySnapshot.forEach((doc) => {
-      const dados = doc.data();
-      const palavra = dados.palavra;
-      console.log("Palavra do dia:" + palavra);
-
-      console.log("Anagrama1: " + anagrama1Valor);
-      console.log("Anagrama2: " + anagrama2Valor);
-      console.log("Anagrama3: " + anagrama3Valor);
-      console.log("Anagrama4: " + anagrama4Valor);
-      console.log("Anagrama5: " + anagrama5Valor);
-      console.log("Anagrama6: " + anagrama6Valor);
-    })
-  } catch (error) {
-    console.error("Erro ao buscar dados:", error);
-  }
-}
-
+///////////////////////////////////////////////////////////////////////
 async function MostrarDados() {
   try {
     const usuariosRef = collection(db, "usuarios");
-    const q = query(usuariosRef, orderBy("tempo", "asc")); // decrescente
+    const q = query(usuariosRef, orderBy("tempo", "asc")); 
     const querySnapshot = await getDocs(q);
 
     querySnapshot.forEach(doc => {

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
@@ -40,4 +40,47 @@
 
   <input type="text" id="campoTexto" placeholder="Clique em um botão..." />
 </body>
+</html> -->
+
+<!-- 
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Gemini Teste</title>
+</head>
+<body>
+  <h1>Teste Gemini</h1>
+  <button onclick="run()">Perguntar</button>
+  <pre id="resposta"></pre>
+
+  <script>
+    const API_KEY = "AIzaSyCMozEyqIb-VR62uMWtylxYpzNtTPxrzzQ"; 
+    const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+
+    async function run() {
+      document.getElementById("resposta").textContent = "⏳ Consultando...";
+
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: "O que é uma laranja?" }] }]
+        })
+      });
+
+      const data = await res.json();
+      console.log(data);
+
+      if (data.candidates && data.candidates[0].content.parts[0].text) {
+        document.getElementById("resposta").textContent =
+          data.candidates[0].content.parts[0].text;
+      } else {
+        document.getElementById("resposta").textContent =
+          "❌ Erro: " + JSON.stringify(data);
+      }
+    }
+  </script>
+</body>
 </html>
+-->

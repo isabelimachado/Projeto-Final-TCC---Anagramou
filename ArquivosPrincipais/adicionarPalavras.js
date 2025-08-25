@@ -24,7 +24,7 @@ async function AcharPalavra(jsonTipo, identificador) {
     const listaExistentes = [];
     snapshot.forEach(doc => {
       const tudo = doc.data();
-      if (tudo.palavra) listaExistentes.push(tudo.palavra); 
+      if (tudo) listaExistentes.push(tudo); 
     });
 
     let palavraAleatoria, anagramas;
@@ -44,10 +44,10 @@ async function AcharPalavra(jsonTipo, identificador) {
       );
 
       if (anagramas.length >= 6) {
-        console.log(`✅ Escolhida: ${palavraAleatoria} com ${anagramas.length} anagramas`);
+        console.log(`escolhida: ${palavraAleatoria} com ${anagramas.length} anagramas`);
         break;
       } else {
-        console.log(`⚠️ ${palavraAleatoria} ,tentando outra`);
+        console.log(` ${palavraAleatoria} ,tentando outra`);
       }
     }
 
