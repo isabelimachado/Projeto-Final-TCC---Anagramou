@@ -24,6 +24,10 @@
       <button class="botao-icone botao-tema" onclick="alternarTema()">
         <i class="fas fa-moon"></i>
       </button>
+
+      <!-- <button class="botao-icone" onclick="Dica()"> 
+        <i class="fas fa-lightbulb"></i>
+      </button> -->
     </div>
 
     <div class="titulo"><b>ANAGRAMOU!</b></div>
@@ -47,7 +51,7 @@
 
 
   <div class="divdapalavra">
-    <span class="palavradodia" id="palavraDoDia">   </span>
+    <span class="palavradodia" id="palavraDoDia"> </span>
   </div>
 
   <div class="divdobrayan">
@@ -75,7 +79,7 @@
       <span id="p6">6</span>
     </div>
   </div>
-
+  <br>
   <div class="inputzao">
     <input id="input-jogar" type="text" placeholder="Digite seu palpite" />
     <button class="botaoderesposta" onclick="InputResposta()">
@@ -116,6 +120,10 @@
   <!-- login uau -->
 
   <div class="instrucoes oculto" id="Login">
+    <p id="mensagemErroLogin">
+      Sua mensagem de erro aqui
+      <button class="botao-ok" onclick="fecharAlerta()">OK</button>
+    </p>
     <div class="conteudo-instrucoes">
       <button class="botao-sair" onclick="fecharX()">✖</button>
       <div class="cabecalho-instrucoes">
@@ -133,6 +141,7 @@
 
   <!--registro -->
   <div class="instrucoes oculto" id="Registro">
+    <p id="mensagemErroRegistro"></p>
     <div class="conteudo-instrucoes">
       <button class="botao-sair" onclick="fecharX()">✖</button>
       <div class="cabecalho-instrucoes">

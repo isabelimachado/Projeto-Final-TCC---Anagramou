@@ -123,7 +123,7 @@ a {
 [data-theme="dark"] #campos4,
 [data-theme="dark"] #campos5,
 [data-theme="dark"] #campos6 {
-    background-color: #faeaea93;
+    background-color: #faeaeabb;
 }
 
 [data-theme="dark"] .botao-dificuldade,
@@ -412,15 +412,12 @@ body {
     margin-top: 20px;
     color: #5d70c4;
     font-size: 16px;
+    background: none;
     font-weight: bold;
     text-decoration: underline;
     transition: color 0.3s;
 }
 
-.link-registrar:hover {
-    color: #4a90e2;
-
-}
 
 .botao-sair {
     font-size: 20px;
@@ -466,28 +463,31 @@ body {
     margin: 10px auto 50px auto;
     color: black;
     padding: 20px;
-    box-sizing: border-box;
-    animation-name: "";
-    animation-duration: 1s;
+
 }
 
 .divdapalavra {
-    width: 150px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    height: 35px;
-    margin-bottom: 10px;
-    background-color: white;
-    text-align: center;
+    width: 200px;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    height: 45px;
+    margin: 0 auto 20px auto;
+    background: #ffffff;
+    border: 2px solid #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
 }
 
 
-.palavradodia {
-    font-weight: bold;
-    color: black;
-    font-size: 23px;
-    font-size: 27px;
 
+.palavradodia {
+    color: #1c2833;
+    font-size: 24px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    letter-spacing: 1px;
+    font-family: 'Arial Black', Arial, sans-serif;
 }
 
 #campos1,
@@ -496,7 +496,7 @@ body {
 #campos4,
 #campos5,
 #campos6 {
-    background-color: #3a3542;
+    background: #9f8db0;
     color: #f7f4fa;
     height: 50px;
     width: 35%;
@@ -506,7 +506,9 @@ body {
     justify-content: center;
     text-align: center;
     margin: 8px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+    box-shadow:
+        0 6px 12px rgba(0, 0, 0, 0.25),
+        4px 4px 0px #8a7a9a;
     animation-duration: 1s;
 }
 
@@ -519,7 +521,11 @@ body {
     display: flex;
     animation-duration: 1s;
     font-weight: bold;
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
+
+
 
 
 /*RANKING MUDAR*/
@@ -594,17 +600,6 @@ body {
     color: #ffffff;
     line-height: 1.4;
 }
-
-#divJogador p:first-child {
-    font-size: 18px;
-    color: #ffffff;
-    margin-bottom: 8px;
-}
-
-
-
-
-
 
 #divJogador.aberta {
     right: 0;
