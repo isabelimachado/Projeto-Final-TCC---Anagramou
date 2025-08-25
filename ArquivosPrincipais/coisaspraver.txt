@@ -1,12 +1,5 @@
 
-2- arrumar o style dos campos -> tb melhora tema escuro
-
-3- arrumar style dos ranking
--tambem arrumar no ranking oq vai aparecer de acordo com o nivel
--arrumar a ordem q aparece no ranking, no caso do primeiro aparece qm fez no menor tempo e assim por diante
-
-
-5- arruma os alert de login e registrar
+2- arrumar o style dos campos -> tb melhora tema escuro (ok)
 
 
 muda as variaveis do controller pq segundo o brayan ta estranho
@@ -14,10 +7,15 @@ muda as variaveis do controller pq segundo o brayan ta estranho
 9- melhora o estilo em geral -> segundo a cris
 
 10- adiciona alguma dica -> uma breve descrição da palavra principal -> ver uma API pra isso, com ajuda dos mlk da outra turma talvez sla
-brayan fala q tem uma do gemini, ver isso ai
+brayan fala q tem uma do gemini, ver isso ai (ok)
 
 11- pontuação -> adicionar isso , sla se cada questao q ganha, 10 pontos, se errar diminui 5 por exemplo, se pede dica diminui esses pontos
+?
 
 12- o brayan vai cria um input novo -> q nem no termo
 
 lá no final qnd for apresenta pra banca, apresentar a nossa motivação pro projeto e td mais -> talvez fazer um slidezinho?
+
+13- se sobrar muitooooo tempo altera os nomes das classes pra fica bonitinho e organizar o style(vai ser dificilkkkk)
+
+14-talvez melhora a paleta de cores? nao sei algo me incomoda
