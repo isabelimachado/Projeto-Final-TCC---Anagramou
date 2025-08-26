@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 import { getFirestore, collection, doc, getDoc, getDocs, query, where, orderBy, setDoc, } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js';
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword,GoogleAuthProvider,signInWithPopup, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js';
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword,GoogleAuthProvider,signInWithPopup, signOut, onAuthStateChanged,setPersistence, browserSessionPersistence } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js';
 // IA GEMINI
 const API_KEY = "AIzaSyCMozEyqIb-VR62uMWtylxYpzNtTPxrzzQ"; 
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
@@ -38,18 +38,162 @@ window.fecharX = function () {
   document.getElementById('Login').classList.add('oculto');
   document.getElementById('Registro').classList.add('oculto');
 };
-//////////////////// FLUXO ANAGRAMAS //////////////////////////////
-window.buscarDadosFacil = async function(){
-
+window.mostrarInstrucoes = function() {
+    document.getElementById('Instrucoes').classList.remove('oculto');
 }
 
+window.fecharInstrucoes = function() {
+    document.getElementById('Instrucoes').classList.add('oculto');
+}
+window.fecharInstrucoes = function() {
+    document.getElementById('Instrucoes').classList.add('oculto');
+};
+window.mostrarPerfil = function() {
+    document.getElementById('Login').classList.remove('oculto');
+};
+window.fecharX = function() {
+    document.getElementById('Login').classList.add('oculto');
+    document.getElementById('Registro').classList.add('oculto');
+};
+window.mostrarRegistro = function() {
+    document.getElementById('Registro').classList.remove('oculto');
+    document.getElementById('Login').classList.add('oculto');
+}
+window.mostrarRanking = function() {
+    document.getElementById("ranking").classList.toggle("aberta");
+    document.getElementById("divJogador").classList.toggle("aberta");
+}
+window.fecharGaveta = function() {
+    document.getElementById("ranking").classList.remove("aberta");
+    document.getElementById("divJogador").classList.remove("aberta");
+}
+//////////////////// FLUXO ANAGRAMAS //////////////////////////////
+window.buscarDados = async function(tipo){
+  let databasePalavra = ""
+  let databaseExemplo = ""
+  if(tipo == 1){
+    databasePalavra = "palavraDoDiaFacil"
+    databaseExemplo = "descPalavraFacil"
+  } 
+  if(tipo == 2) {
+    databasePalavra = "palavraDoDiaMedia"
+    databaseExemplo = "descPalavraMedia"
+  }
+  if(tipo == 3) {
+    databasePalavra = "palavraDoDiaDificil"
+    databaseExemplo = "descPalavraDificil"
+  }    
+  const hoje = new Date().toISOString().split("T")[0];
+  const exemplosDocRef = doc(db, databaseExemplo, hoje);
+  const palavrasDocRef = doc(db, databasePalavra, hoje);
+  try{
+  const snapshotExemplos = await getDoc(exemplosDocRef)
+  const snapshotPalavras = await getDoc(palavrasDocRef)
 
+  if(!snapshotExemplos.exists() && !snapshotPalavras.exists() ){
+    alert("Favor atualizar!");
+    return
+  }
+    const exemplosData = snapshotExemplos.data();
 
+    const exemplo1 = exemplosData.resumo1;
+    const exemplo2 = exemplosData.resumo2;
+    const exemplo3 = exemplosData.resumo3;
+    const exemplo4 = exemplosData.resumo4;
+    const exemplo5 = exemplosData.resumo5;
+    const exemplo6 = exemplosData.resumo6;
 
+    const exemplosPalavras= snapshotPalavras.data();
 
+    const palavraPrincipal = exemplosPalavras.palavra;
+    const anagrama1 = exemplosPalavras.anagrama1;
+    const anagrama2 = exemplosPalavras.anagrama2;
+    const anagrama3 = exemplosPalavras.anagrama3;
+    const anagrama4 = exemplosPalavras.anagrama4;
+    const anagrama5 = exemplosPalavras.anagrama5;
+    const anagrama6 = exemplosPalavras.anagrama6;
 
+  console.log(palavraPrincipal,exemplo1,exemplo2,exemplo3,exemplo4,exemplo5,exemplo6)
+  console.log(anagrama1,anagrama2,anagrama3,anagrama4,anagrama5,anagrama6)
+  MostrarPalavras(palavraPrincipal,anagrama1,anagrama2,anagrama3,anagrama4,anagrama5,anagrama6,exemplo1,exemplo2,exemplo3,exemplo4,exemplo5,exemplo6)
+}catch(err){
+  console.log("erro ao pegar anagramas e seus sinonimos")
+  return ;
+}
+}
 
+let listaAnagramas = [];
+let listaAchou = [];
+window.MostrarPalavras = async function(pPrincipal,a1,a2,a3,a4,a5,a6,e1,e2,e3,e4,e5,e6){
+  palavraDoDia.textContent = pPrincipal.toLowerCase()
+  anagrama1.textContent = e1.toLowerCase()
+  anagrama2.textContent = e2.toLowerCase()
+  anagrama3.textContent = e3.toLowerCase()
+  anagrama4.textContent = e4.toLowerCase()
+  anagrama5.textContent = e5.toLowerCase()
+  anagrama6.textContent = e6.toLowerCase()
 
+  listaAnagramas.push(a1)
+  listaAnagramas.push(a2)
+  listaAnagramas.push(a3)
+  listaAnagramas.push(a4)
+  listaAnagramas.push(a5)
+  listaAnagramas.push(a6)
+  console.log(listaAnagramas)
+}
+window.InputResposta = function() {
+  const inputField = document.getElementById("input-jogar");
+  const input = inputField.value.toLowerCase().trim();
+  const idx = listaAnagramas.indexOf(input);
+
+  if (idx !== -1) { 
+    if (!listaAchou.includes(input)) {
+      listaAchou.push(input);
+
+      const pos = idx + 1; 
+      const x = document.getElementById(`p${pos}`);
+      const y = document.getElementById(`campos${pos}`);
+
+      x.textContent = input;
+      x.style.animationName = "AnimPulando";
+      y.style.animationName = "aoAcertar";
+    } else {
+      console.log("Já foi incluso!");
+    }
+  } else {
+    console.log("Resposta incorreta!");
+  }
+  inputField.value = "";
+};
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("input-jogar").addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      InputResposta();
+    }
+  });
+});
+document.addEventListener("DOMContentLoaded", () => { 
+    const input = document.getElementById("input-jogar");
+    const tempo = document.getElementById("timeDisplay");
+    let intervalo = null;
+    let timer = 0;
+    input.addEventListener("focus", () => {
+        if (!intervalo) {
+            intervalo = setInterval(() => {
+                const min = Math.floor(timer / 60);
+                const sec = timer % 60;
+                tempo.textContent = `${min}:${sec < 10 ? '0' : ''}${sec}`;
+                timer++;
+                if (listaAchou.length === 6) {
+                  salvarResultado(tempo.textContent)
+                    clearInterval(intervalo);
+                    intervalo = null;
+                }
+            }, 1000);
+        }
+    });
+});
 ///////////////////////////////////////////////////////////////////////
 async function MostrarDados() {
   try {
@@ -230,7 +374,6 @@ async function login(email, senha) {
   }
 }
 
-
 window.LoginGoogle = async function(){
   auth.languageCode = 'pt';
    try {
@@ -242,7 +385,7 @@ window.LoginGoogle = async function(){
     console.log("Foto:", user.photoURL);
     
     const docRef = doc(db, "usuarios", user.uid);
-    const docSnap = await getDoc(docRef);
+    let docSnap = await getDoc(docRef);
     let dados;
 
     if(!docSnap.exists()){
@@ -250,7 +393,7 @@ window.LoginGoogle = async function(){
         nome: user.displayName,
         email: user.email,
         foto: user.photoURL,
-        tempo: "0:00"
+        tempo: document.getElementById("timeDisplay").textContent
       });
       docSnap = await getDoc(docRef)
     }
@@ -267,6 +410,37 @@ window.LoginGoogle = async function(){
     throw err;
   }
 }
+let usuario = null;
+auth.onAuthStateChanged((user) => {
+  usuario = user;
+});
+
+async function salvarResultado(guardarTempo){
+  if (!usuario) {
+    console.log("Chamando janela pra registro!");
+    mostrarPerfil();
+    return;
+  }
+  const hoje = new Date().toISOString().split("T")[0];
+  const ref = doc(db, "usuarios",usuario.uid);
+  try {
+    await setDoc(ref, {
+      tempo: guardarTempo,
+    }, {merge: true});
+    console.log("Atualizado!");
+  } catch (err) {
+    console.error("Erro ao atualizar:", err);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    await signOut(auth); 
+    console.log("Usuário deslogado automaticamente ao recarregar.");
+  } catch (err) {
+    console.error("Erro ao deslogar automaticamente:", err);
+  }
+});
 //////////
 window.EnviarRegistro = function () {
   const email = document.getElementById("emailRegistro").value;
