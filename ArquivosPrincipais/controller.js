@@ -90,10 +90,10 @@ window.buscarDados = async function(tipo){
   const snapshotExemplos = await getDoc(exemplosDocRef)
   const snapshotPalavras = await getDoc(palavrasDocRef)
 
-  // if(!snapshotExemplos.exists() && !snapshotPalavras.exists() ){
-  //   alert("Favor atualizar!");
-  //   return
-  // }
+ if(!snapshotExemplos.exists() && !snapshotPalavras.exists() ){
+   alert("Favor atualizar!");
+   return
+  }
     const exemplosData = snapshotExemplos.data();
 
     const exemplo1 = exemplosData.resumo1;
@@ -153,7 +153,7 @@ window.InputResposta = function() {
       const pos = idx + 1; 
       const x = document.getElementById(`p${pos}`);
       const y = document.getElementById(`campos${pos}`);
-
+      x.style.backgroundColor = "#0df940ff"
       x.textContent = input;
       x.style.animationName = "AnimPulando";
       y.style.animationName = "aoAcertar";
