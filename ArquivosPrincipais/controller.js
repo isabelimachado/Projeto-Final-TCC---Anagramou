@@ -90,10 +90,10 @@ window.buscarDados = async function(tipo){
   const snapshotExemplos = await getDoc(exemplosDocRef)
   const snapshotPalavras = await getDoc(palavrasDocRef)
 
-  if(!snapshotExemplos.exists() && !snapshotPalavras.exists() ){
-    alert("Favor atualizar!");
-    return
-  }
+  // if(!snapshotExemplos.exists() && !snapshotPalavras.exists() ){
+  //   alert("Favor atualizar!");
+  //   return
+  // }
     const exemplosData = snapshotExemplos.data();
 
     const exemplo1 = exemplosData.resumo1;
