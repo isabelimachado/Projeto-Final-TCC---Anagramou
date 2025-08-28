@@ -1516,3 +1516,370 @@ body {
     }
 }
 
+
+@media (max-width: 768px) {
+    body {
+        padding: 0 10px;
+    }
+    
+    .cabecalho {
+        padding: 20px 15px;
+        margin-bottom: 5px;
+    }
+    
+    .botoes-esquerda,
+    .botoes-direita {
+        gap: 10px;
+    }
+    
+    .botao-icone {
+        font-size: 16px;
+        padding: 8px;
+        min-width: 36px;
+        min-height: 36px;
+    }
+    
+    .titulo {
+        font-size: 26px;
+        margin: 0 10px;
+    }
+    
+    .selecionarDificuldade {
+        gap: 15px;
+        padding: 10px 5px;
+    }
+    
+    .botao-dificuldade {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+    
+    .divdapalavra {
+        width: 90%;
+        max-width: 280px;
+    }
+    
+    .palavradodia {
+        font-size: 24px;
+        letter-spacing: 2px;
+    }
+    
+    .divdobrayan {
+        width: 90%;
+        max-width: 500px;
+        height: auto;
+        min-height: 280px;
+        padding: 15px;
+        margin: 10px auto 30px auto;
+    }
+    
+    .inputzao {
+        width: 90%;
+        max-width: 350px;
+        margin: -30px auto 0 auto;
+    }
+    
+    #input-jogar {
+        padding: 12px 15px;
+        font-size: 16px;
+    }
+    
+    .divdotimer {
+        bottom: 20px;
+        right: 15px;
+    }
+    
+    .timerr {
+        padding: 12px 16px;
+        font-size: 16px;
+        gap: 8px;
+    }
+    
+    .rodape {
+        padding: 25px 15px;
+        margin-top: 30px;
+    }
+    
+    .texto-rodape p {
+        font-size: 16px;
+    }
+    
+    .links-rodape {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .link-rodape {
+        font-size: 14px;
+        justify-content: center;
+    }
+    
+    #ranking {
+        width: 100%;
+        max-width: 350px;
+        padding: 20px;
+        right: -100%;
+    }
+    
+    .botaoRanking {
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
+        right: 15px;
+    }
+    
+    #ranking h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+    
+    #divJogador {
+        padding: 15px;
+        margin-bottom: 10px;
+    }
+    
+    .jogador-posicao {
+        width: 30px;
+        height: 30px;
+        font-size: 12px;
+        margin-right: 12px;
+    }
+    
+    .jogador-nome {
+        font-size: 14px;
+    }
+    
+    .jogador-tempo {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .cabecalho {
+        padding: 15px 10px;
+    }
+    
+    .botoes-esquerda,
+    .botoes-direita {
+        gap: 8px;
+    }
+    
+    .titulo {
+        font-size: 22px;
+    }
+    
+    .selecionarDificuldade {
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+    
+    .botao-dificuldade {
+        padding: 8px 15px;
+        font-size: 12px;
+        flex: 1;
+        min-width: 80px;
+    }
+    
+    .divdapalavra {
+        width: 95%;
+        max-width: 250px;
+        height: 40px;
+    }
+    
+    .palavradodia {
+        font-size: 20px;
+        letter-spacing: 1px;
+    }
+    
+    .divdobrayan {
+        width: 95%;
+        min-height: 250px;
+        padding: 10px;
+        gap: 6px;
+    }
+    
+    #campos1,
+    #campos2,
+    #campos3,
+    #campos4,
+    #campos5,
+    #campos6 {
+        height: 40px;
+        width: calc(50% - 6px);
+        min-width: 110px;
+        border-radius: 20px;
+        margin: 3px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 2px 2px 0px #8a7a9a;
+    }
+    
+    #p1, #p2, #p3, #p4, #p5, #p6 {
+        font-size: 12px;
+    }
+    
+    .inputzao {
+        width: 95%;
+        max-width: 320px;
+        gap: 8px;
+    }
+    
+    #input-jogar {
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+    
+    .botaoderesposta {
+        padding: 10px 12px;
+        font-size: 14px;
+        min-width: 40px;
+    }
+    
+    .conteudo-instrucoes {
+        padding: 20px;
+        width: 95%;
+        max-width: 350px;
+        max-height: 85vh;
+        overflow-y: auto;
+    }
+    
+    .titulo-instrucoes {
+        font-size: 1.4rem;
+    }
+    
+    .subtitulo-instrucoes {
+        font-size: 12px;
+    }
+    
+    .caixa-exemplo {
+        padding: 10px;
+    }
+    
+    .palavra-exemplo {
+        font-size: 18px;
+    }
+    
+    .anagramas-exemplo {
+        font-size: 11px;
+    }
+    
+    .etapa-instrucao {
+        padding: 10px;
+        gap: 8px;
+    }
+    
+    .numero-etapa {
+        width: 22px;
+        height: 22px;
+        font-size: 11px;
+    }
+    
+    .texto-etapa {
+        font-size: 11px;
+        line-height: 1.4;
+    }
+    
+    .botao-comecar-jogo {
+        padding: 12px;
+        font-size: 14px;
+    }
+    
+    .input-autenticacao {
+        padding: 10px;
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+    
+    .links {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .link-registrar,
+    .link-google {
+        font-size: 11px;
+        padding: 8px;
+    }
+    
+    .botao-sair {
+        font-size: 16px;
+        top: 8px;
+        right: 8px;
+    }
+    
+    #mensagemErroRegistro,
+    #mensagemErroLogin {
+        font-size: 11px;
+        padding: 6px 12px;
+        max-width: calc(100% - 30px);
+    }
+}
+
+@media (max-width: 375px) {
+    .titulo {
+        font-size: 20px;
+    }
+    
+    .palavradodia {
+        font-size: 18px;
+    }
+    
+    .botao-dificuldade {
+        font-size: 11px;
+        padding: 6px 12px;
+    }
+    
+    #campos1,
+    #campos2,
+    #campos3,
+    #campos4,
+    #campos5,
+    #campos6 {
+        height: 35px;
+        min-width: 100px;
+    }
+    
+    #p1, #p2, #p3, #p4, #p5, #p6 {
+        font-size: 11px;
+    }
+    
+    .divdobrayan {
+        min-height: 220px;
+    }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+    .divdobrayan {
+        min-height: 180px;
+        padding: 8px;
+    }
+    
+    .rodape {
+        margin-top: 20px;
+        padding: 15px 10px;
+    }
+    
+    .divdotimer {
+        bottom: 10px;
+        right: 10px;
+    }
+    
+    .timerr {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+    
+    .conteudo-instrucoes {
+        max-height: 90vh;
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) and (max-height: 800px) {
+    .instrucoes {
+        padding: 10px;
+    }
+    
+    .conteudo-instrucoes {
+        max-height: 95vh;
+    }
+}
+
