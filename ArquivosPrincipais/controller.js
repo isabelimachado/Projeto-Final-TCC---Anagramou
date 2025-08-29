@@ -198,7 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 ///////////////////////////////////////////////////////////////////////
-/* async function MostrarDados() {
+async function MostrarDados() {
   try {
     const usuariosRef = collection(db, "usuarios");
     const q = query(usuariosRef, orderBy("tempo", "asc")); 
@@ -259,7 +259,7 @@ document.addEventListener("DOMContentLoaded", () => {
     console.error("Achei nada!!", err);
   }
 } 
- */
+
 MostrarDados();
 
 async function criarProprioPlacar(email) {
