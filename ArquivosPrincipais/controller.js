@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-import { getFirestore, collection, doc, getDoc, getDocs, query, where, orderBy, setDoc, } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js';
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword,GoogleAuthProvider,signInWithPopup, signOut, onAuthStateChanged,setPersistence, browserSessionPersistence } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js';
+import { getFirestore, collection, doc, getDoc, getDocs, query, where, orderBy, setDoc,onSnapshot  } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js';
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword,GoogleAuthProvider,signInWithPopup, signOut, onAuthStateChanged,setPersistence, browserSessionPersistence,inMemoryPersistence,signInWithRedirect } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js';
 // IA GEMINI
 const API_KEY = "AIzaSyCMozEyqIb-VR62uMWtylxYpzNtTPxrzzQ"; 
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
@@ -20,6 +20,7 @@ const db = getFirestore(app);
 const auth = getAuth(app)
 const provider = new GoogleAuthProvider();
 
+let checagemJaAcertou = null;
 // GLOBAL PRA FACILITAR CHAMAR EM OUTRAS FUNÇÕES
 const palavraDoDia = document.getElementById("palavraDoDia");
 const anagrama1 = document.getElementById("p1");
@@ -29,6 +30,7 @@ const anagrama4 = document.getElementById("p4");
 const anagrama5 = document.getElementById("p5");
 const anagrama6 = document.getElementById("p6");
 const listaAnagrama = [anagrama1, anagrama2, anagrama3, anagrama4, anagrama5, anagrama6];
+let usuario = null;
 // FUNÇÕES QUE EXISTEM PRA FACILITAR TRABALHO
 window.FecharJanelaAbrirGaveta = function () {
   document.getElementById("ranking").classList.toggle("aberta");
@@ -125,7 +127,7 @@ window.buscarDados = async function(tipo){
 let listaAnagramas = [];
 let listaAchou = [];
 window.MostrarPalavras = async function(pPrincipal,a1,a2,a3,a4,a5,a6,e1,e2,e3,e4,e5,e6){
-  palavraDoDia.textContent = pPrincipal.toLowerCase()
+  palavraDoDia.textContent = pPrincipal.toUpperCase();
   anagrama1.textContent = e1.toLowerCase()
   anagrama2.textContent = e2.toLowerCase()
   anagrama3.textContent = e3.toLowerCase()
@@ -149,7 +151,6 @@ window.InputResposta = function() {
   if (idx !== -1) { 
     if (!listaAchou.includes(input)) {
       listaAchou.push(input);
-
       const pos = idx + 1; 
       const x = document.getElementById(`p${pos}`);
       const y = document.getElementById(`campos${pos}`);
@@ -187,7 +188,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 tempo.textContent = `${min}:${sec < 10 ? '0' : ''}${sec}`;
                 timer++;
                 if (listaAchou.length === 6) {
-                  salvarResultado(tempo.textContent)
+                  checagemJaAcertou = true;
+                  salvarResultado(tempo.textContent,checagemJaAcertou)
                     clearInterval(intervalo);
                     intervalo = null;
                 }
@@ -196,12 +198,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 ///////////////////////////////////////////////////////////////////////
-async function MostrarDados() {
+/* async function MostrarDados() {
   try {
     const usuariosRef = collection(db, "usuarios");
     const q = query(usuariosRef, orderBy("tempo", "asc")); 
     const querySnapshot = await getDocs(q);
-
     let posicao = 1; //variavel pra mostra posicao do jogador
 
     querySnapshot.forEach(doc => {
@@ -257,8 +258,8 @@ async function MostrarDados() {
   } catch (err) {
     console.error("Achei nada!!", err);
   }
-}
-
+} 
+ */
 MostrarDados();
 
 async function criarProprioPlacar(email) {
@@ -411,38 +412,47 @@ window.LoginGoogle = async function(){
     throw err;
   }
 }
-let usuario = null;
-auth.onAuthStateChanged((user) => {
-  usuario = user;
-});
 
-async function salvarResultado(guardarTempo){
+function sair(){
+  signOut(auth).then(() => {
+    window.location.reload();
+  })
+}
+
+auth.onAuthStateChanged(async (user) => {
+  usuario = user;
+  console.log(user);
+  if (usuario) {
+    document.getElementById("botao-iconeID").removeAttribute("onclick");
+    document.getElementById("iconeEntrar").className = "fa-solid fa-arrow-right-from-bracket";
+    document.getElementById("botao-iconeID").addEventListener("click", sair);
+    criarProprioPlacar(user.email);
+
+    const docRef = doc(db, "usuarios", user.uid);
+    const docSnap = await getDoc(docRef);
+    
+  }
+});
+async function salvarResultado(guardarTempo,JaAcertou){
   if (!usuario) {
     console.log("Chamando janela pra registro!");
     mostrarPerfil();
     return;
   }
-  const hoje = new Date().toISOString().split("T")[0];
   const ref = doc(db, "usuarios",usuario.uid);
   try {
     await setDoc(ref, {
       tempo: guardarTempo,
+      jaAcertouHoje : JaAcertou
     }, {merge: true});
     console.log("Atualizado!");
   } catch (err) {
     console.error("Erro ao atualizar:", err);
   }
 }
-
-document.addEventListener("DOMContentLoaded", async () => {
-  try {
-    await signOut(auth); 
-    console.log("Usuário deslogado automaticamente ao recarregar.");
-  } catch (err) {
-    console.error("Erro ao deslogar automaticamente:", err);
-  }
+window.addEventListener("beforeunload", () => {
+  signOut(auth);
 });
-//////////
 window.EnviarRegistro = function () {
   const email = document.getElementById("emailRegistro").value;
   const nome = document.getElementById("nomeRegistro").value;
@@ -456,5 +466,3 @@ window.EnviarLogin = function () {
   const senha = document.getElementById("senhaLogin").value;
   login(email, senha);
 };
-
-

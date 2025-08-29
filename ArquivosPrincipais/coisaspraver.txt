@@ -1,21 +1,18 @@
-
 2- arrumar o style dos campos -> tb melhora tema escuro (ok)
-
-
-muda as variaveis do controller pq segundo o brayan ta estranho
 
 9- melhora o estilo em geral -> segundo a cris
 
-10- adiciona alguma dica -> uma breve descrição da palavra principal -> ver uma API pra isso, com ajuda dos mlk da outra turma talvez sla
-brayan fala q tem uma do gemini, ver isso ai (ok)
+11- pontuação -> adicionar isso , sla se cada questao q ganha, 10 pontos, se errar diminui 5 por exemplo, se pede dica diminui esses pontos 
+-> esse negocio de pontuação nao faz muito sentido pra mim talvez, mas eu acho que pra simplificar o ranking seria legal colocar um sistema de pontos pq senão vou ter que fazer um campo pra cada tempo(facil,medio,dificil) e é mt ruim pra ser sincero, então vou considerar a ideia da mari 
 
-11- pontuação -> adicionar isso , sla se cada questao q ganha, 10 pontos, se errar diminui 5 por exemplo, se pede dica diminui esses pontos
-?
+12- o brayan vai cria um input novo -> q nem no termo -> to considerando descartar essa ideia
 
-12- o brayan vai cria um input novo -> q nem no termo
+lá no final qnd for apresenta pra banca, apresentar a nossa motivação pro projeto e td mais -> talvez fazer um slidezinho? -> claro
 
-lá no final qnd for apresenta pra banca, apresentar a nossa motivação pro projeto e td mais -> talvez fazer um slidezinho?
+13- se sobrar muitooooo tempo altera os nomes das classes pra fica bonitinho e organizar o style(vai ser dificilkkkk) -> mt trampo no back ta ;-;
 
-13- se sobrar muitooooo tempo altera os nomes das classes pra fica bonitinho e organizar o style(vai ser dificilkkkk)
+14-talvez melhora a paleta de cores? nao sei algo me incomoda - > me incomoda algo no tem claro sla
 
-14-talvez melhora a paleta de cores? nao sei algo me incomoda
+coisas arrumadas:
+
+IA do gemini pega mas as vezes retorna uns negocios nd a ver mas ok

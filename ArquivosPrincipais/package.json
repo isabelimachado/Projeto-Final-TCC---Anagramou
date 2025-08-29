@@ -3,6 +3,7 @@
     "@google/generative-ai": "^0.24.1",
     "firebase": "^12.1.0",
     "firebase-admin": "^13.4.0",
+    "nodemailer": "^7.0.5",
     "openai": "^5.12.2"
   }
 }
