@@ -163,7 +163,7 @@ window.InputResposta = function() {
       console.log("Já foi incluso!");
     }
   } else {
-    alert("Resposta incorreta seu burro do!");
+    alert("Resposta incorreta seu burro do caraio!");
   }
   inputField.value = "";
 };
