@@ -133,7 +133,12 @@
       <input type="password" placeholder="Senha" id="senhaLogin" class="input-autenticacao" />
       <button class="botao-comecar-jogo" onclick="EnviarLogin()">ENTRAR</button>
       <div style="display: flex; justify-content: center;">
-        <button class="link-registrar" onclick="mostrarRegistro()">Não tem uma conta? Registrar</button>
+        <div class="links">
+          <button class="link-registrar" onclick="mostrarRegistro()">Não tem uma conta? Registrar</button>
+          <button class="link-google" onclick="LoginGoogle()">Logar com google
+            <i class="fab fa-google"></i>
+          </button>
+        </div>
       </div>
     </div>
   </div>
