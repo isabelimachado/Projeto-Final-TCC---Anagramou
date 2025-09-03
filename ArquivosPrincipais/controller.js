@@ -163,7 +163,7 @@ window.InputResposta = function() {
       console.log("Já foi incluso!");
     }
   } else {
-    console.log("Resposta incorreta seu burro do caraio!");
+    console.log("Resposta incorreta !");
   }
   inputField.value = "";
 };
@@ -199,9 +199,21 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 ///////////////////////////////////////////////////////////////////////
 async function MostrarDados() {
+  let colecao = ""
+  switch(id){
+    case 1:
+      colecao = "pontosFacil"
+      break;
+    case 2:
+      colecao = "pontosMedio"
+      break;
+    case 3:
+      colecao = "pontosDificil"
+      break;
+  }
   try {
     const usuariosRef = collection(db, "usuarios");
-    const q = query(usuariosRef, orderBy("tempo", "asc")); 
+    const q = query(usuariosRef, orderBy(colecao, "asc")); 
     const querySnapshot = await getDocs(q);
     let posicao = 1; //variavel pra mostra posicao do jogador
 
@@ -259,8 +271,6 @@ async function MostrarDados() {
     console.error("Achei nada!!", err);
   }
 } 
-
-MostrarDados();
 
 async function criarProprioPlacar(email) {
   try {
