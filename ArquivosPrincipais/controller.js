@@ -43,7 +43,6 @@ window.fecharX = function () {
 window.mostrarInstrucoes = function() {
     document.getElementById('Instrucoes').classList.remove('oculto');
 }
-
 window.fecharInstrucoes = function() {
     document.getElementById('Instrucoes').classList.add('oculto');
 }
@@ -198,7 +197,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 ///////////////////////////////////////////////////////////////////////
-async function MostrarDados() {
+window.MostrarDados = async function (id) {
   let colecao = ""
   switch(id){
     case 1:
@@ -322,15 +321,14 @@ export function errorFirebase(code) {
   }
 }
 ///////////// AUTENTICAÇÃO//////////////
-async function registro(email, nome, senha, tempo) {
+async function registro(email, nome, senha, tempo, pontos) {
   const mensagemErro = document.getElementById("mensagemErroRegistro");
   mensagemErro.textContent = "";
   mensagemErro.classList.remove("ativo");
-
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
     const user = userCredential.user;
-    await setDoc(doc(db, "usuarios", user.uid), { nome, tempo, email });
+    await setDoc(doc(db, "usuarios", user.uid), { nome, tempo, email});
 
     mensagemErro.textContent = "Usuário registrado com sucesso!";
     mensagemErro.style.backgroundColor = "#52c41a"; // verde sucesso
@@ -443,6 +441,7 @@ auth.onAuthStateChanged(async (user) => {
     
   }
 });
+
 async function salvarResultado(guardarTempo,JaAcertou){
   if (!usuario) {
     console.log("Chamando janela pra registro!");
@@ -460,6 +459,7 @@ async function salvarResultado(guardarTempo,JaAcertou){
     console.error("Erro ao atualizar:", err);
   }
 }
+
 window.addEventListener("beforeunload", () => {
   signOut(auth);
 });
