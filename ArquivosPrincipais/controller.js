@@ -312,7 +312,8 @@ export function errorFirebase(code) {
   }
 }
 ///////////// AUTENTICAÇÃO//////////////
-async function registro(email, nome, senha, tempo) {
+async function registro(email, nome, senha, tempo,seAcertou,pontuaçao) {
+  /* Essa função tem que ter nome, senha, tempo, seAcertou? pontuação */
   const mensagemErro = document.getElementById("mensagemErroRegistro");
   mensagemErro.textContent = "";
   mensagemErro.classList.remove("ativo");
@@ -320,7 +321,7 @@ async function registro(email, nome, senha, tempo) {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
     const user = userCredential.user;
-    await setDoc(doc(db, "usuarios", user.uid), { nome, tempo, email });
+    await setDoc(doc(db, "usuarios", user.uid), { nome, tempo, email, seAcertou , pontuaçao });
 
     mensagemErro.textContent = "Usuário registrado com sucesso!";
     mensagemErro.style.backgroundColor = "#52c41a"; // verde sucesso
@@ -458,7 +459,9 @@ window.EnviarRegistro = function () {
   const nome = document.getElementById("nomeRegistro").value;
   const senha = document.getElementById("senhaRegistro").value;
   const tempo = document.getElementById("timeDisplay").textContent;
-  registro(email, nome, senha, tempo);
+  const seAcertou = checagemJaAcertou;
+  const pontuacao = 10000 - (Number(tempo) * 0.25)
+  registro(email, nome, senha, tempo,seAcertou,pontuacao);
 };
 
 window.EnviarLogin = function () {
