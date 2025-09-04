@@ -43,7 +43,6 @@ window.fecharX = function () {
 window.mostrarInstrucoes = function() {
     document.getElementById('Instrucoes').classList.remove('oculto');
 }
-
 window.fecharInstrucoes = function() {
     document.getElementById('Instrucoes').classList.add('oculto');
 }
@@ -163,7 +162,7 @@ window.InputResposta = function() {
       console.log("Já foi incluso!");
     }
   } else {
-    console.log("Resposta incorreta!");
+    console.log("Resposta incorreta !");
   }
   inputField.value = "";
 };
@@ -198,10 +197,22 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 ///////////////////////////////////////////////////////////////////////
-async function MostrarDados() {
+window.MostrarDados = async function (id) {
+  let colecao = ""
+  switch(id){
+    case 1:
+      colecao = "pontosFacil"
+      break;
+    case 2:
+      colecao = "pontosMedio"
+      break;
+    case 3:
+      colecao = "pontosDificil"
+      break;
+  }
   try {
     const usuariosRef = collection(db, "usuarios");
-    const q = query(usuariosRef, orderBy("tempo", "asc")); 
+    const q = query(usuariosRef, orderBy(colecao, "asc")); 
     const querySnapshot = await getDocs(q);
     let posicao = 1; //variavel pra mostra posicao do jogador
 
@@ -260,8 +271,6 @@ async function MostrarDados() {
   }
 } 
 
-MostrarDados();
-
 async function criarProprioPlacar(email) {
   try {
     const pesquisa = query(collection(db, "usuarios"), where("email", "==", email));
@@ -312,16 +321,14 @@ export function errorFirebase(code) {
   }
 }
 ///////////// AUTENTICAÇÃO//////////////
-async function registro(email, nome, senha, tempo,seAcertou,pontuaçao) {
-  /* Essa função tem que ter nome, senha, tempo, seAcertou? pontuação */
+async function registro(email, nome, senha, tempo, pontos) {
   const mensagemErro = document.getElementById("mensagemErroRegistro");
   mensagemErro.textContent = "";
   mensagemErro.classList.remove("ativo");
-
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
     const user = userCredential.user;
-    await setDoc(doc(db, "usuarios", user.uid), { nome, tempo, email, seAcertou , pontuaçao });
+    await setDoc(doc(db, "usuarios", user.uid), { nome, tempo, email});
 
     mensagemErro.textContent = "Usuário registrado com sucesso!";
     mensagemErro.style.backgroundColor = "#52c41a"; // verde sucesso
@@ -434,6 +441,7 @@ auth.onAuthStateChanged(async (user) => {
     
   }
 });
+
 async function salvarResultado(guardarTempo,JaAcertou){
   if (!usuario) {
     console.log("Chamando janela pra registro!");
@@ -451,6 +459,7 @@ async function salvarResultado(guardarTempo,JaAcertou){
     console.error("Erro ao atualizar:", err);
   }
 }
+
 window.addEventListener("beforeunload", () => {
   signOut(auth);
 });
