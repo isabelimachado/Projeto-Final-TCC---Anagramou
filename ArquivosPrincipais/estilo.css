@@ -774,6 +774,12 @@ body {
     }
 }
 
+@keyframes cair {
+  to {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
 /*teste pra ver se funciona celular*/
 
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap');
@@ -1263,7 +1269,10 @@ body {
     color: black;
     padding: 20px;
 }
-
+#divdobrayan{
+    animation-name: "";
+    animation-duration: 0.5s;
+}
 .divdapalavra {
     width: 200px;
     border-radius: 16px;
@@ -1572,6 +1581,8 @@ body {
         min-height: 280px;
         padding: 15px;
         margin: 10px auto 30px auto;
+        animation-name: "";
+        animation-duration:  2s;
     }
     
     .inputzao {

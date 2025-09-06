@@ -68,6 +68,21 @@ window.fecharGaveta = function() {
     document.getElementById("ranking").classList.remove("aberta");
     document.getElementById("divJogador").classList.remove("aberta");
 }
+window.jogarConfetes = function(){
+  const emotes = ["🎉","🔥","🅰️"];
+  for (let i = 0; i < 50; i++) {
+    const emote = document.createElement("div");
+    emote.textContent = emotes[Math.floor(Math.random() * emotes.length)];
+    emote.style.position = "fixed";
+    emote.style.left = Math.random() * 100 + "vw";
+    emote.style.top = "-50px";
+    emote.style.fontSize = "2rem";
+    emote.style.animation = `cair ${2 + Math.random() * 3}s linear forwards`;
+    document.body.appendChild(emote);
+
+    setTimeout(() => emote.remove(), 5000);
+  }
+}
 //////////////////// FLUXO ANAGRAMAS //////////////////////////////
 window.buscarDados = async function(tipo){
   let databasePalavra = ""
@@ -188,9 +203,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 timer++;
                 if (listaAchou.length === 6) {
                   checagemJaAcertou = true;
-                  salvarResultado(tempo.textContent,checagemJaAcertou)
-                    clearInterval(intervalo);
-                    intervalo = null;
+                  const container = document.getElementById("divdobrayan");
+                  container.style.animationName = "aoAcertar";
+                  jogarConfetes();
+                  setTimeout(() => salvarResultado(tempo.textContent, checagemJaAcertou), 2000);
+                  clearInterval(intervalo);
+                   intervalo = null;
                 }
             }, 1000);
         }
@@ -435,10 +453,6 @@ auth.onAuthStateChanged(async (user) => {
     document.getElementById("iconeEntrar").className = "fa-solid fa-arrow-right-from-bracket";
     document.getElementById("botao-iconeID").addEventListener("click", sair);
     criarProprioPlacar(user.email);
-
-    const docRef = doc(db, "usuarios", user.uid);
-    const docSnap = await getDoc(docRef);
-    
   }
 });
 
@@ -463,14 +477,25 @@ async function salvarResultado(guardarTempo,JaAcertou){
 window.addEventListener("beforeunload", () => {
   signOut(auth);
 });
+
 window.EnviarRegistro = function () {
   const email = document.getElementById("emailRegistro").value;
   const nome = document.getElementById("nomeRegistro").value;
   const senha = document.getElementById("senhaRegistro").value;
   const tempo = document.getElementById("timeDisplay").textContent;
   const seAcertou = checagemJaAcertou;
-  const pontuacao = 10000 - (Number(tempo) * 0.25)
-  registro(email, nome, senha, tempo,seAcertou,pontuacao);
+
+  let pontuacao = 0
+  if(listaAchou.length >= 6){
+    pontuacao = 10000
+  }else{
+    pontuacao = 0
+  }
+  const [min, sec] = tempo.split(":").map(Number)
+  const totalSegundos = min * 60 + sec
+  let total = pontuacao - (totalSegundos * 10)
+
+  registro(email, nome, senha, tempo,seAcertou,total);
 };
 
 window.EnviarLogin = function () {
