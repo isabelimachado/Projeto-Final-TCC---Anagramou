@@ -17,7 +17,7 @@ async function exemplo(a1, a2, a3, a4, a5, a6,database) {
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
   const palavras = [a1, a2, a3, a4, a5, a6];
-  const prompt = `Dê um sinônimo de cada uma dessas palavras, em duas únicas palavra para cada, na mesma ordem, separadas por vírgula, nunca repetindo ele mesmo, sendo um sinônimo fácil em comum: ${palavras.join(", ")}`;
+  const prompt = `Dê um sinônimo de cada uma dessas palavras, em duas únicas palavra para cada, na mesma ordem, separadas por vírgula, nunca repetindo ele mesmo, sendo um sinônimo fácil em comum, se vir algo muito antigo ou inutilizado, refiltre: ${palavras.join(", ")}`;
   
   try {
     const result = await model.generateContent(prompt);
