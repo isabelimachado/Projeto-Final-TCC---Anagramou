@@ -24,7 +24,12 @@ async function AcharPalavra(jsonTipo, identificador) {
     const listaExistentes = [];
     snapshot.forEach(doc => {
       const tudo = doc.data();
-      if (tudo) listaExistentes.push(tudo); 
+      if (tudo) {
+        if (tudo.palavra) listaExistentes.push(tudo.palavra);
+        for (let i = 1; i <= 6; i++) {
+          if (tudo[`anagrama${i}`]) listaExistentes.push(tudo[`anagrama${i}`]);
+        }
+      }
     });
 
     let palavraAleatoria, anagramas;

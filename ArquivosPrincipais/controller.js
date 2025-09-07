@@ -83,6 +83,15 @@ window.jogarConfetes = function(){
     setTimeout(() => emote.remove(), 5000);
   }
 }
+window.retornarPalavras = function(){
+    document.getElementById("campos1").style.display = "flex";
+    document.getElementById("campos2").style.display = "flex";
+    document.getElementById("campos3").style.display = "flex";
+    document.getElementById("campos4").style.display = "flex";
+    document.getElementById("campos5").style.display = "flex";
+    document.getElementById("campos6").style.display = "flex";
+    container.style.animationName = "aoAcertar";
+}
 //////////////////// FLUXO ANAGRAMAS //////////////////////////////
 window.buscarDados = async function(tipo){
   let databasePalavra = ""
@@ -201,12 +210,23 @@ document.addEventListener("DOMContentLoaded", () => {
                 const sec = timer % 60;
                 tempo.textContent = `${min}:${sec < 10 ? '0' : ''}${sec}`;
                 timer++;
-                if (listaAchou.length === 6) {
+                if (listaAchou.length === 1) {
                   checagemJaAcertou = true;
                   const container = document.getElementById("divdobrayan");
                   container.style.animationName = "aoAcertar";
+                  document.getElementById("campos1").style.display = "none";
+                  document.getElementById("campos2").style.display = "none";
+                  document.getElementById("campos3").style.display = "none";
+                  document.getElementById("campos4").style.display = "none";
+                  document.getElementById("campos5").style.display = "none";
+                  document.getElementById("campos6").style.display = "none";
                   jogarConfetes();
-                  setTimeout(() => salvarResultado(tempo.textContent, checagemJaAcertou), 2000);
+                  const novo = document.createElement("span")
+                  container.appendChild(novo)
+                  novo.textContent = "✨PARABÉNS✨"
+                  setTimeout(() => retornarPalavras() , 2000);
+                  setTimeout(() =>   container.removeChild(novo), 2000)
+                  setTimeout(() => salvarResultado(tempo.textContent, checagemJaAcertou), 4000);
                   clearInterval(intervalo);
                    intervalo = null;
                 }
