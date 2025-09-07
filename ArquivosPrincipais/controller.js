@@ -210,7 +210,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const sec = timer % 60;
                 tempo.textContent = `${min}:${sec < 10 ? '0' : ''}${sec}`;
                 timer++;
-                if (listaAchou.length === 1) {
+                if (listaAchou.length === 6) {
                   checagemJaAcertou = true;
                   const container = document.getElementById("divdobrayan");
                   container.style.animationName = "aoAcertar";
