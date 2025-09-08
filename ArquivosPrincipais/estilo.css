@@ -748,7 +748,7 @@ body {
 
 .novoclasse{
     font-weight: bold;
-    font-size: 90px;
+    font-size: 30px;
 }
 
 
@@ -917,7 +917,7 @@ a {
 [data-theme="dark"] #campos4,
 [data-theme="dark"] #campos5,
 [data-theme="dark"] #campos6 {
-    background-color: #faeaeaf8;
+    background-color: whitesmoke;
     box-shadow:
         0 6px 12px rgba(0, 0, 0, 0.25),
         4px 4px 0px #3d3333;
@@ -937,6 +937,14 @@ a {
 [data-theme="dark"] #input-jogar,
 [data-theme="dark"] .divdapalavra {
     background-color: whitesmoke;
+}
+
+[data-theme="dark"] #ranking {
+    background-color: #1a1a1a;
+}
+
+[data-theme] #ranking h2 {
+    color: white;
 }
 
 /* variaveis globais do tema claro */

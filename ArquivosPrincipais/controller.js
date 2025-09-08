@@ -226,9 +226,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const sec = timer % 60;
         tempo.textContent = `${min}:${sec < 10 ? '0' : ''}${sec}`;
         timer++;
-        if (listaAchou.length === 6) {
+        if (listaAchou.length === 1) {
           checagemJaAcertou = true;
           const container = document.getElementById("divdobrayan");
+          if(container){
+            console.log("existe")
+          }else{
+            console.log("nao existe")
+          }
           container.style.animationName = "aoAcertar";
           document.getElementById("campos1").style.display = "none";
           document.getElementById("campos2").style.display = "none";
