@@ -183,7 +183,6 @@ window.desistir = function(){
 }
 window.InputResposta = function() {
   if(desistiu){return}
-window.InputResposta = function () {
   const inputField = document.getElementById("input-jogar");
   const input = inputField.value.toLowerCase().trim();
   const idx = listaAnagramas.indexOf(input);
@@ -542,4 +541,4 @@ window.EnviarLogin = function () {
   const email = document.getElementById("emailLogin").value;
   const senha = document.getElementById("senhaLogin").value;
   login(email, senha);
-};}
+};
