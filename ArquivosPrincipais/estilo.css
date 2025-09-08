@@ -772,7 +772,14 @@ body {
         transform: translateY(0);
     }
 }
-
+@keyframes aoDesistir {
+    from{
+        transform: rotateX(0deg);
+    }
+    to{
+         transform: rotateX(360deg);
+    }
+}
 @keyframes cair {
   to {
     transform: translateY(100vh);

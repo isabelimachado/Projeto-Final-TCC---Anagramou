@@ -21,6 +21,9 @@ const auth = getAuth(app)
 const provider = new GoogleAuthProvider();
 
 let checagemJaAcertou = null;
+let desistiu = false
+let usuario = null;
+
 // GLOBAL PRA FACILITAR CHAMAR EM OUTRAS FUNÇÕES
 const palavraDoDia = document.getElementById("palavraDoDia");
 const anagrama1 = document.getElementById("p1");
@@ -30,7 +33,6 @@ const anagrama4 = document.getElementById("p4");
 const anagrama5 = document.getElementById("p5");
 const anagrama6 = document.getElementById("p6");
 const listaAnagrama = [anagrama1, anagrama2, anagrama3, anagrama4, anagrama5, anagrama6];
-let usuario = null;
 // FUNÇÕES QUE EXISTEM PRA FACILITAR TRABALHO
 window.FecharJanelaAbrirGaveta = function () {
   document.getElementById("ranking").classList.toggle("aberta");
@@ -166,7 +168,20 @@ window.MostrarPalavras = async function(pPrincipal,a1,a2,a3,a4,a5,a6,e1,e2,e3,e4
   listaAnagramas.push(a6)
   console.log(listaAnagramas)
 }
+window.desistir = function(){
+  desistiu = true;
+  for(let i = 0; i < 6 ; i++){
+    const y = document.getElementById(`campos${1 + i}`);
+    if(y.style.backgroundColor !== "rgb(13, 249, 64)"){
+      document.getElementById(`p${i + 1}`).textContent = listaAnagramas[i].toLowerCase();
+        y.style.backgroundColor = "#ff4545bf";
+        y.style.animationName = "aoDesistir"
+        y.style.boxShadow = "0 6px 12px rgba(0, 0, 0, 0.25), 4px 4px 0px #ff4545bf";
+    }
+  }
+}
 window.InputResposta = function() {
+  if(desistiu){return}
   const inputField = document.getElementById("input-jogar");
   const input = inputField.value.toLowerCase().trim();
   const idx = listaAnagramas.indexOf(input);
@@ -366,7 +381,7 @@ async function registro(email, nome, senha, tempo, pontos) {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
     const user = userCredential.user;
-    await setDoc(doc(db, "usuarios", user.uid), { nome, tempo, email});
+    await setDoc(doc(db, "usuarios", user.uid), { nome, tempo, email, pontos});
 
     mensagemErro.textContent = "Usuário registrado com sucesso!";
     mensagemErro.style.backgroundColor = "#52c41a"; // verde sucesso
@@ -504,17 +519,20 @@ window.EnviarRegistro = function () {
   const senha = document.getElementById("senhaRegistro").value;
   const tempo = document.getElementById("timeDisplay").textContent;
   const seAcertou = checagemJaAcertou;
-
-  let pontuacao = 0
-  if(listaAchou.length >= 6){
-    pontuacao = 10000
+  let total = 0
+  if(!desistiu){
+    let pontuacao = 0
+    if(listaAchou.length >= 6){
+      pontuacao = 10000
+    }else{
+      pontuacao = 0
+    }
+    const [min, sec] = tempo.split(":").map(Number)
+    const totalSegundos = min * 60 + sec
+    total = pontuacao - (totalSegundos * 10)
   }else{
-    pontuacao = 0
+    total = 0 
   }
-  const [min, sec] = tempo.split(":").map(Number)
-  const totalSegundos = min * 60 + sec
-  let total = pontuacao - (totalSegundos * 10)
-
   registro(email, nome, senha, tempo,seAcertou,total);
 };
 
