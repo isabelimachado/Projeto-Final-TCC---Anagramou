@@ -1,8 +1,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-import { getFirestore, collection, doc, getDoc, getDocs, query, where, orderBy, setDoc,onSnapshot  } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js';
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword,GoogleAuthProvider,signInWithPopup, signOut, onAuthStateChanged,setPersistence, browserSessionPersistence,inMemoryPersistence,signInWithRedirect } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js';
+import { getFirestore, collection, doc, getDoc, getDocs, query, where, orderBy, setDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js';
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, setPersistence, browserSessionPersistence, inMemoryPersistence, signInWithRedirect } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js';
 // IA GEMINI
-const API_KEY = "AIzaSyCMozEyqIb-VR62uMWtylxYpzNtTPxrzzQ"; 
+const API_KEY = "AIzaSyCMozEyqIb-VR62uMWtylxYpzNtTPxrzzQ";
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 // FUNÇÃO DA PALAVRA DO DIA//
 const firebaseConfig = {
@@ -42,36 +42,36 @@ window.fecharX = function () {
   document.getElementById('Login').classList.add('oculto');
   document.getElementById('Registro').classList.add('oculto');
 };
-window.mostrarInstrucoes = function() {
-    document.getElementById('Instrucoes').classList.remove('oculto');
+window.mostrarInstrucoes = function () {
+  document.getElementById('Instrucoes').classList.remove('oculto');
 }
-window.fecharInstrucoes = function() {
-    document.getElementById('Instrucoes').classList.add('oculto');
+window.fecharInstrucoes = function () {
+  document.getElementById('Instrucoes').classList.add('oculto');
 }
-window.fecharInstrucoes = function() {
-    document.getElementById('Instrucoes').classList.add('oculto');
+window.fecharInstrucoes = function () {
+  document.getElementById('Instrucoes').classList.add('oculto');
 };
-window.mostrarPerfil = function() {
-    document.getElementById('Login').classList.remove('oculto');
+window.mostrarPerfil = function () {
+  document.getElementById('Login').classList.remove('oculto');
 };
-window.fecharX = function() {
-    document.getElementById('Login').classList.add('oculto');
-    document.getElementById('Registro').classList.add('oculto');
+window.fecharX = function () {
+  document.getElementById('Login').classList.add('oculto');
+  document.getElementById('Registro').classList.add('oculto');
 };
-window.mostrarRegistro = function() {
-    document.getElementById('Registro').classList.remove('oculto');
-    document.getElementById('Login').classList.add('oculto');
+window.mostrarRegistro = function () {
+  document.getElementById('Registro').classList.remove('oculto');
+  document.getElementById('Login').classList.add('oculto');
 }
-window.mostrarRanking = function() {
-    document.getElementById("ranking").classList.toggle("aberta");
-    document.getElementById("divJogador").classList.toggle("aberta");
+window.mostrarRanking = function () {
+  document.getElementById("ranking").classList.toggle("aberta");
+  document.getElementById("divJogador").classList.toggle("aberta");
 }
-window.fecharGaveta = function() {
-    document.getElementById("ranking").classList.remove("aberta");
-    document.getElementById("divJogador").classList.remove("aberta");
+window.fecharGaveta = function () {
+  document.getElementById("ranking").classList.remove("aberta");
+  document.getElementById("divJogador").classList.remove("aberta");
 }
-window.jogarConfetes = function(){
-  const emotes = ["🎉","🔥","🅰️"];
+window.jogarConfetes = function () {
+  const emotes = ["🎉", "🔥", "🅰️"];
   for (let i = 0; i < 50; i++) {
     const emote = document.createElement("div");
     emote.textContent = emotes[Math.floor(Math.random() * emotes.length)];
@@ -85,42 +85,43 @@ window.jogarConfetes = function(){
     setTimeout(() => emote.remove(), 5000);
   }
 }
-window.retornarPalavras = function(){
-    document.getElementById("campos1").style.display = "flex";
-    document.getElementById("campos2").style.display = "flex";
-    document.getElementById("campos3").style.display = "flex";
-    document.getElementById("campos4").style.display = "flex";
-    document.getElementById("campos5").style.display = "flex";
-    document.getElementById("campos6").style.display = "flex";
-    container.style.animationName = "aoAcertar";
+window.retornarPalavras = function () {
+  document.getElementById("campos1").style.display = "flex";
+  document.getElementById("campos2").style.display = "flex";
+  document.getElementById("campos3").style.display = "flex";
+  document.getElementById("campos4").style.display = "flex";
+  document.getElementById("campos5").style.display = "flex";
+  document.getElementById("campos6").style.display = "flex";
+  const container = document.getElementById("divdobrayan");
+  container.style.animationName = "aoAcertar";
 }
 //////////////////// FLUXO ANAGRAMAS //////////////////////////////
-window.buscarDados = async function(tipo){
+window.buscarDados = async function (tipo) {
   let databasePalavra = ""
   let databaseExemplo = ""
-  if(tipo == 1){
+  if (tipo == 1) {
     databasePalavra = "palavraDoDiaFacil"
     databaseExemplo = "descPalavraFacil"
-  } 
-  if(tipo == 2) {
+  }
+  if (tipo == 2) {
     databasePalavra = "palavraDoDiaMedia"
     databaseExemplo = "descPalavraMedia"
   }
-  if(tipo == 3) {
+  if (tipo == 3) {
     databasePalavra = "palavraDoDiaDificil"
     databaseExemplo = "descPalavraDificil"
-  }    
+  }
   const hoje = new Date().toISOString().split("T")[0];
   const exemplosDocRef = doc(db, databaseExemplo, hoje);
   const palavrasDocRef = doc(db, databasePalavra, hoje);
-  try{
-  const snapshotExemplos = await getDoc(exemplosDocRef)
-  const snapshotPalavras = await getDoc(palavrasDocRef)
+  try {
+    const snapshotExemplos = await getDoc(exemplosDocRef)
+    const snapshotPalavras = await getDoc(palavrasDocRef)
 
- if(!snapshotExemplos.exists() && !snapshotPalavras.exists() ){
-   alert("Favor atualizar!");
-   return
-  }
+    if (!snapshotExemplos.exists() && !snapshotPalavras.exists()) {
+      alert("Favor atualizar!");
+      return
+    }
     const exemplosData = snapshotExemplos.data();
 
     const exemplo1 = exemplosData.resumo1;
@@ -130,7 +131,7 @@ window.buscarDados = async function(tipo){
     const exemplo5 = exemplosData.resumo5;
     const exemplo6 = exemplosData.resumo6;
 
-    const exemplosPalavras= snapshotPalavras.data();
+    const exemplosPalavras = snapshotPalavras.data();
 
     const palavraPrincipal = exemplosPalavras.palavra;
     const anagrama1 = exemplosPalavras.anagrama1;
@@ -140,18 +141,18 @@ window.buscarDados = async function(tipo){
     const anagrama5 = exemplosPalavras.anagrama5;
     const anagrama6 = exemplosPalavras.anagrama6;
 
-  console.log(palavraPrincipal,exemplo1,exemplo2,exemplo3,exemplo4,exemplo5,exemplo6)
-  console.log(anagrama1,anagrama2,anagrama3,anagrama4,anagrama5,anagrama6)
-  MostrarPalavras(palavraPrincipal,anagrama1,anagrama2,anagrama3,anagrama4,anagrama5,anagrama6,exemplo1,exemplo2,exemplo3,exemplo4,exemplo5,exemplo6)
-}catch(err){
-  console.log("erro ao pegar anagramas e seus sinonimos")
-  return ;
-}
+    console.log(palavraPrincipal, exemplo1, exemplo2, exemplo3, exemplo4, exemplo5, exemplo6)
+    console.log(anagrama1, anagrama2, anagrama3, anagrama4, anagrama5, anagrama6)
+    MostrarPalavras(palavraPrincipal, anagrama1, anagrama2, anagrama3, anagrama4, anagrama5, anagrama6, exemplo1, exemplo2, exemplo3, exemplo4, exemplo5, exemplo6)
+  } catch (err) {
+    console.log("erro ao pegar anagramas e seus sinonimos")
+    return;
+  }
 }
 
 let listaAnagramas = [];
 let listaAchou = [];
-window.MostrarPalavras = async function(pPrincipal,a1,a2,a3,a4,a5,a6,e1,e2,e3,e4,e5,e6){
+window.MostrarPalavras = async function (pPrincipal, a1, a2, a3, a4, a5, a6, e1, e2, e3, e4, e5, e6) {
   palavraDoDia.textContent = pPrincipal.toUpperCase();
   anagrama1.textContent = e1.toLowerCase()
   anagrama2.textContent = e2.toLowerCase()
@@ -182,14 +183,15 @@ window.desistir = function(){
 }
 window.InputResposta = function() {
   if(desistiu){return}
+window.InputResposta = function () {
   const inputField = document.getElementById("input-jogar");
   const input = inputField.value.toLowerCase().trim();
   const idx = listaAnagramas.indexOf(input);
 
-  if (idx !== -1) { 
+  if (idx !== -1) {
     if (!listaAchou.includes(input)) {
       listaAchou.push(input);
-      const pos = idx + 1; 
+      const pos = idx + 1;
       const x = document.getElementById(`p${pos}`);
       const y = document.getElementById(`campos${pos}`);
       y.style.backgroundColor = "#0df940ff"
@@ -206,53 +208,54 @@ window.InputResposta = function() {
   inputField.value = "";
 };
 document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("input-jogar").addEventListener("keydown", function(e) {
+  document.getElementById("input-jogar").addEventListener("keydown", function (e) {
     if (e.key === "Enter") {
       e.preventDefault();
       InputResposta();
     }
   });
 });
-document.addEventListener("DOMContentLoaded", () => { 
-    const input = document.getElementById("input-jogar");
-    const tempo = document.getElementById("timeDisplay");
-    let intervalo = null;
-    let timer = 0;
-    input.addEventListener("focus", () => {
-        if (!intervalo) {
-            intervalo = setInterval(() => {
-                const min = Math.floor(timer / 60);
-                const sec = timer % 60;
-                tempo.textContent = `${min}:${sec < 10 ? '0' : ''}${sec}`;
-                timer++;
-                if (listaAchou.length === 6) {
-                  checagemJaAcertou = true;
-                  const container = document.getElementById("divdobrayan");
-                  container.style.animationName = "aoAcertar";
-                  document.getElementById("campos1").style.display = "none";
-                  document.getElementById("campos2").style.display = "none";
-                  document.getElementById("campos3").style.display = "none";
-                  document.getElementById("campos4").style.display = "none";
-                  document.getElementById("campos5").style.display = "none";
-                  document.getElementById("campos6").style.display = "none";
-                  jogarConfetes();
-                  const novo = document.createElement("span")
-                  container.appendChild(novo)
-                  novo.textContent = "✨PARABÉNS✨"
-                  setTimeout(() => retornarPalavras() , 2000);
-                  setTimeout(() =>   container.removeChild(novo), 2000)
-                  setTimeout(() => salvarResultado(tempo.textContent, checagemJaAcertou), 4000);
-                  clearInterval(intervalo);
-                   intervalo = null;
-                }
-            }, 1000);
+document.addEventListener("DOMContentLoaded", () => {
+  const input = document.getElementById("input-jogar");
+  const tempo = document.getElementById("timeDisplay");
+  let intervalo = null;
+  let timer = 0;
+  input.addEventListener("focus", () => {
+    if (!intervalo) {
+      intervalo = setInterval(() => {
+        const min = Math.floor(timer / 60);
+        const sec = timer % 60;
+        tempo.textContent = `${min}:${sec < 10 ? '0' : ''}${sec}`;
+        timer++;
+        if (listaAchou.length === 6) {
+          checagemJaAcertou = true;
+          const container = document.getElementById("divdobrayan");
+          container.style.animationName = "aoAcertar";
+          document.getElementById("campos1").style.display = "none";
+          document.getElementById("campos2").style.display = "none";
+          document.getElementById("campos3").style.display = "none";
+          document.getElementById("campos4").style.display = "none";
+          document.getElementById("campos5").style.display = "none";
+          document.getElementById("campos6").style.display = "none";
+          jogarConfetes();
+          const novo = document.createElement("span")
+          container.appendChild(novo)
+          novo.classList.add("novoclasse");
+          novo.textContent = "✨PARABÉNS✨"
+          setTimeout(() => retornarPalavras(), 2000);
+          setTimeout(() => container.removeChild(novo), 2000)
+          setTimeout(() => salvarResultado(tempo.textContent, checagemJaAcertou), 4000);
+          clearInterval(intervalo);
+          intervalo = null;
         }
-    });
+      }, 1000);
+    }
+  });
 });
 ///////////////////////////////////////////////////////////////////////
 window.MostrarDados = async function (id) {
   let colecao = ""
-  switch(id){
+  switch (id) {
     case 1:
       colecao = "pontosFacil"
       break;
@@ -265,7 +268,7 @@ window.MostrarDados = async function (id) {
   }
   try {
     const usuariosRef = collection(db, "usuarios");
-    const q = query(usuariosRef, orderBy(colecao, "asc")); 
+    const q = query(usuariosRef, orderBy(colecao, "asc"));
     const querySnapshot = await getDocs(q);
     let posicao = 1; //variavel pra mostra posicao do jogador
 
@@ -277,11 +280,11 @@ window.MostrarDados = async function (id) {
 
       const posicaoSpan = document.createElement("span");
       posicaoSpan.className = "jogador-posicao"; //span pra mostra a posicao 
-      
+
       if (posicao === 1) posicaoSpan.classList.add("primeiro"); //se tiver na posicao 1 vai adicionar na classe 1 e assim por diante
       else if (posicao === 2) posicaoSpan.classList.add("segundo");
       else if (posicao === 3) posicaoSpan.classList.add("terceiro");
-      
+
       posicaoSpan.textContent = posicao; //coloca o conteudo da posicao dentro do span
       //aqui eh so informaçoes do jogador: tempo posicao e ome
       const infoDiv = document.createElement("div");
@@ -298,8 +301,8 @@ window.MostrarDados = async function (id) {
       containerFoto.style.width = "125px";
       containerFoto.style.height = "100px";
       containerFoto.style.borderRadius = "60px"
-      containerFoto.style.position = "absolute";  
-      containerFoto.style.right = "2px"; 
+      containerFoto.style.position = "absolute";
+      containerFoto.style.right = "2px";
 
       const imagensAleatorias = ["imagensAleatorias/gatodandojoia.jpeg", "imagensAleatorias/imagempadrao.webp", "imagensAleatorias/sillycat.webp"]
       const fotoURL = infos.foto || imagensAleatorias[Math.floor(Math.random() * imagensAleatorias.length)];
@@ -309,7 +312,7 @@ window.MostrarDados = async function (id) {
 
       infoDiv.appendChild(pNome);
       infoDiv.appendChild(pTempo);
-      
+
       divPlayer.appendChild(posicaoSpan);
       divPlayer.appendChild(infoDiv);
       divPlayer.appendChild(containerFoto)
@@ -322,7 +325,7 @@ window.MostrarDados = async function (id) {
   } catch (err) {
     console.error("Achei nada!!", err);
   }
-} 
+}
 
 async function criarProprioPlacar(email) {
   try {
@@ -382,7 +385,6 @@ async function registro(email, nome, senha, tempo, pontos) {
     const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
     const user = userCredential.user;
     await setDoc(doc(db, "usuarios", user.uid), { nome, tempo, email, pontos});
-
     mensagemErro.textContent = "Usuário registrado com sucesso!";
     mensagemErro.style.backgroundColor = "#52c41a"; // verde sucesso
     mensagemErro.classList.add("ativo");
@@ -437,22 +439,22 @@ async function login(email, senha) {
   }
 }
 
-window.LoginGoogle = async function(){
+window.LoginGoogle = async function () {
   auth.languageCode = 'pt';
-   try {
+  try {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
 
     console.log("Nome:", user.displayName);
     console.log("Email:", user.email);
     console.log("Foto:", user.photoURL);
-    
+
     const docRef = doc(db, "usuarios", user.uid);
     let docSnap = await getDoc(docRef);
     let dados;
 
-    if(!docSnap.exists()){
-      await setDoc(docRef,{
+    if (!docSnap.exists()) {
+      await setDoc(docRef, {
         nome: user.displayName,
         email: user.email,
         foto: user.photoURL,
@@ -460,12 +462,12 @@ window.LoginGoogle = async function(){
       });
       docSnap = await getDoc(docRef)
     }
-  
+
     dados = docSnap.data();
-    criarProprioPlacar(user.email); 
-    fecharX();                        
+    criarProprioPlacar(user.email);
+    fecharX();
     FecharJanelaAbrirGaveta();
-    alert("Bem vindo!,"+user.displayName)
+    alert("Bem vindo!," + user.displayName)
     return dados;
 
   } catch (err) {
@@ -474,7 +476,7 @@ window.LoginGoogle = async function(){
   }
 }
 
-function sair(){
+function sair() {
   signOut(auth).then(() => {
     window.location.reload();
   })
@@ -491,18 +493,18 @@ auth.onAuthStateChanged(async (user) => {
   }
 });
 
-async function salvarResultado(guardarTempo,JaAcertou){
+async function salvarResultado(guardarTempo, JaAcertou) {
   if (!usuario) {
     console.log("Chamando janela pra registro!");
     mostrarPerfil();
     return;
   }
-  const ref = doc(db, "usuarios",usuario.uid);
+  const ref = doc(db, "usuarios", usuario.uid);
   try {
     await setDoc(ref, {
       tempo: guardarTempo,
-      jaAcertouHoje : JaAcertou
-    }, {merge: true});
+      jaAcertouHoje: JaAcertou
+    }, { merge: true });
     console.log("Atualizado!");
   } catch (err) {
     console.error("Erro ao atualizar:", err);
@@ -540,4 +542,4 @@ window.EnviarLogin = function () {
   const email = document.getElementById("emailLogin").value;
   const senha = document.getElementById("senhaLogin").value;
   login(email, senha);
-};
+};}
