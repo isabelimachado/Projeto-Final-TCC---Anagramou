@@ -223,6 +223,7 @@ document.addEventListener("DOMContentLoaded", () => {
                   jogarConfetes();
                   const novo = document.createElement("span")
                   container.appendChild(novo)
+                  novo.classList.add("novoclasse");
                   novo.textContent = "✨PARABÉNS✨"
                   setTimeout(() => retornarPalavras() , 2000);
                   setTimeout(() =>   container.removeChild(novo), 2000)
