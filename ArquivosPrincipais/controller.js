@@ -234,7 +234,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const sec = timer % 60;
         tempo.textContent = `${min}:${sec < 10 ? '0' : ''}${sec}`;
         timer++;
-        if (listaAchou.length === 6) {
+        if (listaAchou.length === 6  ||  desistiu) {
           checagemJaAcertou = true;
           let container = document.getElementById("divdobrayan");
           if(container){
@@ -399,14 +399,42 @@ export function errorFirebase(code) {
   }
 }
 ///////////// AUTENTICAÇÃO//////////////
-async function registro(email, nome, senha, tempo, pontos) {
+/* email, nome, senha, tempo,seAcertou,totalPontos,1 */
+async function registro(email, nome, senha, tempo, seAcertou, totalPontos,id) {     
   const mensagemErro = document.getElementById("mensagemErroRegistro");
   mensagemErro.textContent = "";
   mensagemErro.classList.remove("ativo");
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
     const user = userCredential.user;
-    await setDoc(doc(db, "usuarios", user.uid), { nome, tempo, email, pontos});
+    if(id === 1){
+      await setDoc(doc(db, "usuarios", user.uid), { 
+      nome : nome ,
+      tempo : tempo,
+      email : email,
+      seAcertou: seAcertou,
+      pontosFaceis : totalPontos
+      });      
+    }
+    if(id === 2){
+      await setDoc(doc(db, "usuarios", user.uid), { 
+      nome : nome ,
+      tempo : tempo,
+      email : email,
+      seAcertou: seAcertou,
+      pontosMedios : totalPontos
+      });      
+    }
+    if(id === 3){
+      await setDoc(doc(db, "usuarios", user.uid), { 
+      nome : nome ,
+      tempo : tempo,
+      email : email,
+      seAcertou: seAcertou,
+      pontosDificies : totalPontos
+      });      
+    }
+
     mensagemErro.textContent = "Usuário registrado com sucesso!";
     mensagemErro.style.backgroundColor = "#52c41a"; // verde sucesso
     mensagemErro.classList.add("ativo");
@@ -497,13 +525,11 @@ window.LoginGoogle = async function () {
     throw err;
   }
 }
-
 function sair() {
   signOut(auth).then(() => {
     window.location.reload();
   })
 }
-
 auth.onAuthStateChanged(async (user) => {
   usuario = user;
   console.log(user);
@@ -537,27 +563,25 @@ window.addEventListener("beforeunload", () => {
   signOut(auth);
 });
 
-window.EnviarRegistro = function () {
+window.EnviarRegistro = function (id) {
   const email = document.getElementById("emailRegistro").value;
   const nome = document.getElementById("nomeRegistro").value;
   const senha = document.getElementById("senhaRegistro").value;
   const tempo = document.getElementById("timeDisplay").textContent;
   const seAcertou = checagemJaAcertou;
-  let total = 0
-  if(!desistiu){
-    let pontuacao = 0
-    if(listaAchou.length >= 6){
-      pontuacao = 10000
-    }else{
-      pontuacao = 0
-    }
-    const [min, sec] = tempo.split(":").map(Number)
-    const totalSegundos = min * 60 + sec
-    total = pontuacao - (totalSegundos * 10)
+  let totalPontos = 0
+  const [min, sec] = tempo.split(":").map(Number)
+  const totalSegundos = min * 60 + sec
+  totalPontos = totalSegundos * 2
+  const auxPontos = totalPontos
+  if(!desistiu && listaAchou.length === 6){
+    totalPontos = auxPontos * listaAchou.length; 
+  }else if(desistiu && listaAchou.length >=1){
+    totalPontos = auxPontos * listaAchou.length;
   }else{
-    total = 0 
+    console.log("Desistiu e não colocou nada!")
   }
-  registro(email, nome, senha, tempo,seAcertou,total);
+  registro(email, nome, senha, tempo,seAcertou,totalPontos,id);
 };
 
 window.EnviarLogin = function () {
@@ -567,20 +591,16 @@ window.EnviarLogin = function () {
 };
 window.dica = function(){
   let lista = [1, 2, 3, 4, 5, 6];
-
   let camposVazios = lista.filter(i => {
     const elementoAleatorio = document.getElementById(`p${i}`);
     return elementoAleatorio && elementoAleatorio.textContent === "";
   });
-
   if (camposVazios.length === 0) {
     alert("As dicas já foram usadas!");
     return;
   }
-
   const randomIndice = camposVazios[Math.floor(Math.random() * camposVazios.length)];
   const campo = document.getElementById(`p${randomIndice}`);
-
   campo.textContent = listaSinonimos[randomIndice - 1].toLowerCase();
   campo.style.animationName = "aoAcertar"
   console.log(randomIndice)
