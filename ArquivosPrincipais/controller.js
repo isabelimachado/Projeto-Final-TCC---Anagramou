@@ -20,6 +20,10 @@ const db = getFirestore(app);
 const auth = getAuth(app)
 const provider = new GoogleAuthProvider();
 
+let listaSinonimos =[];
+let listaAnagramas = [];
+let listaAchou = [];
+
 let checagemJaAcertou = null;
 let desistiu = false
 let usuario = null;
@@ -32,7 +36,6 @@ const anagrama3 = document.getElementById("p3");
 const anagrama4 = document.getElementById("p4");
 const anagrama5 = document.getElementById("p5");
 const anagrama6 = document.getElementById("p6");
-const listaAnagrama = [anagrama1, anagrama2, anagrama3, anagrama4, anagrama5, anagrama6];
 // FUNÇÕES QUE EXISTEM PRA FACILITAR TRABALHO
 window.FecharJanelaAbrirGaveta = function () {
   document.getElementById("ranking").classList.toggle("aberta");
@@ -71,8 +74,8 @@ window.fecharGaveta = function () {
   document.getElementById("divJogador").classList.remove("aberta");
 }
 window.jogarConfetes = function () {
-  const emotes = ["🎉", "🔥", "🅰️"];
-  for (let i = 0; i < 50; i++) {
+  const emotes = ["🎉", "🏆", "🎊"];
+  for (let i = 0; i < 75; i++) {
     const emote = document.createElement("div");
     emote.textContent = emotes[Math.floor(Math.random() * emotes.length)];
     emote.style.position = "fixed";
@@ -149,17 +152,21 @@ window.buscarDados = async function (tipo) {
     return;
   }
 }
-
-let listaAnagramas = [];
-let listaAchou = [];
 window.MostrarPalavras = async function (pPrincipal, a1, a2, a3, a4, a5, a6, e1, e2, e3, e4, e5, e6) {
   palavraDoDia.textContent = pPrincipal.toUpperCase();
-  anagrama1.textContent = e1.toLowerCase()
+/*   anagrama1.textContent = e1.toLowerCase()
   anagrama2.textContent = e2.toLowerCase()
   anagrama3.textContent = e3.toLowerCase()
   anagrama4.textContent = e4.toLowerCase()
   anagrama5.textContent = e5.toLowerCase()
-  anagrama6.textContent = e6.toLowerCase()
+  anagrama6.textContent = e6.toLowerCase() */
+  
+  listaSinonimos.push(e1)
+  listaSinonimos.push(e2)
+  listaSinonimos.push(e3)
+  listaSinonimos.push(e4)
+  listaSinonimos.push(e5)
+  listaSinonimos.push(e6)
 
   listaAnagramas.push(a1)
   listaAnagramas.push(a2)
@@ -167,7 +174,8 @@ window.MostrarPalavras = async function (pPrincipal, a1, a2, a3, a4, a5, a6, e1,
   listaAnagramas.push(a4)
   listaAnagramas.push(a5)
   listaAnagramas.push(a6)
-  console.log(listaAnagramas)
+  console.log("Lista dos anagramas:"+listaAnagramas)
+  console.log("Lista dos sinonimos:"+listaSinonimos)
 }
 window.desistir = function(){
   desistiu = true;
@@ -226,9 +234,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const sec = timer % 60;
         tempo.textContent = `${min}:${sec < 10 ? '0' : ''}${sec}`;
         timer++;
-        if (listaAchou.length === 1) {
+        if (listaAchou.length === 6) {
           checagemJaAcertou = true;
-          const container = document.getElementById("divdobrayan");
+          let container = document.getElementById("divdobrayan");
           if(container){
             console.log("existe")
           }else{
@@ -257,7 +265,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 ///////////////////////////////////////////////////////////////////////
-window.MostrarDados = async function (id) {
+window.MostrarDados = async function (id) { // função do ranking
   let colecao = ""
   switch (id) {
     case 1:
@@ -284,12 +292,22 @@ window.MostrarDados = async function (id) {
 
       const posicaoSpan = document.createElement("span");
       posicaoSpan.className = "jogador-posicao"; //span pra mostra a posicao 
-
       if (posicao === 1) posicaoSpan.classList.add("primeiro"); //se tiver na posicao 1 vai adicionar na classe 1 e assim por diante
       else if (posicao === 2) posicaoSpan.classList.add("segundo");
       else if (posicao === 3) posicaoSpan.classList.add("terceiro");
-
-      posicaoSpan.textContent = posicao; //coloca o conteudo da posicao dentro do span
+      if(posicao === 1) {
+        posicaoSpan.textContent = "🥇"
+      }
+      else if(posicao === 2) {
+        posicaoSpan.textContent = "🥈"
+      }
+      else if(posicao === 3) {
+        posicaoSpan.textContent = "🥉"
+      }else{
+        posicaoSpan.textContent = posicao;
+      }
+      console.log(posicao)
+      //coloca o conteudo da posicao dentro do span
       //aqui eh so informaçoes do jogador: tempo posicao e ome
       const infoDiv = document.createElement("div");
 
@@ -547,3 +565,24 @@ window.EnviarLogin = function () {
   const senha = document.getElementById("senhaLogin").value;
   login(email, senha);
 };
+window.dica = function(){
+  let lista = [1, 2, 3, 4, 5, 6];
+
+  let camposVazios = lista.filter(i => {
+    const elementoAleatorio = document.getElementById(`p${i}`);
+    return elementoAleatorio && elementoAleatorio.textContent === "";
+  });
+
+  if (camposVazios.length === 0) {
+    alert("As dicas já foram usadas!");
+    return;
+  }
+
+  const randomIndice = camposVazios[Math.floor(Math.random() * camposVazios.length)];
+  const campo = document.getElementById(`p${randomIndice}`);
+
+  campo.textContent = listaSinonimos[randomIndice - 1].toLowerCase();
+  campo.style.animationName = "aoAcertar"
+  console.log(randomIndice)
+  console.log(document.getElementById("p6"))
+}
