@@ -269,7 +269,7 @@ window.MostrarDados = async function (id) { // função do ranking
   let colecao = ""
   switch (id) {
     case 1:
-      colecao = "pontosFacil"
+      colecao = "pontosFaceis"
       break;
     case 2:
       colecao = "pontosMedio"
@@ -280,7 +280,7 @@ window.MostrarDados = async function (id) { // função do ranking
   }
   try {
     const usuariosRef = collection(db, "usuarios");
-    const q = query(usuariosRef, orderBy(colecao, "asc"));
+    const q = query(usuariosRef, orderBy(colecao, "desc"));
     const querySnapshot = await getDocs(q);
     let posicao = 1; //variavel pra mostra posicao do jogador
 
@@ -317,7 +317,7 @@ window.MostrarDados = async function (id) { // função do ranking
 
       const pTempo = document.createElement("p");
       pTempo.className = "jogador-tempo";
-      pTempo.textContent = infos.tempo;
+      pTempo.textContent = "Pontos: "+infos[colecao];
 
       const containerFoto = document.createElement("div");
       containerFoto.style.width = "125px";
@@ -572,12 +572,11 @@ window.EnviarRegistro = function (id) {
   let totalPontos = 0
   const [min, sec] = tempo.split(":").map(Number)
   const totalSegundos = min * 60 + sec
-  totalPontos = totalSegundos * 2
   const auxPontos = totalPontos
   if(!desistiu && listaAchou.length === 6){
-    totalPontos = auxPontos * listaAchou.length; 
+    totalPontos = auxPontos * (listaAchou.length * 1000) - (totalSegundos * 0.25); 
   }else if(desistiu && listaAchou.length >=1){
-    totalPontos = auxPontos * listaAchou.length;
+    totalPontos = auxPontos * (listaAchou.length * 1000) - (totalSegundos * 0.25);
   }else{
     console.log("Desistiu e não colocou nada!")
   }
