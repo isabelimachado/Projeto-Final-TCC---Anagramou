@@ -287,10 +287,10 @@ window.MostrarDados = async function (id) { // função do ranking
       colecao = "pontosFaceis"
       break;
     case 2:
-      colecao = "pontosMedio"
+      colecao = "pontosMedios"
       break;
     case 3:
-      colecao = "pontosDificil"
+      colecao = "pontosDificies"
       break;
   }
   try {
@@ -621,7 +621,7 @@ window.EnviarRegistro = function (id) {
   const totalSegundos = min * 60 + sec
   const auxPontos = totalPontos
   if(!desistiu && listaAchou.length === 6){
-    totalPontos = auxPontos * (listaAchou.length * 1000) - (totalSegundos * 0.25); 
+    totalPontos = listaAchou.length * 1000 - (totalSegundos * 0.25); 
   }else if(desistiu && listaAchou.length >=1){
     totalPontos = auxPontos * (listaAchou.length * 1000) - (totalSegundos * 0.25);
   }else{
