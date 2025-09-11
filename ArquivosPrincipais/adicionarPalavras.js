@@ -60,6 +60,9 @@ async function AcharPalavra(jsonTipo, identificador) {
     const docRef = db.collection(colecao).doc(hoje); 
     const docSnap = await docRef.get();
 
+    const docRefUsuario = db.collection("usuarios");
+    const docSnapUsuario = await docRefUsuario.get();
+    
     if (!docSnap.exists) {
       await docRef.set({
         palavra: palavraAleatoria,
@@ -70,6 +73,14 @@ async function AcharPalavra(jsonTipo, identificador) {
         anagrama5: anagramas[4] || "",
         anagrama6: anagramas[5] || ""
       });
+      if(docSnapUsuario.exists){
+       await docRefUsuario.set({
+        pontosFaceis:0,
+        pontosMedios:0,
+        pontosDificies:0,
+        seAcertou : false
+       },{ merge: true });
+      }
       console.log("consegui!");
     } else {
       console.log("existe uma palavra pro dia de hoje!");

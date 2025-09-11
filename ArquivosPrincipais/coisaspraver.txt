@@ -2,13 +2,6 @@
 
 9- melhora o estilo em geral -> segundo a cris
 
-11- pontuação -> adicionar isso , sla se cada questao q ganha, 10 pontos, se errar diminui 5 por exemplo, se pede dica diminui esses pontos 
--> esse negocio de pontuação nao faz muito sentido pra mim talvez, mas eu acho que pra simplificar o ranking seria legal colocar um sistema de pontos pq senão vou ter que fazer um campo pra cada tempo *noss nao*(facil,medio,dificil) e é mt ruim pra ser sincero, então vou considerar a ideia da mari 
-qual é a ideia da mari??????????????????????
-
-
-12- o brayan vai cria um input novo -> q nem no termo -> to considerando descartar essa ideia (entao fodase)
-
 lá no final qnd for apresenta pra banca, apresentar a nossa motivação pro projeto e td mais -> talvez fazer um slidezinho? -> claro
 
 13- se sobrar muitooooo tempo altera os nomes das classes pra fica bonitinho e organizar o style(vai ser dificilkkkk) -> mt trampo no back ta ;-; -> puts vdd, mas so coisa q nao envolva o back ent
@@ -22,3 +15,4 @@ lá no final qnd for apresenta pra banca, apresentar a nossa motivação pro pro
 coisas arrumadas:
 
 IA do gemini pega mas as vezes retorna uns negocios nd a ver mas ok     ;_;
+z

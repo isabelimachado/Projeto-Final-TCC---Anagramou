@@ -27,7 +27,7 @@ let listaAchou = [];
 let checagemJaAcertou = null;
 let desistiu = false
 let usuario = null;
-
+let pontos = ""
 // GLOBAL PRA FACILITAR CHAMAR EM OUTRAS FUNÇÕES
 const palavraDoDia = document.getElementById("palavraDoDia");
 const anagrama1 = document.getElementById("p1");
@@ -36,6 +36,20 @@ const anagrama3 = document.getElementById("p3");
 const anagrama4 = document.getElementById("p4");
 const anagrama5 = document.getElementById("p5");
 const anagrama6 = document.getElementById("p6");
+
+if (window.location.pathname === "/index.html") {
+  console.log("index.");
+  pontos = "pontosFaceis"
+}
+if (window.location.pathname === "/anagramaMedio.html") {
+  console.log("medio.");
+  pontos = "pontosMedios"
+}
+if (window.location.pathname === "/anagramaDificil.html") {
+  console.log("dificil.");
+  pontos = "pontosDificies"
+}
+
 // FUNÇÕES QUE EXISTEM PRA FACILITAR TRABALHO
 window.FecharJanelaAbrirGaveta = function () {
   document.getElementById("ranking").classList.toggle("aberta");
@@ -143,9 +157,6 @@ window.buscarDados = async function (tipo) {
     const anagrama4 = exemplosPalavras.anagrama4;
     const anagrama5 = exemplosPalavras.anagrama5;
     const anagrama6 = exemplosPalavras.anagrama6;
-
-    console.log(palavraPrincipal, exemplo1, exemplo2, exemplo3, exemplo4, exemplo5, exemplo6)
-    console.log(anagrama1, anagrama2, anagrama3, anagrama4, anagrama5, anagrama6)
     MostrarPalavras(palavraPrincipal, anagrama1, anagrama2, anagrama3, anagrama4, anagrama5, anagrama6, exemplo1, exemplo2, exemplo3, exemplo4, exemplo5, exemplo6)
   } catch (err) {
     console.log("erro ao pegar anagramas e seus sinonimos")
@@ -190,7 +201,11 @@ window.desistir = function(){
   }
 }
 window.InputResposta = function() {
-  if(desistiu){return}
+  if(desistiu){
+    document.getElementById("input-jogar").addEventListener("mousedown", function(e) {
+      this.disabled = true;
+    });
+    return}
   const inputField = document.getElementById("input-jogar");
   const input = inputField.value.toLowerCase().trim();
   const idx = listaAnagramas.indexOf(input);
@@ -234,7 +249,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const sec = timer % 60;
         tempo.textContent = `${min}:${sec < 10 ? '0' : ''}${sec}`;
         timer++;
-        if (listaAchou.length === 6  ||  desistiu) {
+        if (listaAchou.length === 6) {
           checagemJaAcertou = true;
           let container = document.getElementById("divdobrayan");
           if(container){
@@ -256,7 +271,7 @@ document.addEventListener("DOMContentLoaded", () => {
           novo.textContent = "✨PARABÉNS✨"
           setTimeout(() => retornarPalavras(), 2000);
           setTimeout(() => container.removeChild(novo), 2000)
-          setTimeout(() => salvarResultado(tempo.textContent, checagemJaAcertou), 4000);
+          setTimeout(() => salvarResultado(tempo.textContent, checagemJaAcertou, pontos), 4000);
           clearInterval(intervalo);
           intervalo = null;
         }
@@ -306,7 +321,6 @@ window.MostrarDados = async function (id) { // função do ranking
       }else{
         posicaoSpan.textContent = posicao;
       }
-      console.log(posicao)
       //coloca o conteudo da posicao dentro do span
       //aqui eh so informaçoes do jogador: tempo posicao e ome
       const infoDiv = document.createElement("div");
@@ -359,7 +373,7 @@ async function criarProprioPlacar(email) {
       const tempo = dados.tempo;
       const divPlayer = document.createElement("div");
       divPlayer.id = "divJogador";
-      divPlayer.style.backgroundColor = "#15ff00ff";
+      divPlayer.style.backgroundColor = "#fff";
 
       const pNome = document.createElement("p");
       pNome.textContent = "SEU RECORDE:\n" + nome;
@@ -508,7 +522,8 @@ window.LoginGoogle = async function () {
         nome: user.displayName,
         email: user.email,
         foto: user.photoURL,
-        tempo: document.getElementById("timeDisplay").textContent
+        tempo: document.getElementById("timeDisplay").textContent,
+        seAcertou: checagemJaAcertou
       });
       docSnap = await getDoc(docRef)
     }
@@ -541,19 +556,51 @@ auth.onAuthStateChanged(async (user) => {
   }
 });
 
-async function salvarResultado(guardarTempo, JaAcertou) {
+async function salvarResultado(guardarTempo, JaAcertou, id) {
   if (!usuario) {
     console.log("Chamando janela pra registro!");
     mostrarPerfil();
     return;
   }
+  
+  let totalPontos = 0
+  const tempo = document.getElementById("timeDisplay").textContent;
+  const [min, sec] = tempo.split(":").map(Number)
+  const totalSegundos = min * 60 + sec
+  const auxPontos = totalPontos
+  if(!desistiu && listaAchou.length === 6){
+    totalPontos = auxPontos * (listaAchou.length * 1000) - (totalSegundos * 0.25); 
+  }else if(desistiu && listaAchou.length >=1){
+    totalPontos = auxPontos * (listaAchou.length * 1000) - (totalSegundos * 0.25);
+  }else{
+    console.log("Desistiu e não colocou nada!")
+  }
   const ref = doc(db, "usuarios", usuario.uid);
   try {
-    await setDoc(ref, {
+    if(id === "pontosFaceis"){
+       await setDoc(ref, {
       tempo: guardarTempo,
-      jaAcertouHoje: JaAcertou
-    }, { merge: true });
-    console.log("Atualizado!");
+      jaAcertouHoje: JaAcertou,
+      pontosFaceis: totalPontos
+      }, { merge: true });
+      console.log("Atualizado!");
+    }
+    if(id === "pontosMedios"){
+      await setDoc(ref, {
+     tempo: guardarTempo,
+     jaAcertouHoje: JaAcertou,
+     pontosFaceis: totalPontos
+     }, { merge: true });
+     console.log("Atualizado!");
+   }
+   if(id === "pontosDificies"){
+    await setDoc(ref, {
+   tempo: guardarTempo,
+   jaAcertouHoje: JaAcertou,
+   pontosFaceis: totalPontos
+   }, { merge: true });
+   console.log("Atualizado!");
+ }
   } catch (err) {
     console.error("Erro ao atualizar:", err);
   }
@@ -602,6 +649,4 @@ window.dica = function(){
   const campo = document.getElementById(`p${randomIndice}`);
   campo.textContent = listaSinonimos[randomIndice - 1].toLowerCase();
   campo.style.animationName = "aoAcertar"
-  console.log(randomIndice)
-  console.log(document.getElementById("p6"))
 }
