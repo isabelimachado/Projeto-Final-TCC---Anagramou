@@ -20,7 +20,7 @@ const db = getFirestore(app);
 const auth = getAuth(app)
 const provider = new GoogleAuthProvider();
 
-let listaSinonimos =[];
+let listaSinonimos = [];
 let listaAnagramas = [];
 let listaAchou = [];
 
@@ -28,6 +28,7 @@ let checagemJaAcertou = null;
 let desistiu = false
 let usuario = null;
 let pontos = ""
+let placarJaCriado = false;
 // GLOBAL PRA FACILITAR CHAMAR EM OUTRAS FUNÇÕES
 const palavraDoDia = document.getElementById("palavraDoDia");
 const anagrama1 = document.getElementById("p1");
@@ -165,13 +166,13 @@ window.buscarDados = async function (tipo) {
 }
 window.MostrarPalavras = async function (pPrincipal, a1, a2, a3, a4, a5, a6, e1, e2, e3, e4, e5, e6) {
   palavraDoDia.textContent = pPrincipal.toUpperCase();
-/*   anagrama1.textContent = e1.toLowerCase()
-  anagrama2.textContent = e2.toLowerCase()
-  anagrama3.textContent = e3.toLowerCase()
-  anagrama4.textContent = e4.toLowerCase()
-  anagrama5.textContent = e5.toLowerCase()
-  anagrama6.textContent = e6.toLowerCase() */
-  
+  /*   anagrama1.textContent = e1.toLowerCase()
+    anagrama2.textContent = e2.toLowerCase()
+    anagrama3.textContent = e3.toLowerCase()
+    anagrama4.textContent = e4.toLowerCase()
+    anagrama5.textContent = e5.toLowerCase()
+    anagrama6.textContent = e6.toLowerCase() */
+
   listaSinonimos.push(e1)
   listaSinonimos.push(e2)
   listaSinonimos.push(e3)
@@ -185,27 +186,28 @@ window.MostrarPalavras = async function (pPrincipal, a1, a2, a3, a4, a5, a6, e1,
   listaAnagramas.push(a4)
   listaAnagramas.push(a5)
   listaAnagramas.push(a6)
-  console.log("Lista dos anagramas:"+listaAnagramas)
-  console.log("Lista dos sinonimos:"+listaSinonimos)
+  console.log("Lista dos anagramas:" + listaAnagramas)
+  console.log("Lista dos sinonimos:" + listaSinonimos)
 }
-window.desistir = function(){
+window.desistir = function () {
   desistiu = true;
-  for(let i = 0; i < 6 ; i++){
+  for (let i = 0; i < 6; i++) {
     const y = document.getElementById(`campos${1 + i}`);
-    if(y.style.backgroundColor !== "rgb(13, 249, 64)"){
+    if (y.style.backgroundColor !== "rgb(13, 249, 64)") {
       document.getElementById(`p${i + 1}`).textContent = listaAnagramas[i].toLowerCase();
-        y.style.backgroundColor = "#ff4545bf";
-        y.style.animationName = "aoDesistir"
-        y.style.boxShadow = "0 6px 12px rgba(0, 0, 0, 0.25), 4px 4px 0px #ff4545bf";
+      y.style.backgroundColor = "#ff4545bf";
+      y.style.animationName = "aoDesistir"
+      y.style.boxShadow = "0 6px 12px rgba(0, 0, 0, 0.25), 4px 4px 0px #ff4545bf";
     }
   }
 }
-window.InputResposta = function() {
-  if(desistiu){
-    document.getElementById("input-jogar").addEventListener("mousedown", function(e) {
+window.InputResposta = function () {
+  if (desistiu) {
+    document.getElementById("input-jogar").addEventListener("mousedown", function (e) {
       this.disabled = true;
     });
-    return}
+    return
+  }
   const inputField = document.getElementById("input-jogar");
   const input = inputField.value.toLowerCase().trim();
   const idx = listaAnagramas.indexOf(input);
@@ -252,9 +254,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (listaAchou.length === 6) {
           checagemJaAcertou = true;
           let container = document.getElementById("divdobrayan");
-          if(container){
+          if (container) {
             console.log("existe")
-          }else{
+          } else {
             console.log("nao existe")
           }
           container.style.animationName = "aoAcertar";
@@ -310,15 +312,15 @@ window.MostrarDados = async function (id) { // função do ranking
       if (posicao === 1) posicaoSpan.classList.add("primeiro"); //se tiver na posicao 1 vai adicionar na classe 1 e assim por diante
       else if (posicao === 2) posicaoSpan.classList.add("segundo");
       else if (posicao === 3) posicaoSpan.classList.add("terceiro");
-      if(posicao === 1) {
+      if (posicao === 1) {
         posicaoSpan.textContent = "🥇"
       }
-      else if(posicao === 2) {
+      else if (posicao === 2) {
         posicaoSpan.textContent = "🥈"
       }
-      else if(posicao === 3) {
+      else if (posicao === 3) {
         posicaoSpan.textContent = "🥉"
-      }else{
+      } else {
         posicaoSpan.textContent = posicao;
       }
       //coloca o conteudo da posicao dentro do span
@@ -331,7 +333,7 @@ window.MostrarDados = async function (id) { // função do ranking
 
       const pTempo = document.createElement("p");
       pTempo.className = "jogador-tempo";
-      pTempo.textContent = "Pontos: "+infos[colecao];
+      pTempo.textContent = "Pontos: " + infos[colecao];
 
       const containerFoto = document.createElement("div");
       containerFoto.style.width = "125px";
@@ -364,31 +366,76 @@ window.MostrarDados = async function (id) { // função do ranking
 }
 
 async function criarProprioPlacar(email) {
+  // Se já foi criado, não cria novamente
+  if (placarJaCriado) return;
+
   try {
     const pesquisa = query(collection(db, "usuarios"), where("email", "==", email));
     const snapshot = await getDocs(pesquisa);
+
+    if (snapshot.empty) {
+      console.log("Nenhum usuário encontrado com este email");
+      return;
+    }
+
     snapshot.forEach(doc => {
       const dados = doc.data();
-      const nome = dados.nome;
-      const tempo = dados.tempo;
+
+      const nome = dados.nome || "Nome não encontrado";
+      const tempo = dados.tempo || "Tempo não registrado";
+
+      // mostra a pontuação com base na página atual
+      let pontosAtual = 0;
+      if (pontos === "pontosFaceis" && dados.pontosFaceis) {
+        pontosAtual = dados.pontosFaceis;
+      } else if (pontos === "pontosMedios" && dados.pontosMedios) {
+        pontosAtual = dados.pontosMedios;
+      } else if (pontos === "pontosDificies" && dados.pontosDificies) {
+        pontosAtual = dados.pontosDificies;
+      }
+
+      const placarExistente = document.querySelector('#ranking [data-user-placar="true"]');
+      if (placarExistente) {
+        placarExistente.remove();
+      }
+
       const divPlayer = document.createElement("div");
-      divPlayer.id = "divJogador";
-      divPlayer.style.backgroundColor = "#fff";
+      divPlayer.setAttribute("data-user-placar", "true");
+      divPlayer.style.backgroundColor = "#15ff00ff";
+      divPlayer.style.padding = "10px";
+      divPlayer.style.margin = "5px 0";
+      divPlayer.style.borderRadius = "8px";
+
+      const pTitulo = document.createElement("p");
+      pTitulo.textContent = "SEU RECORDE:";
+      
+      pTitulo.style.fontWeight = "bold";
+      pTitulo.style.margin = "0 0 5px 0";
+      pNome.style.fontSize = "16px";
 
       const pNome = document.createElement("p");
-      pNome.textContent = "SEU RECORDE:\n" + nome;
-      pNome.style.whiteSpace = "pre-line";
+      pNome.textContent = `Nome: ${nome}`;
+      pNome.style.margin = "0 0 10px 0";
 
       const pTempo = document.createElement("p");
-      pTempo.textContent = tempo;
+      pTempo.textContent = `Tempo: ${tempo}`;
+      pTempo.style.margin = "0 0 5px 0";
 
-      divPlayer.appendChild(pNome);
-      divPlayer.appendChild(pTempo);
+      const pPontos = document.createElement("p");
+      pPontos.textContent = `Pontos: ${pontosAtual}`;
+      pPontos.style.margin = "0";
+
+      divPlayer.appendChild(pTitulo);  
+      divPlayer.appendChild(pNome);    
+      divPlayer.appendChild(pTempo);  
+      divPlayer.appendChild(pPontos);  
 
       document.getElementById("ranking").appendChild(divPlayer);
-    })
+
+      placarJaCriado = true;
+    });
   } catch (error) {
-    console.log("erro")
+    console.log("Erro ao criar placar próprio:", error);
   }
 }
 
@@ -414,44 +461,51 @@ export function errorFirebase(code) {
 }
 ///////////// AUTENTICAÇÃO//////////////
 /* email, nome, senha, tempo,seAcertou,totalPontos,1 */
-async function registro(email, nome, senha, tempo, seAcertou, totalPontos,id) {     
+async function registro(email, nome, senha, tempo, seAcertou, totalPontos, id) {
   const mensagemErro = document.getElementById("mensagemErroRegistro");
   mensagemErro.textContent = "";
   mensagemErro.classList.remove("ativo");
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
     const user = userCredential.user;
-    if(id === 1){
-      await setDoc(doc(db, "usuarios", user.uid), { 
-      nome : nome ,
-      tempo : tempo,
-      email : email,
-      seAcertou: seAcertou,
-      pontosFaceis : totalPontos
-      });      
+    if (id === 1) {
+      await setDoc(doc(db, "usuarios", user.uid), {
+        nome: nome,
+        tempo: tempo,
+        email: email,
+        seAcertou: seAcertou,
+        pontosFaceis: totalPontos
+      });
     }
-    if(id === 2){
-      await setDoc(doc(db, "usuarios", user.uid), { 
-      nome : nome ,
-      tempo : tempo,
-      email : email,
-      seAcertou: seAcertou,
-      pontosMedios : totalPontos
-      });      
+    if (id === 2) {
+      await setDoc(doc(db, "usuarios", user.uid), {
+        nome: nome,
+        tempo: tempo,
+        email: email,
+        seAcertou: seAcertou,
+        pontosMedios: totalPontos
+      });
     }
-    if(id === 3){
-      await setDoc(doc(db, "usuarios", user.uid), { 
-      nome : nome ,
-      tempo : tempo,
-      email : email,
-      seAcertou: seAcertou,
-      pontosDificies : totalPontos
-      });      
+    if (id === 3) {
+      await setDoc(doc(db, "usuarios", user.uid), {
+        nome: nome,
+        tempo: tempo,
+        email: email,
+        seAcertou: seAcertou,
+        pontosDificies: totalPontos
+      });
     }
 
     mensagemErro.textContent = "Usuário registrado com sucesso!";
     mensagemErro.style.backgroundColor = "#52c41a"; // verde sucesso
     mensagemErro.classList.add("ativo");
+
+    setTimeout(() => {
+      mensagemErro.classList.remove("ativo");
+      mensagemErro.textContent = "";
+      mensagemErro.style.backgroundColor = "";
+    }, 6000);
+
 
   } catch (error) {
     const msg = errorFirebase(error.code);
@@ -482,7 +536,6 @@ async function login(email, senha) {
     if (docSnap.exists()) {
       const dados = docSnap.data();
       criarProprioPlacar(email);
-      fecharX();
       FecharJanelaAbrirGaveta();
 
       mensagemErro.style.backgroundColor = "#52c41a"; // verde sucesso
@@ -491,7 +544,9 @@ async function login(email, senha) {
 
       setTimeout(() => {
         mensagemErro.classList.remove("ativo");
-      }, 3000); //tempo da mensagem sumir
+        mensagemErro.textContent = "";
+        mensagemErro.style.backgroundColor = "";
+      }, 5000);
 
       return dados;
     }
@@ -553,6 +608,8 @@ auth.onAuthStateChanged(async (user) => {
     document.getElementById("iconeEntrar").className = "fa-solid fa-arrow-right-from-bracket";
     document.getElementById("botao-iconeID").addEventListener("click", sair);
     criarProprioPlacar(user.email);
+  } else {
+    placarJaCriado = false;
   }
 });
 
@@ -562,45 +619,45 @@ async function salvarResultado(guardarTempo, JaAcertou, id) {
     mostrarPerfil();
     return;
   }
-  
+
   let totalPontos = 0
   const tempo = document.getElementById("timeDisplay").textContent;
   const [min, sec] = tempo.split(":").map(Number)
   const totalSegundos = min * 60 + sec
   const auxPontos = totalPontos
-  if(!desistiu && listaAchou.length === 6){
-    totalPontos = auxPontos * (listaAchou.length * 1000) - (totalSegundos * 0.25); 
-  }else if(desistiu && listaAchou.length >=1){
+  if (!desistiu && listaAchou.length === 6) {
     totalPontos = auxPontos * (listaAchou.length * 1000) - (totalSegundos * 0.25);
-  }else{
+  } else if (desistiu && listaAchou.length >= 1) {
+    totalPontos = auxPontos * (listaAchou.length * 1000) - (totalSegundos * 0.25);
+  } else {
     console.log("Desistiu e não colocou nada!")
   }
   const ref = doc(db, "usuarios", usuario.uid);
   try {
-    if(id === "pontosFaceis"){
-       await setDoc(ref, {
-      tempo: guardarTempo,
-      jaAcertouHoje: JaAcertou,
-      pontosFaceis: totalPontos
+    if (id === "pontosFaceis") {
+      await setDoc(ref, {
+        tempo: guardarTempo,
+        jaAcertouHoje: JaAcertou,
+        pontosFaceis: totalPontos
       }, { merge: true });
       console.log("Atualizado!");
     }
-    if(id === "pontosMedios"){
+    if (id === "pontosMedios") {
       await setDoc(ref, {
-     tempo: guardarTempo,
-     jaAcertouHoje: JaAcertou,
-     pontosFaceis: totalPontos
-     }, { merge: true });
-     console.log("Atualizado!");
-   }
-   if(id === "pontosDificies"){
-    await setDoc(ref, {
-   tempo: guardarTempo,
-   jaAcertouHoje: JaAcertou,
-   pontosFaceis: totalPontos
-   }, { merge: true });
-   console.log("Atualizado!");
- }
+        tempo: guardarTempo,
+        jaAcertouHoje: JaAcertou,
+        pontosFaceis: totalPontos
+      }, { merge: true });
+      console.log("Atualizado!");
+    }
+    if (id === "pontosDificies") {
+      await setDoc(ref, {
+        tempo: guardarTempo,
+        jaAcertouHoje: JaAcertou,
+        pontosFaceis: totalPontos
+      }, { merge: true });
+      console.log("Atualizado!");
+    }
   } catch (err) {
     console.error("Erro ao atualizar:", err);
   }
@@ -620,14 +677,14 @@ window.EnviarRegistro = function (id) {
   const [min, sec] = tempo.split(":").map(Number)
   const totalSegundos = min * 60 + sec
   const auxPontos = totalPontos
-  if(!desistiu && listaAchou.length === 6){
-    totalPontos = listaAchou.length * 1000 - (totalSegundos * 0.25); 
-  }else if(desistiu && listaAchou.length >=1){
+  if (!desistiu && listaAchou.length === 6) {
+    totalPontos = listaAchou.length * 1000 - (totalSegundos * 0.25);
+  } else if (desistiu && listaAchou.length >= 1) {
     totalPontos = auxPontos * (listaAchou.length * 1000) - (totalSegundos * 0.25);
-  }else{
+  } else {
     console.log("Desistiu e não colocou nada!")
   }
-  registro(email, nome, senha, tempo,seAcertou,totalPontos,id);
+  registro(email, nome, senha, tempo, seAcertou, totalPontos, id);
 };
 
 window.EnviarLogin = function () {
@@ -635,7 +692,7 @@ window.EnviarLogin = function () {
   const senha = document.getElementById("senhaLogin").value;
   login(email, senha);
 };
-window.dica = function(){
+window.dica = function () {
   let lista = [1, 2, 3, 4, 5, 6];
   let camposVazios = lista.filter(i => {
     const elementoAleatorio = document.getElementById(`p${i}`);
