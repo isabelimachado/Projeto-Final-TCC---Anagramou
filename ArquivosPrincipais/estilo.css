@@ -777,6 +777,20 @@ body {
         transform: translateY(0);
     }
 }
+@keyframes containerGirar{
+    from{
+        transform:rotate3d(0,0,0,0deg);
+    }to{
+        transform: rotate3d(0,0,3,360deg);
+    }
+}
+@keyframes aoPedirDica{
+    from{
+        transform: rotateY(0deg);
+    }to{
+        transform: rotateY(360deg);
+    }
+}
 @keyframes aoDesistir {
     from{
         transform: rotateX(0deg);

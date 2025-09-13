@@ -111,7 +111,8 @@ window.retornarPalavras = function () {
   document.getElementById("campos5").style.display = "flex";
   document.getElementById("campos6").style.display = "flex";
   const container = document.getElementById("divdobrayan");
-  container.style.animationName = "aoAcertar";
+  container.style.animationName = "containerGirar";
+  container.style.backgroundColor = "#e9a1e26c"
 }
 //////////////////// FLUXO ANAGRAMAS //////////////////////////////
 window.buscarDados = async function (tipo) {
@@ -251,7 +252,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const sec = timer % 60;
         tempo.textContent = `${min}:${sec < 10 ? '0' : ''}${sec}`;
         timer++;
-        if (listaAchou.length === 6) {
+        if (listaAchou.length === 6 && checagemJaAcertou == null) {
           checagemJaAcertou = true;
           let container = document.getElementById("divdobrayan");
           if (container) {
@@ -267,10 +268,12 @@ document.addEventListener("DOMContentLoaded", () => {
           document.getElementById("campos5").style.display = "none";
           document.getElementById("campos6").style.display = "none";
           jogarConfetes();
-          const novo = document.createElement("span")
+          const novo = document.createElement("img")
+          novo.style.width = "200px"
+          novo.style.height = "200px"
           container.appendChild(novo)
-          novo.classList.add("novoclasse");
-          novo.textContent = "✨PARABÉNS✨"
+         /*  novo.classList.add("novoclasse"); */
+          novo.src = "logo.ico"
           setTimeout(() => retornarPalavras(), 2000);
           setTimeout(() => container.removeChild(novo), 2000)
           setTimeout(() => salvarResultado(tempo.textContent, checagemJaAcertou, pontos), 4000);
@@ -607,8 +610,9 @@ auth.onAuthStateChanged(async (user) => {
     document.getElementById("botao-iconeID").removeAttribute("onclick");
     document.getElementById("iconeEntrar").className = "fa-solid fa-arrow-right-from-bracket";
     document.getElementById("botao-iconeID").addEventListener("click", sair);
-    criarProprioPlacar(user.email);
-  } else {
+    criarProprioPlacar(user.email);  
+  } 
+  else {
     placarJaCriado = false;
   }
 });
@@ -706,4 +710,7 @@ window.dica = function () {
   const campo = document.getElementById(`p${randomIndice}`);
   campo.textContent = listaSinonimos[randomIndice - 1].toLowerCase();
   campo.style.animationName = "aoAcertar"
+  campo.parentElement.style.backgroundColor = "#e9b8edff";
+  campo.parentElement.style.animationName = "aoPedirDica"
+  campo.parentElement.style.boxShadow = "0 6px 12px rgba(0, 0, 0, 0.25), 4px 4px 0px #e9b8edff";
 }
