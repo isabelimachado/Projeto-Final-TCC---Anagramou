@@ -779,9 +779,9 @@ body {
 }
 @keyframes containerGirar{
     from{
-        transform:rotate3d(0,0,0,0deg);
+        transform:rotateX(360deg);
     }to{
-        transform: rotate3d(0,0,3,360deg);
+        transform: rotateX(0deg);
     }
 }
 @keyframes aoPedirDica{

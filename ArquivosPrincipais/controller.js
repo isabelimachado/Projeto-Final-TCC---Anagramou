@@ -90,7 +90,7 @@ window.fecharGaveta = function () {
 }
 window.jogarConfetes = function () {
   const emotes = ["🎉", "🏆", "🎊"];
-  for (let i = 0; i < 75; i++) {
+  for (let i = 0; i < 150; i++) {
     const emote = document.createElement("div");
     emote.textContent = emotes[Math.floor(Math.random() * emotes.length)];
     emote.style.position = "fixed";
@@ -112,7 +112,7 @@ window.retornarPalavras = function () {
   document.getElementById("campos6").style.display = "flex";
   const container = document.getElementById("divdobrayan");
   container.style.animationName = "containerGirar";
-  container.style.backgroundColor = "#e9a1e26c"
+  container.style.backgroundColor = "#ffe6f8"
 }
 //////////////////// FLUXO ANAGRAMAS //////////////////////////////
 window.buscarDados = async function (tipo) {
