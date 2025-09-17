@@ -306,7 +306,9 @@ window.MostrarDados = async function (id) { // função do ranking
 
     querySnapshot.forEach(doc => {
       const infos = doc.data();
-
+      if(infos[colecao] <= 0){
+        return
+      }
       const divPlayer = document.createElement("div");
       divPlayer.id = "divJogador"; //div que fica o fundo com nome e tempo do jogador
 
@@ -623,7 +625,6 @@ async function salvarResultado(guardarTempo, JaAcertou, id) {
     mostrarPerfil();
     return;
   }
-
   let totalPontos = 0
   const tempo = document.getElementById("timeDisplay").textContent;
   const [min, sec] = tempo.split(":").map(Number)
