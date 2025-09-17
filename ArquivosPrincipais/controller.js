@@ -28,6 +28,7 @@ let checagemJaAcertou = null;
 let desistiu = false
 let usuario = null;
 let pontos = ""
+let paginaPontos = ""
 let placarJaCriado = false;
 // GLOBAL PRA FACILITAR CHAMAR EM OUTRAS FUNÇÕES
 const palavraDoDia = document.getElementById("palavraDoDia");
@@ -41,14 +42,17 @@ const anagrama6 = document.getElementById("p6");
 if (window.location.pathname === "/index.html") {
   console.log("index.");
   pontos = "pontosFaceis"
+  paginaPontos = "JaAcertouHojeFacil"
 }
 if (window.location.pathname === "/anagramaMedio.html") {
   console.log("medio.");
   pontos = "pontosMedios"
+  paginaPontos = "JaAcertouHojeMedio"
 }
 if (window.location.pathname === "/anagramaDificil.html") {
   console.log("dificil.");
   pontos = "pontosDificies"
+  paginaPontos = "JaAcertouHojeDificil"
 }
 
 // FUNÇÕES QUE EXISTEM PRA FACILITAR TRABALHO
@@ -71,10 +75,6 @@ window.fecharInstrucoes = function () {
 };
 window.mostrarPerfil = function () {
   document.getElementById('Login').classList.remove('oculto');
-};
-window.fecharX = function () {
-  document.getElementById('Login').classList.add('oculto');
-  document.getElementById('Registro').classList.add('oculto');
 };
 window.mostrarRegistro = function () {
   document.getElementById('Registro').classList.remove('oculto');
@@ -200,6 +200,31 @@ window.desistir = function () {
       y.style.animationName = "aoDesistir"
       y.style.boxShadow = "0 6px 12px rgba(0, 0, 0, 0.25), 4px 4px 0px #ff4545bf";
     }
+  }
+}
+window.revelarTudo = async function (){
+  console.log(paginaPontos)
+  try{
+    const docRef = doc(db, "usuarios",user.uid);
+    const documento = await getDoc(docRef);
+    if(documento.exists){console.log("existe")}else{return}
+    const JaAcertouCheck = documento.data()
+    
+    const JaAcertouParte = JaAcertouCheck[paginaPontos]
+    console.log(JaAcertouParte)
+    if(!JaAcertouParte){
+      return
+    }
+     for (let i = 0; i < 6; i++) {
+        const y = document.getElementById(`campos${1 + i}`);
+        document.getElementById(`p${i + 1}`).textContent = listaAnagramas[i].toLowerCase();
+        y.style.backgroundColor = "#0df940ff";
+        y.style.animationName = "aoAcertar"
+        y.style.boxShadow = "0 6px 12px rgba(0, 0, 0, 0.25), 4px 4px 0px #0df940ff";
+    }
+  }
+  catch(err){
+    console.log("🎉erro ao mostrar tudo!🎉")
   }
 }
 window.InputResposta = function () {
@@ -478,7 +503,7 @@ async function registro(email, nome, senha, tempo, seAcertou, totalPontos, id) {
         nome: nome,
         tempo: tempo,
         email: email,
-        JaAcertouHoje: seAcertou,
+        JaAcertouHojeFacil: seAcertou,
         pontosFaceis: totalPontos
       });
     }
@@ -487,7 +512,7 @@ async function registro(email, nome, senha, tempo, seAcertou, totalPontos, id) {
         nome: nome,
         tempo: tempo,
         email: email,
-        JaAcertouHoje: seAcertou,
+        JaAcertouHojeMedio: seAcertou,
         pontosMedios: totalPontos
       });
     }
@@ -496,7 +521,7 @@ async function registro(email, nome, senha, tempo, seAcertou, totalPontos, id) {
         nome: nome,
         tempo: tempo,
         email: email,
-        JaAcertouHoje: seAcertou,
+        JaAcertouHojeDificil: seAcertou,
         pontosDificies: totalPontos
       });
     }
@@ -540,7 +565,6 @@ async function login(email, senha) {
 
     if (docSnap.exists()) {
       const dados = docSnap.data();
-      criarProprioPlacar(email);
       FecharJanelaAbrirGaveta();
 
       mensagemErro.style.backgroundColor = "#52c41a"; // verde sucesso
@@ -589,7 +613,6 @@ window.LoginGoogle = async function () {
     }
 
     dados = docSnap.data();
-    criarProprioPlacar(user.email);
     fecharX();
     FecharJanelaAbrirGaveta();
     alert("Bem vindo!," + user.displayName)
@@ -612,13 +635,12 @@ auth.onAuthStateChanged(async (user) => {
     document.getElementById("botao-iconeID").removeAttribute("onclick");
     document.getElementById("iconeEntrar").className = "fa-solid fa-arrow-right-from-bracket";
     document.getElementById("botao-iconeID").addEventListener("click", sair);
-    criarProprioPlacar(user.email);  
+    revelarTudo();
   } 
   else {
     placarJaCriado = false;
   }
 });
-
 async function salvarResultado(guardarTempo, JaAcertou, id) {
   if (!usuario) {
     console.log("Chamando janela pra registro!");
@@ -642,7 +664,7 @@ async function salvarResultado(guardarTempo, JaAcertou, id) {
     if (id === "pontosFaceis") {
       await setDoc(ref, {
         tempo: guardarTempo,
-        jaAcertouHoje: JaAcertou,
+        jaAcertouHojeFacil: JaAcertou,
         pontosFaceis: totalPontos
       }, { merge: true });
       console.log("Atualizado!");
@@ -650,7 +672,7 @@ async function salvarResultado(guardarTempo, JaAcertou, id) {
     if (id === "pontosMedios") {
       await setDoc(ref, {
         tempo: guardarTempo,
-        jaAcertouHoje: JaAcertou,
+        jaAcertouHojeMedio: JaAcertou,
         pontosFaceis: totalPontos
       }, { merge: true });
       console.log("Atualizado!");
@@ -658,7 +680,7 @@ async function salvarResultado(guardarTempo, JaAcertou, id) {
     if (id === "pontosDificies") {
       await setDoc(ref, {
         tempo: guardarTempo,
-        jaAcertouHoje: JaAcertou,
+        jaAcertouHojeDificil: JaAcertou,
         pontosFaceis: totalPontos
       }, { merge: true });
       console.log("Atualizado!");
@@ -667,11 +689,9 @@ async function salvarResultado(guardarTempo, JaAcertou, id) {
     console.error("Erro ao atualizar:", err);
   }
 }
-
 window.addEventListener("beforeunload", () => {
   signOut(auth);
 });
-
 window.EnviarRegistro = function (id) {
   const email = document.getElementById("emailRegistro").value;
   const nome = document.getElementById("nomeRegistro").value;
@@ -691,7 +711,6 @@ window.EnviarRegistro = function (id) {
   }
   registro(email, nome, senha, tempo, seAcertou, totalPontos, id);
 };
-
 window.EnviarLogin = function () {
   const email = document.getElementById("emailLogin").value;
   const senha = document.getElementById("senhaLogin").value;

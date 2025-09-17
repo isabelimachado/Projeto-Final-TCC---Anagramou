@@ -69,7 +69,9 @@ async function AcharPalavra(jsonTipo, identificador) {
         pontosFaceis: 0,
         pontosMedios: 0,
         pontosDificies: 0,
-        JaAcertouHoje: false
+        JaAcertouHojeFacil: false,
+        JaAcertouHojeMedio: false,
+        JaAcertouHojeDificil: false
       }, { merge: true });
     }
 
