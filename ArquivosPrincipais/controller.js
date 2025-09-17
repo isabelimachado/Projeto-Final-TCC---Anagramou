@@ -476,7 +476,7 @@ async function registro(email, nome, senha, tempo, seAcertou, totalPontos, id) {
         nome: nome,
         tempo: tempo,
         email: email,
-        seAcertou: seAcertou,
+        JaAcertouHoje: seAcertou,
         pontosFaceis: totalPontos
       });
     }
@@ -485,7 +485,7 @@ async function registro(email, nome, senha, tempo, seAcertou, totalPontos, id) {
         nome: nome,
         tempo: tempo,
         email: email,
-        seAcertou: seAcertou,
+        JaAcertouHoje: seAcertou,
         pontosMedios: totalPontos
       });
     }
@@ -494,7 +494,7 @@ async function registro(email, nome, senha, tempo, seAcertou, totalPontos, id) {
         nome: nome,
         tempo: tempo,
         email: email,
-        seAcertou: seAcertou,
+        JaAcertouHoje: seAcertou,
         pontosDificies: totalPontos
       });
     }
