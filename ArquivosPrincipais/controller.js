@@ -202,28 +202,28 @@ window.desistir = function () {
     }
   }
 }
-window.revelarTudo = async function (){
+window.revelarTudo = async function () {
   console.log(paginaPontos)
-  try{
-    const docRef = doc(db, "usuarios",user.uid);
+  try {
+    const docRef = doc(db, "usuarios", user.uid);
     const documento = await getDoc(docRef);
-    if(documento.exists){console.log("existe")}else{return}
+    if (documento.exists) { console.log("existe") } else { return }
     const JaAcertouCheck = documento.data()
-    
+
     const JaAcertouParte = JaAcertouCheck[paginaPontos]
     console.log(JaAcertouParte)
-    if(!JaAcertouParte){
+    if (!JaAcertouParte) {
       return
     }
-     for (let i = 0; i < 6; i++) {
-        const y = document.getElementById(`campos${1 + i}`);
-        document.getElementById(`p${i + 1}`).textContent = listaAnagramas[i].toLowerCase();
-        y.style.backgroundColor = "#0df940ff";
-        y.style.animationName = "aoAcertar"
-        y.style.boxShadow = "0 6px 12px rgba(0, 0, 0, 0.25), 4px 4px 0px #0df940ff";
+    for (let i = 0; i < 6; i++) {
+      const y = document.getElementById(`campos${1 + i}`);
+      document.getElementById(`p${i + 1}`).textContent = listaAnagramas[i].toLowerCase();
+      y.style.backgroundColor = "#0df940ff";
+      y.style.animationName = "aoAcertar"
+      y.style.boxShadow = "0 6px 12px rgba(0, 0, 0, 0.25), 4px 4px 0px #0df940ff";
     }
   }
-  catch(err){
+  catch (err) {
     console.log("🎉erro ao mostrar tudo!🎉")
   }
 }
@@ -302,7 +302,7 @@ document.addEventListener("DOMContentLoaded", () => {
           novo.style.width = "200px"
           novo.style.height = "200px"
           container.appendChild(novo)
-         /*  novo.classList.add("novoclasse"); */
+          /*  novo.classList.add("novoclasse"); */
           novo.src = "logo.ico"
           setTimeout(() => retornarPalavras(), 2000);
           setTimeout(() => container.removeChild(novo), 2000)
@@ -336,7 +336,7 @@ window.MostrarDados = async function (id) { // função do ranking
 
     querySnapshot.forEach(doc => {
       const infos = doc.data();
-      if(infos[colecao] <= 0){
+      if (infos[colecao] <= 0) {
         return
       }
       const divPlayer = document.createElement("div");
@@ -401,7 +401,6 @@ window.MostrarDados = async function (id) { // função do ranking
 }
 
 async function criarProprioPlacar(email) {
-  // Se já foi criado, não cria novamente
   if (placarJaCriado) return;
 
   try {
@@ -419,56 +418,60 @@ async function criarProprioPlacar(email) {
       const nome = dados.nome || "Nome não encontrado";
       const tempo = dados.tempo || "Tempo não registrado";
 
-      // mostra a pontuação com base na página atual
       let pontosAtual = 0;
-      if (pontos === "pontosFaceis" && dados.pontosFaceis) {
+      let tituloPagina = "";
+
+      if (pontos === "pontosFaceis" && dados.pontosFaceis !== undefined) {
         pontosAtual = dados.pontosFaceis;
-      } else if (pontos === "pontosMedios" && dados.pontosMedios) {
+        tituloPagina = "FÁCIL";
+      } else if (pontos === "pontosMedios" && dados.pontosMedios !== undefined) {
         pontosAtual = dados.pontosMedios;
-      } else if (pontos === "pontosDificies" && dados.pontosDificies) {
+        tituloPagina = "MÉDIO";
+      } else if (pontos === "pontosDificies" && dados.pontosDificies !== undefined) {
         pontosAtual = dados.pontosDificies;
+        tituloPagina = "DIFÍCIL";
       }
 
       const placarExistente = document.querySelector('#ranking [data-user-placar="true"]');
-      if (placarExistente) {
-        placarExistente.remove();
-      }
+      if (placarExistente) placarExistente.remove();
 
       const divPlayer = document.createElement("div");
       divPlayer.setAttribute("data-user-placar", "true");
       divPlayer.style.backgroundColor = "#15ff00ff";
       divPlayer.style.padding = "10px";
-      divPlayer.style.margin = "5px 0";
+      divPlayer.style.marginTop = "20px";
+      divPlayer.style.borderTop = "2px solid #000"; 
       divPlayer.style.borderRadius = "8px";
+      divPlayer.style.boxShadow = "0 4px 10px rgba(0,0,0,0.2)";
+      divPlayer.style.fontFamily = "Arial, sans-serif";
 
       const pTitulo = document.createElement("p");
-      pTitulo.textContent = "SEU RECORDE:";
-      
+      pTitulo.textContent = `SUAS INFORMAÇÕES`;
       pTitulo.style.fontWeight = "bold";
-      pTitulo.style.margin = "0 0 5px 0";
-      pNome.style.fontSize = "16px";
+      pTitulo.style.fontSize = "18px";
+      pTitulo.style.marginBottom = "10px";
 
       const pNome = document.createElement("p");
-      pNome.textContent = `Nome: ${nome}`;
-      pNome.style.margin = "0 0 10px 0";
+      pNome.textContent = `Usuário: ${nome}`;
+      pNome.style.margin = "5px 0";
 
       const pTempo = document.createElement("p");
-      pTempo.textContent = `Tempo: ${tempo}`;
-      pTempo.style.margin = "0 0 5px 0";
+      pTempo.textContent = `Melhor Tempo: ${tempo}`;
+      pTempo.style.margin = "5px 0";
 
       const pPontos = document.createElement("p");
-      pPontos.textContent = `Pontos: ${pontosAtual}`;
-      pPontos.style.margin = "0";
+      pPontos.textContent = `Melhor Pontuação: ${pontosAtual}`;
+      pPontos.style.margin = "5px 0";
 
-      divPlayer.appendChild(pTitulo);  
-      divPlayer.appendChild(pNome);    
-      divPlayer.appendChild(pTempo);  
-      divPlayer.appendChild(pPontos);  
+      divPlayer.appendChild(pTitulo);
+      divPlayer.appendChild(pNome);
+      divPlayer.appendChild(pTempo);
+      divPlayer.appendChild(pPontos);
 
       document.getElementById("ranking").appendChild(divPlayer);
-
       placarJaCriado = true;
     });
+
   } catch (error) {
     console.log("Erro ao criar placar próprio:", error);
   }
@@ -637,11 +640,12 @@ auth.onAuthStateChanged(async (user) => {
   usuario = user;
   console.log(user);
   if (usuario) {
+    criarProprioPlacar(user.email);
     document.getElementById("botao-iconeID").removeAttribute("onclick");
     document.getElementById("iconeEntrar").className = "fa-solid fa-arrow-right-from-bracket";
     document.getElementById("botao-iconeID").addEventListener("click", sair);
     revelarTudo();
-  } 
+  }
   else {
     placarJaCriado = false;
   }
