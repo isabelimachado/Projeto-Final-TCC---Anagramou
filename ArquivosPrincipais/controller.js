@@ -24,7 +24,7 @@ let listaSinonimos = [];
 let listaAnagramas = [];
 let listaAchou = [];
 
-let checagemJaAcertou = null;
+let checagemJaAcertou = false;
 let desistiu = false
 let usuario = null;
 let pontos = ""
@@ -276,8 +276,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const min = Math.floor(timer / 60);
         const sec = timer % 60;
         tempo.textContent = `${min}:${sec < 10 ? '0' : ''}${sec}`;
+        if(checagemJaAcertou){
+          clearInterval(intervalo);
+          intervalo = null;
+          return
+        }
         timer++;
-        if (listaAchou.length === 6 && checagemJaAcertou == null) {
+        if (listaAchou.length === 6 && checagemJaAcertou == false) {
           checagemJaAcertou = true;
           let container = document.getElementById("divdobrayan");
           if (container) {
