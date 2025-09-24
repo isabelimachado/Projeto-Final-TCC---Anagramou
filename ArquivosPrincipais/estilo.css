@@ -1558,6 +1558,23 @@ body {
     }
 }
 
+#placarAuxiliar{
+    display: flex;
+}
+
+#placarProprio {
+    position: fixed;
+    display: none;
+    width: 90%;
+    height: 75%;
+    border-radius: 20px;
+    top: 60px;
+    background-color: #d9bcf3;
+    box-shadow: -5px 0 25px rgba(0, 0, 0, 0.3);
+}
+#placarProprio.aberto {
+    display:inline;
+}
 /*dimensões do celular (pequeno/medio e os menorzinhos)*/
 
 @media (max-width: 768px) {

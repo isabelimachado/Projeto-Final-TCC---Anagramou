@@ -88,6 +88,12 @@ window.fecharGaveta = function () {
   document.getElementById("ranking").classList.remove("aberta");
   document.getElementById("divJogador").classList.remove("aberta");
 }
+window.abrirPlacarProprio = function(){
+  document.getElementById("placarProprio").classList.add("aberto");
+} 
+window.fecharPlacarProprio = function(){
+  document.getElementById("placarProprio").classList.remove("aberto")
+}
 window.jogarConfetes = function () {
   const emotes = ["🎉", "🏆", "🎊"];
   for (let i = 0; i < 150; i++) {
@@ -283,6 +289,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         timer++;
         if (listaAchou.length === 6 && checagemJaAcertou == false) {
+          document.getElementById("input-jogar").style.display = "none"
           checagemJaAcertou = true;
           let container = document.getElementById("divdobrayan");
           if (container) {
@@ -332,8 +339,7 @@ window.MostrarDados = async function (id) { // função do ranking
     const usuariosRef = collection(db, "usuarios");
     const q = query(usuariosRef, orderBy(colecao, "desc"));
     const querySnapshot = await getDocs(q);
-    let posicao = 1; //variavel pra mostra posicao do jogador
-
+    let posicao = 1; //variavel pra mostra posicao do jogado
     querySnapshot.forEach(doc => {
       const infos = doc.data();
       if (infos[colecao] <= 0) {
@@ -400,76 +406,21 @@ window.MostrarDados = async function (id) { // função do ranking
   }
 }
 
-async function criarProprioPlacar(email) {
-  if (placarJaCriado) return;
-
+async function criarPlacarProprio(email) {
+  document.getElementById("placarAuxiliar").style.display = "flex";
   try {
     const pesquisa = query(collection(db, "usuarios"), where("email", "==", email));
     const snapshot = await getDocs(pesquisa);
-
-    if (snapshot.empty) {
-      console.log("Nenhum usuário encontrado com este email");
-      return;
-    }
-
+    const imagensAleatorias = ["imagensAleatorias/gatodandojoia.jpeg", "imagensAleatorias/imagempadrao.webp", "imagensAleatorias/sillycat.webp"]
     snapshot.forEach(doc => {
       const dados = doc.data();
-
-      const nome = dados.nome || "Nome não encontrado";
-      const tempo = dados.tempo || "Tempo não registrado";
-
-      let pontosAtual = 0;
-      let tituloPagina = "";
-
-      if (pontos === "pontosFaceis" && dados.pontosFaceis !== undefined) {
-        pontosAtual = dados.pontosFaceis;
-        tituloPagina = "FÁCIL";
-      } else if (pontos === "pontosMedios" && dados.pontosMedios !== undefined) {
-        pontosAtual = dados.pontosMedios;
-        tituloPagina = "MÉDIO";
-      } else if (pontos === "pontosDificies" && dados.pontosDificies !== undefined) {
-        pontosAtual = dados.pontosDificies;
-        tituloPagina = "DIFÍCIL";
-      }
-
-      const placarExistente = document.querySelector('#ranking [data-user-placar="true"]');
-      if (placarExistente) placarExistente.remove();
-
-      const divPlayer = document.createElement("div");
-      divPlayer.setAttribute("data-user-placar", "true");
-      divPlayer.style.backgroundColor = "#15ff00ff";
-      divPlayer.style.padding = "10px";
-      divPlayer.style.marginTop = "20px";
-      divPlayer.style.borderTop = "2px solid #000"; 
-      divPlayer.style.borderRadius = "8px";
-      divPlayer.style.boxShadow = "0 4px 10px rgba(0,0,0,0.2)";
-      divPlayer.style.fontFamily = "Arial, sans-serif";
-
-      const pTitulo = document.createElement("p");
-      pTitulo.textContent = `SUAS INFORMAÇÕES`;
-      pTitulo.style.fontWeight = "bold";
-      pTitulo.style.fontSize = "18px";
-      pTitulo.style.marginBottom = "10px";
-
-      const pNome = document.createElement("p");
-      pNome.textContent = `Usuário: ${nome}`;
-      pNome.style.margin = "5px 0";
-
-      const pTempo = document.createElement("p");
-      pTempo.textContent = `Melhor Tempo: ${tempo}`;
-      pTempo.style.margin = "5px 0";
-
-      const pPontos = document.createElement("p");
-      pPontos.textContent = `Melhor Pontuação: ${pontosAtual}`;
-      pPontos.style.margin = "5px 0";
-
-      divPlayer.appendChild(pTitulo);
-      divPlayer.appendChild(pNome);
-      divPlayer.appendChild(pTempo);
-      divPlayer.appendChild(pPontos);
-
-      document.getElementById("ranking").appendChild(divPlayer);
-      placarJaCriado = true;
+      const fotoURL = dados.foto || imagensAleatorias[Math.floor(Math.random() * imagensAleatorias.length)];
+      document.getElementById("nomeUsuario").textContent = dados.nome 
+      document.getElementById("tempoHoje").textContent =  dados.tempo
+      document.getElementById("pontosFacilPlacar").textContent = dados.pontosFaceis
+      document.getElementById("pontosMedioPlacar").textContent = dados.pontosMedios
+      document.getElementById("pontosDificilPlacar").textContent = dados.pontosDificies
+      document.getElementById("foto").src = fotoURL
     });
 
   } catch (error) {
@@ -640,14 +591,12 @@ auth.onAuthStateChanged(async (user) => {
   usuario = user;
   console.log(user);
   if (usuario) {
-    criarProprioPlacar(user.email);
+    criarPlacarProprio(user.email);
+    placarJaCriado = true;
     document.getElementById("botao-iconeID").removeAttribute("onclick");
     document.getElementById("iconeEntrar").className = "fa-solid fa-arrow-right-from-bracket";
     document.getElementById("botao-iconeID").addEventListener("click", sair);
     revelarTudo();
-  }
-  else {
-    placarJaCriado = false;
   }
 });
 async function salvarResultado(guardarTempo, JaAcertou, id) {
@@ -664,7 +613,7 @@ async function salvarResultado(guardarTempo, JaAcertou, id) {
   if (!desistiu && listaAchou.length === 6) {
     totalPontos = auxPontos * (listaAchou.length * 1000) - (totalSegundos * 0.25);
   } else if (desistiu && listaAchou.length >= 1) {
-    totalPontos = auxPontos * (listaAchou.length * 1000) - (totalSegundos * 0.25);
+    totalPontos = auxPontos * (listaAchou.length * 1000) - (totalSegundos * 0.50);
   } else {
     console.log("Desistiu e não colocou nada!")
   }
@@ -673,7 +622,7 @@ async function salvarResultado(guardarTempo, JaAcertou, id) {
     if (id === "pontosFaceis") {
       await setDoc(ref, {
         tempo: guardarTempo,
-        jaAcertouHojeFacil: JaAcertou,
+        JaAcertouHojeFacil: JaAcertou,
         pontosFaceis: totalPontos
       }, { merge: true });
       console.log("Atualizado!");
@@ -681,7 +630,7 @@ async function salvarResultado(guardarTempo, JaAcertou, id) {
     if (id === "pontosMedios") {
       await setDoc(ref, {
         tempo: guardarTempo,
-        jaAcertouHojeMedio: JaAcertou,
+        JaAcertouHojeMedio: JaAcertou,
         pontosFaceis: totalPontos
       }, { merge: true });
       console.log("Atualizado!");
@@ -689,7 +638,7 @@ async function salvarResultado(guardarTempo, JaAcertou, id) {
     if (id === "pontosDificies") {
       await setDoc(ref, {
         tempo: guardarTempo,
-        jaAcertouHojeDificil: JaAcertou,
+        JaAcertouHojeDificil: JaAcertou,
         pontosFaceis: totalPontos
       }, { merge: true });
       console.log("Atualizado!");

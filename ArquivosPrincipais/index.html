@@ -39,6 +39,11 @@
         <i class="fa-brands fa-font-awesome"></i>
       </button> <!--desistir-->
 
+      <button class="botao-icone" onclick="abrirPlacarProprio()" id="placarAuxiliar">
+        <i class="fa-solid fa-trophy"></i>
+      </button> <!--criar placar proprio-->
+
+
       <button class="botao-icone" onclick="mostrarRanking()">
         <i class="fas fa-chart-bar"></i>
       </button>
@@ -98,7 +103,6 @@
       <p id="timeDisplay">0:00</p>
     </div>
   </div>
-
 
   <footer class="rodape">
     <div class="conteudo-rodape">
@@ -243,5 +247,14 @@
     <h2>RANKING GLOBAL</h2>
 
   </div>
-
+<div id="placarProprio">
+  <button class="botao-sair" onclick="fecharPlacarProprio()">✖</button><br>
+  <span id="nomeUsuario">Nome:ue</span> <br>
+  <span id="tempoHoje">Tempo:</span> <br>
+  <span id="pontosFacilPlacar">Tempo:</span> <br>
+  <span id="pontosMedioPlacar">Tempo:</span> <br>
+  <span id="pontosDificilPlacar">Tempo:</span> <br>
+  <span id="melhorTempo">Melhor tempo:</span> <br>
+  <img id="foto">Foto do google</img>
+</div>
 </html>
