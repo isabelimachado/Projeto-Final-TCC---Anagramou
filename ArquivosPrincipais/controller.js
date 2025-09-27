@@ -694,11 +694,12 @@ window.dica = function () {
 }
 window.mudarImagem = async function(){
   let urlDado = document.getElementById("urlImagem").value
-  if(!urlDado.includes("jpeg") || !urlDado.includes("png") ||  !urlDado.includes("webp") ){
-    console.log("Formato invalido!")
+  if(urlDado.includes("jpeg") || urlDado.includes("png") ||  urlDado.includes("webp") ){
+    console.log("Formato valido!")
+  }else{
+    console.log("Invalido")
   }
   console.log(urlDado) 
-  return
   try {
     const ref = doc(db, "usuarios", usuario.uid);
     await setDoc(ref,{
