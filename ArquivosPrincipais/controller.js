@@ -692,3 +692,29 @@ window.dica = function () {
   campo.parentElement.style.animationName = "aoPedirDica"
   campo.parentElement.style.boxShadow = "0 6px 12px rgba(0, 0, 0, 0.25), 4px 4px 0px #e9b8edff";
 }
+window.mudarImagem = async function(){
+  let urlDado = document.getElementById("urlImagem").value
+  if(!urlDado.includes("jpeg") || !urlDado.includes("png") ||  !urlDado.includes("webp") ){
+    console.log("Formato invalido!")
+  }
+  console.log(urlDado) 
+  return
+  try {
+    const ref = doc(db, "usuarios", usuario.uid);
+    await setDoc(ref,{
+      foto: urlDado,
+    },{merge:true})
+  }catch(err){
+    console.log("Erro algo mandar ou pegar imagem"+err)
+  }
+
+}
+// FUNÇÃO EXTRA DE TROCAR IMAGEM!
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("urlImagem").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      mudarImagem()
+    }
+  });
+});
