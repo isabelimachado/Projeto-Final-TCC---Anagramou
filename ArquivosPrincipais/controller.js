@@ -120,6 +120,9 @@ window.retornarPalavras = function () {
   container.style.animationName = "containerGirar";
   container.style.backgroundColor = "#ffe6f8"
 }
+window.TempoRetornarPontos = async function(tempo,pontos,idAcao){
+  
+}
 //////////////////// FLUXO ANAGRAMAS //////////////////////////////
 window.buscarDados = async function (tipo) {
   let databasePalavra = ""
@@ -208,19 +211,16 @@ window.desistir = function () {
     }
   }
 }
-window.revelarTudo = async function () {
+window.revelarTudo = async function (email) {
   console.log(paginaPontos)
   try {
-    const docRef = doc(db, "usuarios", user.uid);
-    const documento = await getDoc(docRef);
-    if (documento.exists) { console.log("existe") } else { return }
-    const JaAcertouCheck = documento.data()
-
-    const JaAcertouParte = JaAcertouCheck[paginaPontos]
-    console.log(JaAcertouParte)
-    if (!JaAcertouParte) {
+    const pesquisa = query(collection(db, "usuarios"), where("email", "==", email,"and ", paginaPontos, "==", true));
+    const snapshot = await getDocs(pesquisa);
+    if(snapshot.empty){
+      console.log("essa pessoa nao acertou tudo hoje ainda")
       return
     }
+    // revelar anagramas
     for (let i = 0; i < 6; i++) {
       const y = document.getElementById(`campos${1 + i}`);
       document.getElementById(`p${i + 1}`).textContent = listaAnagramas[i].toLowerCase();
@@ -596,7 +596,7 @@ auth.onAuthStateChanged(async (user) => {
     document.getElementById("botao-iconeID").removeAttribute("onclick");
     document.getElementById("iconeEntrar").className = "fa-solid fa-arrow-right-from-bracket";
     document.getElementById("botao-iconeID").addEventListener("click", sair);
-    revelarTudo();
+    revelarTudo(user.email);
   }
 });
 async function salvarResultado(guardarTempo, JaAcertou, id) {
@@ -609,14 +609,14 @@ async function salvarResultado(guardarTempo, JaAcertou, id) {
   const tempo = document.getElementById("timeDisplay").textContent;
   const [min, sec] = tempo.split(":").map(Number)
   const totalSegundos = min * 60 + sec
-  const auxPontos = totalPontos
   if (!desistiu && listaAchou.length === 6) {
-    totalPontos = auxPontos * (listaAchou.length * 1000) - (totalSegundos * 0.25);
+    totalPontos = listaAchou.length * 1000 - (totalSegundos * 0.25);
   } else if (desistiu && listaAchou.length >= 1) {
-    totalPontos = auxPontos * (listaAchou.length * 1000) - (totalSegundos * 0.50);
+    totalPontos = listaAchou.length * 1000 - (totalSegundos * 0.50);
   } else {
     console.log("Desistiu e não colocou nada!")
   }
+  console.log(totalPontos)
   const ref = doc(db, "usuarios", usuario.uid);
   try {
     if (id === "pontosFaceis") {
@@ -659,11 +659,10 @@ window.EnviarRegistro = function (id) {
   let totalPontos = 0
   const [min, sec] = tempo.split(":").map(Number)
   const totalSegundos = min * 60 + sec
-  const auxPontos = totalPontos
   if (!desistiu && listaAchou.length === 6) {
     totalPontos = listaAchou.length * 1000 - (totalSegundos * 0.25);
   } else if (desistiu && listaAchou.length >= 1) {
-    totalPontos = auxPontos * (listaAchou.length * 1000) - (totalSegundos * 0.25);
+    totalPontos = listaAchou.length * 1000 - (totalSegundos * 0.25);
   } else {
     console.log("Desistiu e não colocou nada!")
   }
@@ -694,7 +693,7 @@ window.dica = function () {
 }
 window.mudarImagem = async function(){
   let urlDado = document.getElementById("urlImagem").value
-  if(urlDado.includes("jpeg") || urlDado.includes("png") ||  urlDado.includes("webp") ){
+  if(urlDado.includes("jpeg") || urlDado.includes("png") ||  urlDado.includes("webp") |  urlDado.includes("jpg") ){
     console.log("Formato valido!")
   }else{
     console.log("Invalido")
