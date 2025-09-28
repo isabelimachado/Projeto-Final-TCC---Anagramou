@@ -39,10 +39,6 @@
         <i class="fa-brands fa-font-awesome"></i>
       </button> <!--desistir-->
 
-      <button class="botao-icone" onclick="abrirPlacarProprio()" id="placarAuxiliar">
-        <i class="fa-solid fa-trophy"></i>
-      </button> <!--criar placar proprio-->
-
 
       <button class="botao-icone" onclick="mostrarRanking()">
         <i class="fas fa-chart-bar"></i>
@@ -251,9 +247,12 @@
     <button class="botaoRanking" id="fechar" onclick="fecharGaveta()">X</button>
 
     <h2>RANKING GLOBAL</h2>
+    <button class="botao-icone" onclick="abrirPlacarProprio()" id="placarAuxiliar">
+      <i class="fa-solid fa-trophy"></i>
+    </button> <!--criar placar proprio-->
 
   </div>
-  <div id="placarProprio">
+   <div id="placarProprio">
     <button class="botao-sair" onclick="fecharPlacarProprio()">✖</button><br>
     <span id="nomeUsuario">Nome:ue</span> <br>
     <span id="tempoHoje">Tempo:</span> <br>
