@@ -212,14 +212,18 @@ window.desistir = function () {
   }
 }
 window.revelarTudo = async function (email) {
-  console.log(paginaPontos)
   try {
-    const pesquisa = query(collection(db, "usuarios"), where("email", "==", email,"and ", paginaPontos, "==", true));
+    const pesquisa = query(
+      collection(db, "usuarios"),
+      where("email", "==", email),
+      where(paginaPontos, "==", true)
+    );
     const snapshot = await getDocs(pesquisa);
     if(snapshot.empty){
       console.log("essa pessoa nao acertou tudo hoje ainda")
       return
     }
+    console.log("Acertou tudo hoje")
     // revelar anagramas
     for (let i = 0; i < 6; i++) {
       const y = document.getElementById(`campos${1 + i}`);
