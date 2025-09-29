@@ -745,6 +745,10 @@ body {
     font-size: 30px;
 }
 
+#placarProprio {
+    display: none;
+}
+
 
 
 /* troca esses parametros pra outro lugar se quiser*/
@@ -808,4 +812,3 @@ body {
         opacity: 0;
     }
 }
-
