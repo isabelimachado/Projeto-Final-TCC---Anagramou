@@ -307,91 +307,90 @@ body {
 
 .conteudo-instrucoes {
     background: #fcfafa;
-    padding: 25px;
-    border-radius: 15px;
-    width: 90%;
-    max-width: 500px;
+    padding: 20px;
+    border-radius: 12px;
+    width: 85%;
+    max-width: 420px;
     animation: entrada 0.3s ease;
 }
 
 .cabecalho-instrucoes {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .titulo-instrucoes {
     font-weight: 1000;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     color: #5d70c4;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
 }
 
 .subtitulo-instrucoes {
-    font-size: 14px;
+    font-size: 12px;
     color: #333333;
-    font-weight: 510;
+    font-weight: 500;
 }
 
 .caixa-exemplo {
     background: #d4c3d8;
     color: rgb(0, 0, 0);
-    padding: 15px;
-    border-radius: 12px;
+    padding: 12px;
+    border-radius: 10px;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .palavra-exemplo {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 700;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .anagramas-exemplo {
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .etapas-instrucoes {
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     background-color: #d4c3d8;
-    border-radius: 10px;
-
+    border-radius: 8px;
 }
 
 .etapa-instrucao {
     display: flex;
     align-items: flex-start;
-    gap: 12px;
-    margin-bottom: 15px;
-    padding: 15px;
+    gap: 10px;
+    margin-bottom: 12px;
+    padding: 12px;
     transition: all 0.3s ease;
     color: black;
 }
 
 .numero-etapa {
     color: rgb(0, 0, 0);
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
     font-weight: 700;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .texto-etapa {
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .botao-comecar-jogo {
     width: 100%;
-    padding: 15px;
+    padding: 12px;
     background: #336094;
     color: white;
     border: none;
-    border-radius: 12px;
-    font-size: 18px;
+    border-radius: 10px;
+    font-size: 15px;
     font-weight: 700;
     cursor: pointer;
     transition: all 0.3s ease;
