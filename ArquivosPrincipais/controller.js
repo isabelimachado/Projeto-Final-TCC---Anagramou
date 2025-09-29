@@ -87,6 +87,7 @@ window.mostrarRanking = function () {
 window.fecharGaveta = function () {
   document.getElementById("ranking").classList.remove("aberta");
   document.getElementById("divJogador").classList.remove("aberta");
+
 }
 window.abrirPlacarProprio = function(){
   document.getElementById("placarProprio").classList.add("aberto");
