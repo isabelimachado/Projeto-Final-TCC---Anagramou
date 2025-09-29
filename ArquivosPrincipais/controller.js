@@ -120,9 +120,6 @@ window.retornarPalavras = function () {
   container.style.animationName = "containerGirar";
   container.style.backgroundColor = "#ffe6f8"
 }
-window.TempoRetornarPontos = async function(tempo,pontos,idAcao){
-  
-}
 //////////////////// FLUXO ANAGRAMAS //////////////////////////////
 window.buscarDados = async function (tipo) {
   let databasePalavra = ""
@@ -378,7 +375,7 @@ window.MostrarDados = async function (id) { // função do ranking
 
       const pTempo = document.createElement("p");
       pTempo.className = "jogador-tempo";
-      pTempo.textContent = "Pontos: " + infos[colecao];
+      pTempo.textContent = "Pontos: " + Math.round(infos[colecao])
 
       const containerFoto = document.createElement("div");
       containerFoto.style.width = "125px";
