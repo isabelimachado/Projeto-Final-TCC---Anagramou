@@ -89,12 +89,13 @@ window.fecharGaveta = function () {
   document.getElementById("divJogador").classList.remove("aberta");
 
 }
-window.abrirPlacarProprio = function(){
+window.abrirPlacarProprio = function () {
   document.getElementById("placarProprio").classList.add("aberto");
-} 
-window.fecharPlacarProprio = function(){
-  document.getElementById("placarProprio").classList.remove("aberto")
-}
+};
+
+window.fecharPlacarProprio = function () {
+  document.getElementById("placarProprio").classList.remove("aberto");
+};
 window.jogarConfetes = function () {
   const emotes = ["🎉", "🏆", "🎊"];
   for (let i = 0; i < 150; i++) {
