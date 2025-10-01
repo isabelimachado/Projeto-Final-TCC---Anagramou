@@ -219,7 +219,7 @@ window.revelarTudo = async function (email) {
       where(paginaPontos, "==", true)
     );
     const snapshot = await getDocs(pesquisa);
-    if(snapshot.empty){
+    if (snapshot.empty) {
       console.log("essa pessoa nao acertou tudo hoje ainda")
       return
     }
@@ -286,7 +286,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const min = Math.floor(timer / 60);
         const sec = timer % 60;
         tempo.textContent = `${min}:${sec < 10 ? '0' : ''}${sec}`;
-        if(checagemJaAcertou){
+        if (checagemJaAcertou) {
           clearInterval(intervalo);
           intervalo = null;
           return
@@ -419,8 +419,8 @@ async function criarPlacarProprio(email) {
     snapshot.forEach(doc => {
       const dados = doc.data();
       const fotoURL = dados.foto || imagensAleatorias[Math.floor(Math.random() * imagensAleatorias.length)];
-      document.getElementById("nomeUsuario").textContent = dados.nome 
-      document.getElementById("tempoHoje").textContent =  dados.tempo
+      document.getElementById("nomeUsuario").textContent = dados.nome
+      document.getElementById("tempoHoje").textContent = dados.tempo
       document.getElementById("pontosFacilPlacar").textContent = dados.pontosFaceis
       document.getElementById("pontosMedioPlacar").textContent = dados.pontosMedios
       document.getElementById("pontosDificilPlacar").textContent = dados.pontosDificies
@@ -691,25 +691,31 @@ window.dica = function () {
   const campo = document.getElementById(`p${randomIndice}`);
   campo.textContent = listaSinonimos[randomIndice - 1].toLowerCase();
   campo.style.animationName = "aoAcertar"
-  campo.parentElement.style.backgroundColor = "#e9b8edff";
-  campo.parentElement.style.animationName = "aoPedirDica"
-  campo.parentElement.style.boxShadow = "0 6px 12px rgba(0, 0, 0, 0.25), 4px 4px 0px #e9b8edff";
+  const temaAtual = document.body.getAttribute('data-theme');
+
+  if (temaAtual === 'dark') {
+    campo.parentElement.style.backgroundColor = '#6e6e6eff';
+    campo.parentElement.querySelector('span').style.color = 'white';
+  } else {
+    campo.parentElement.style.backgroundColor = '#e9b8edff';  
+    campo.parentElement.style.boxShadow = "0 6px 12px rgba(0, 0, 0, 0.25), 4px 4px 0px #e9b8edff";
+  } campo.parentElement.style.animationName = "aoPedirDica"
 }
-window.mudarImagem = async function(){
+window.mudarImagem = async function () {
   let urlDado = document.getElementById("urlImagem").value
-  if(urlDado.includes("jpeg") || urlDado.includes("png") ||  urlDado.includes("webp") |  urlDado.includes("jpg") ){
+  if (urlDado.includes("jpeg") || urlDado.includes("png") || urlDado.includes("webp") | urlDado.includes("jpg")) {
     console.log("Formato valido!")
-  }else{
+  } else {
     console.log("Invalido")
   }
-  console.log(urlDado) 
+  console.log(urlDado)
   try {
     const ref = doc(db, "usuarios", usuario.uid);
-    await setDoc(ref,{
+    await setDoc(ref, {
       foto: urlDado,
-    },{merge:true})
-  }catch(err){
-    console.log("Erro algo mandar ou pegar imagem"+err)
+    }, { merge: true })
+  } catch (err) {
+    console.log("Erro algo mandar ou pegar imagem" + err)
   }
 
 }
