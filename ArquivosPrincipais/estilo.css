@@ -106,7 +106,7 @@ a {
 }
 
 [data-theme="dark"] .divdobrayan {
-    background-color: #534f4f;
+    background: #2c2c2c;
 }
 
 [data-theme="dark"] .botaoderesposta {
@@ -134,9 +134,9 @@ a {
 [data-theme="dark"] #p3,
 [data-theme="dark"] #p4,
 [data-theme="dark"] #p5,
-[data-theme="dark"] #p6,
-[data-theme="dark"] .palavradodia {
-    color: #020101;
+[data-theme="dark"] #p6
+  {
+    color: #ffffff;
 }
 
 [data-theme="dark"] .botao-dificuldade,
