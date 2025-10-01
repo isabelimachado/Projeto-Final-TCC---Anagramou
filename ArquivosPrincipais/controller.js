@@ -90,6 +90,10 @@ window.fecharGaveta = function () {
 
 }
 window.abrirPlacarProprio = function () {
+  //   if (!usuario) {
+  //   alert("Precisa estar logado para abrir o próprio placar!");
+  //   return;
+  // }
   document.getElementById("placarProprio").classList.add("aberto");
 };
 window.fecharPlacarProprio = function () {
@@ -122,6 +126,126 @@ window.retornarPalavras = function () {
   container.style.animationName = "containerGanhar";
   console.log(container.style.animationName)
 }
+
+//funcao da galeria
+const imagensDisponiveis = [
+  "imagensAleatorias/gatodandojoia.jpeg",
+  "imagensAleatorias/cachorroSalsicha.jpg",
+  "imagensAleatorias/sillycat.webp",
+  "imagensAleatorias/cachorroSorridente.jpg",
+  "imagensAleatorias/cachorroengraçado.avif",
+  "imagensAleatorias/gatoLinguarudo.jpg",
+  "imagensAleatorias/gatoEngracado.jpg"
+];
+
+let imagemSelecionada = null;
+
+window.populaGridImagens = function () {
+  const grid = document.getElementById('gridImagens');
+  if (!grid) {
+    console.error("Elemento gridImagens não encontrado!");
+    return;
+  }
+  grid.innerHTML = '';
+
+  imagensDisponiveis.forEach(url => {
+    const img = document.createElement('img');
+    img.src = url;
+    img.className = 'imagem-opcao';
+    img.onclick = () => selecionarImagem(url, img);
+    grid.appendChild(img);
+  });
+}
+
+window.selecionarImagem = function (url, elemento) {
+  document.querySelectorAll('.imagem-opcao').forEach(img => {
+    img.classList.remove('selecionada');
+  });
+  
+  elemento.classList.add('selecionada');
+  imagemSelecionada = url;
+  const inputUrl = document.getElementById('urlImagem');
+  if (inputUrl) inputUrl.value = '';
+}
+
+window.abrirSeletorImagem = function () {
+  if (!usuario) {
+    alert("Você precisa estar logado para alterar a foto!");
+    return;
+  }
+  const modal = document.getElementById('modalImagens');
+  if (modal) {
+    modal.classList.add('ativo');
+    populaGridImagens();
+  } else {
+    console.error("Modal não encontrado!");
+  }
+}
+
+window.fecharSeletorImagem = function () {
+  const modal = document.getElementById('modalImagens');
+  if (modal) {
+    modal.classList.remove('ativo');
+  }
+  imagemSelecionada = null;
+}
+
+window.confirmarImagem = async function () {
+  if (!usuario) {
+    alert("Você precisa estar logado!");
+    return;
+  }
+
+  let urlFinal = imagemSelecionada;
+  const inputUrl = document.getElementById('urlImagem');
+  const urlPersonalizada = inputUrl ? inputUrl.value.trim() : '';
+
+  if (urlPersonalizada) {
+    const formatosValidos = ['jpeg', 'jpg', 'png', 'webp', 'avif'];
+    const extensao = urlPersonalizada.split('.').pop().toLowerCase();
+    
+    if (!formatosValidos.includes(extensao)) {
+      alert("Formato de imagem inválido! Use: jpg, jpeg, png, webp ou avif");
+      return;
+    }
+    urlFinal = urlPersonalizada;
+  }
+
+  if (!urlFinal) {
+    alert("Selecione uma imagem ou cole uma URL!");
+    return;
+  }
+
+  try {
+    const ref = doc(db, "usuarios", usuario.uid);
+    await setDoc(ref, {
+      foto: urlFinal,
+    }, { merge: true });
+
+    const fotoElement = document.getElementById('foto');
+    if (fotoElement) {
+      fotoElement.src = urlFinal;
+    }
+
+    fecharSeletorImagem();
+    alert("Foto de perfil atualizada com sucesso!");
+    console.log("Imagem atualizada:", urlFinal);
+  } catch (err) {
+    console.error("Erro ao atualizar imagem:", err);
+    alert("Erro ao atualizar a imagem. Tente novamente.");
+  }
+}
+//isso eh pra sair fora do modal
+document.addEventListener('DOMContentLoaded', () => {
+  const modal = document.getElementById('modalImagens');
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target.id === 'modalImagens') {
+        fecharSeletorImagem();
+      }
+    });
+  }
+});
 //////////////////// FLUXO ANAGRAMAS //////////////////////////////
 window.buscarDados = async function (tipo) {
   let databasePalavra = ""
@@ -387,7 +511,7 @@ window.MostrarDados = async function (id) { // função do ranking
       containerFoto.style.position = "absolute";
       containerFoto.style.right = "2px";
 
-      const imagensAleatorias = ["imagensAleatorias/gatodandojoia.jpeg", "imagensAleatorias/cachorroSalsicha.jpg", "imagensAleatorias/sillycat.webp","imagensAleatorias/cachorroSorridente.jpg","imagensAleatorias/cachorroengraçado.avif","imagensAleatorias/gatoLinguarudo.jpg","imagensAleatorias/gatoEngracado.jpg"]
+      const imagensAleatorias = ["imagensAleatorias/gatodandojoia.jpeg", "imagensAleatorias/cachorroSalsicha.jpg", "imagensAleatorias/sillycat.webp", "imagensAleatorias/cachorroSorridente.jpg", "imagensAleatorias/cachorroengraçado.avif", "imagensAleatorias/gatoLinguarudo.jpg", "imagensAleatorias/gatoEngracado.jpg"]
       const fotoURL = infos.foto || imagensAleatorias[Math.floor(Math.random() * imagensAleatorias.length)];
       const pFoto = document.createElement("img");
       pFoto.src = fotoURL;
@@ -415,17 +539,17 @@ async function criarPlacarProprio(email) {
   try {
     const pesquisa = query(collection(db, "usuarios"), where("email", "==", email));
     const snapshot = await getDocs(pesquisa);
-    const imagensAleatorias = ["imagensAleatorias/gatodandojoia.jpeg", "imagensAleatorias/cachorroSalsicha.jpg", "imagensAleatorias/sillycat.webp","imagensAleatorias/cachorroSorridente.jpg","imagensAleatorias/cachorroengraçado.avif","imagensAleatorias/gatoLinguarudo.jpg","imagensAleatorias/gatoEngracado.jpg"]
+    const imagensAleatorias = ["imagensAleatorias/gatodandojoia.jpeg", "imagensAleatorias/cachorroSalsicha.jpg", "imagensAleatorias/sillycat.webp", "imagensAleatorias/cachorroSorridente.jpg", "imagensAleatorias/cachorroengraçado.avif", "imagensAleatorias/gatoLinguarudo.jpg", "imagensAleatorias/gatoEngracado.jpg"]
     snapshot.forEach(doc => {
       const dados = doc.data();
       const fotoURL = dados.foto || imagensAleatorias[Math.floor(Math.random() * imagensAleatorias.length)];
-      document.getElementById("nomeUsuario").textContent = "Nome:"+dados.nome
-      document.getElementById("dataInscricao").textContent = "Membro desde:"+dados.criadoEm || hoje
-      document.getElementById("tempoHoje").textContent = "Tempo Hoje:"+dados.tempo
-      document.getElementById("pontosFacilPlacar").textContent = "Pontos Fácil:"+dados.pontosFaceis
-      document.getElementById("pontosMedioPlacar").textContent = "Pontos Médio:"+dados.pontosMedios
-      document.getElementById("pontosDificilPlacar").textContent = "Pontos Difícil:"+dados.pontosDificies
-      document.getElementById("foto").src = fotoURL 
+      document.getElementById("nomeUsuario").textContent = "Nome:" + dados.nome
+      document.getElementById("dataInscricao").textContent = "Membro desde:" + dados.criadoEm || hoje
+      document.getElementById("tempoHoje").textContent = "Tempo Hoje:" + dados.tempo
+      document.getElementById("pontosFacilPlacar").textContent = "Pontos Fácil:" + dados.pontosFaceis
+      document.getElementById("pontosMedioPlacar").textContent = "Pontos Médio:" + dados.pontosMedios
+      document.getElementById("pontosDificilPlacar").textContent = "Pontos Difícil:" + dados.pontosDificies
+      document.getElementById("foto").src = fotoURL
     });
 
   } catch (error) {
@@ -583,7 +707,7 @@ window.LoginGoogle = async function () {
     dados = docSnap.data();
     fecharX();
     FecharJanelaAbrirGaveta();
-    alert("Bem vindo!," + user.displayName)
+    alert("Bem vindo! " + user.displayName)
     return dados;
 
   } catch (err) {
@@ -702,7 +826,7 @@ window.dica = function () {
     campo.parentElement.style.backgroundColor = '#6e6e6eff';
     campo.parentElement.querySelector('span').style.color = 'white';
   } else {
-    campo.parentElement.style.backgroundColor = '#e9b8edff';  
+    campo.parentElement.style.backgroundColor = '#e9b8edff';
     campo.parentElement.style.boxShadow = "0 6px 12px rgba(0, 0, 0, 0.25), 4px 4px 0px #e9b8edff";
   } campo.parentElement.style.animationName = "aoPedirDica"
 }

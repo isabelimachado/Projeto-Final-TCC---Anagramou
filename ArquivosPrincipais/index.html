@@ -11,6 +11,7 @@
   <link rel="stylesheet" type="text/css" href="estilo.css">
   <script type="module" src="controller.js"></script>
 </head>
+
 <body onload="buscarDados(1); MostrarDados(1)">
 
   <header class="cabecalho">
@@ -236,7 +237,7 @@
       }
     }
     //pra quando clicar fora do modal
-   document.addEventListener('click', function (event) {
+    document.addEventListener('click', function (event) {
       const login = document.getElementById('Login');
       const registro = document.getElementById('Registro');
       const instrucoes = document.getElementById('Instrucoes');
@@ -261,11 +262,12 @@
 
         if (instrucoes && !instrucoes.classList.contains('oculto')) {
           const conteudo = instrucoes.querySelector('.conteudo-instrucoes');
-          const botaoInstrucoes = event.target.closest('.botao-icone'); 
+          const botaoInstrucoes = event.target.closest('.botao-icone');
           if (conteudo && !conteudo.contains(event.target) && !botaoInstrucoes) {
             instrucoes.classList.add('oculto');
           }
         }
+
       }, 10);
     });
   </script>
@@ -278,43 +280,58 @@
 
     <h2>RANKING GLOBAL</h2>
     <div class="verproprioplacar" onclick="abrirPlacarProprio()" id="placarAuxiliar">
-      <i class="fa-solid fa-user"></i>
+      <i class="fa-solid fa-user" style="font-size: 30px; position: relative; right: 15px;"></i>
       <span>Acessar perfil</span>
     </div>
 
   </div>
   <div id="placarProprio">
-    <button class="botao-sair" onclick="fecharPlacarProprio()">✖</button><br>
-    <h2 style="text-align: center;">MEU PERFIL</h2><br>
+    <button class="botao-sair" onclick="fecharPlacarProprio()">✖</button>
+    <h2>MEU PERFIL</h2>
+
     <div class="conteudo-placar">
       <div class="esquerdo">
-        <img id="foto" src="" />
-        <span id="nomeUsuario">Nome: </span><br>
-        <span id="dataInscricao">Inscrito desde: jan/2023</span>
+        <div class="foto-container" onclick="abrirSeletorImagem()">
+          <img id="foto" src="https://via.placeholder.com/120" />
+          <div class="foto-overlay"></div>
+        </div>
+        <div class="info">
+          <span id="nomeUsuario">Nome: Usuário</span>
+          <span id="dataInscricao">Membro desde: 01/10/2025</span>
+        </div>
       </div>
 
       <div class="informacoess">
-
         <div class="direito">
           <h3>TEMPO</h3>
-          <span id="tempoHoje">Tempo: --</span>
-          <span id="melhorTempo">Melhor Tempo: --</span><br>
+          <span id="tempoHoje">Tempo Hoje: --</span>
+          <span id="melhorTempo">Melhor Tempo: --</span>
         </div>
-
-
+        <div class="direito">
           <h3>PONTUAÇÃO</h3>
-          <span id="pontosFacilPlacar">Fácil: --</span><br>
-          <span id="pontosMedioPlacar">Médio: --</span><br>
-          <span id="pontosDificilPlacar">Difícil: ***</span><br>
-          <span id="melhorPontuacao">Melhor Pontuação: ***</span><br>
+          <span id="pontosFacilPlacar">Fácil: --</span>
+          <span id="pontosMedioPlacar">Médio: --</span>
+          <span id="pontosDificilPlacar">Difícil: --</span>
+          <span id="melhorPontuacao">Melhor: --</span>
         </div>
       </div>
     </div>
-
-  <!-- <label>Cole um URL aqui para trocar sua imagem!</label>
-    <input type="url" onclick="mudarImagem()" name="urlImagem" id="urlImagem"> -->
   </div>
 
+  <div id="modalImagens">
+    <div class="modal-conteudo">
+      <button class="botao-fechar-modal" onclick="fecharSeletorImagem()">✖</button>
+      <h3>Escolha sua foto de perfil</h3>
+
+      <div class="grid-imagens" id="gridImagens"></div>
+
+      <div class="url-personalizada">
+        <h4>Ou use uma URL personalizada:</h4>
+        <input type="text" id="urlImagem" placeholder="Cole a URL da imagem aqui (jpg, png, webp)">
+        <button class="botao-confirmar" onclick="confirmarImagem()">Confirmar Alteração</button>
+      </div>
+    </div>
+  </div>
   </div>
 
 </html>
