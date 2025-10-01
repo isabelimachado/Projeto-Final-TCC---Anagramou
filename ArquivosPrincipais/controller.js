@@ -292,7 +292,7 @@ document.addEventListener("DOMContentLoaded", () => {
           return
         }
         timer++;
-        if (listaAchou.length === 1 && checagemJaAcertou == false || desistiu) {
+        if (listaAchou.length === 6 && checagemJaAcertou == false || desistiu) {
           document.getElementById("input-jogar").style.display = "none"
           checagemJaAcertou = true;
           let container = document.getElementById("divdobrayan");
