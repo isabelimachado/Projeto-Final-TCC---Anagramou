@@ -38,7 +38,7 @@ const anagrama3 = document.getElementById("p3");
 const anagrama4 = document.getElementById("p4");
 const anagrama5 = document.getElementById("p5");
 const anagrama6 = document.getElementById("p6");
-
+const hoje = new Date().toISOString().split("T")[0];
 if (window.location.pathname === "/index.html") {
   console.log("index.");
   pontos = "pontosFaceis"
@@ -121,7 +121,6 @@ window.retornarPalavras = function () {
   console.log(container.style.animationName)
   container.style.animationName = "containerGanhar";
   console.log(container.style.animationName)
-  container.style.backgroundColor = "#ffe6f8"
 }
 //////////////////// FLUXO ANAGRAMAS //////////////////////////////
 window.buscarDados = async function (tipo) {
@@ -212,6 +211,7 @@ window.desistir = function () {
   }
 }
 window.revelarTudo = async function (email) {
+  console.log(email)
   try {
     const pesquisa = query(
       collection(db, "usuarios"),
@@ -387,7 +387,7 @@ window.MostrarDados = async function (id) { // função do ranking
       containerFoto.style.position = "absolute";
       containerFoto.style.right = "2px";
 
-      const imagensAleatorias = ["imagensAleatorias/gatodandojoia.jpeg", "imagensAleatorias/imagempadrao.webp", "imagensAleatorias/sillycat.webp"]
+      const imagensAleatorias = ["imagensAleatorias/gatodandojoia.jpeg", "imagensAleatorias/cachorroSalsicha.jpg", "imagensAleatorias/sillycat.webp","imagensAleatorias/cachorroSorridente.jpg","imagensAleatorias/cachorroengraçado.avif","imagensAleatorias/gatoLinguarudo.jpg","imagensAleatorias/gatoEngracado.jpg"]
       const fotoURL = infos.foto || imagensAleatorias[Math.floor(Math.random() * imagensAleatorias.length)];
       const pFoto = document.createElement("img");
       pFoto.src = fotoURL;
@@ -415,16 +415,17 @@ async function criarPlacarProprio(email) {
   try {
     const pesquisa = query(collection(db, "usuarios"), where("email", "==", email));
     const snapshot = await getDocs(pesquisa);
-    const imagensAleatorias = ["imagensAleatorias/gatodandojoia.jpeg", "imagensAleatorias/imagempadrao.webp", "imagensAleatorias/sillycat.webp"]
+    const imagensAleatorias = ["imagensAleatorias/gatodandojoia.jpeg", "imagensAleatorias/cachorroSalsicha.jpg", "imagensAleatorias/sillycat.webp","imagensAleatorias/cachorroSorridente.jpg","imagensAleatorias/cachorroengraçado.avif","imagensAleatorias/gatoLinguarudo.jpg","imagensAleatorias/gatoEngracado.jpg"]
     snapshot.forEach(doc => {
       const dados = doc.data();
       const fotoURL = dados.foto || imagensAleatorias[Math.floor(Math.random() * imagensAleatorias.length)];
-      document.getElementById("nomeUsuario").textContent = dados.nome
-      document.getElementById("tempoHoje").textContent = dados.tempo
-      document.getElementById("pontosFacilPlacar").textContent = dados.pontosFaceis
-      document.getElementById("pontosMedioPlacar").textContent = dados.pontosMedios
-      document.getElementById("pontosDificilPlacar").textContent = dados.pontosDificies
-      document.getElementById("foto").src = fotoURL
+      document.getElementById("nomeUsuario").textContent = "Nome:"+dados.nome
+      document.getElementById("dataInscricao").textContent = "Membro desde:"+dados.criadoEm || hoje
+      document.getElementById("tempoHoje").textContent = "Tempo Hoje:"+dados.tempo
+      document.getElementById("pontosFacilPlacar").textContent = "Pontos Fácil:"+dados.pontosFaceis
+      document.getElementById("pontosMedioPlacar").textContent = "Pontos Médio:"+dados.pontosMedios
+      document.getElementById("pontosDificilPlacar").textContent = "Pontos Difícil:"+dados.pontosDificies
+      document.getElementById("foto").src = fotoURL 
     });
 
   } catch (error) {
@@ -467,7 +468,8 @@ async function registro(email, nome, senha, tempo, seAcertou, totalPontos, id) {
         tempo: tempo,
         email: email,
         JaAcertouHojeFacil: seAcertou,
-        pontosFaceis: totalPontos
+        pontosFaceis: totalPontos,
+        criadoEm: hoje
       });
     }
     if (id === 2) {
@@ -476,7 +478,8 @@ async function registro(email, nome, senha, tempo, seAcertou, totalPontos, id) {
         tempo: tempo,
         email: email,
         JaAcertouHojeMedio: seAcertou,
-        pontosMedios: totalPontos
+        pontosMedios: totalPontos,
+        criadoEm: hoje
       });
     }
     if (id === 3) {
@@ -485,7 +488,8 @@ async function registro(email, nome, senha, tempo, seAcertou, totalPontos, id) {
         tempo: tempo,
         email: email,
         JaAcertouHojeDificil: seAcertou,
-        pontosDificies: totalPontos
+        pontosDificies: totalPontos,
+        criadoEm: hoje
       });
     }
 
@@ -570,7 +574,8 @@ window.LoginGoogle = async function () {
         email: user.email,
         foto: user.photoURL,
         tempo: document.getElementById("timeDisplay").textContent,
-        seAcertou: checagemJaAcertou
+        JaAcertouHojeFacil: checagemJaAcertou,
+        criadoEm: hoje
       });
       docSnap = await getDoc(docRef)
     }
@@ -720,11 +725,11 @@ window.mudarImagem = async function () {
 
 }
 // FUNÇÃO EXTRA DE TROCAR IMAGEM!
-document.addEventListener("DOMContentLoaded", () => {
+/* document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("urlImagem").addEventListener("keydown", function (e) {
     if (e.key === "Enter") {
       e.preventDefault();
       mudarImagem()
     }
   });
-});
+}); */
