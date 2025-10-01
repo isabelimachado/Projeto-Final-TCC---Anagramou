@@ -857,8 +857,9 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 10px;
 }
+
+
 
 #placarProprio label {
   font-weight: bold;
