@@ -2,7 +2,7 @@ const admin = require('firebase-admin');
 const serviceAccount = require('./seguranca.json');
 
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-const genAI = new GoogleGenerativeAI("AIzaSyCMozEyqIb-VR62uMWtylxYpzNtTPxrzzQ");
+const genAI = new GoogleGenerativeAI("AIzaSyAMKZiXnJVL0fHZODpzmxhd9TGHSxEhBT8");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
@@ -17,7 +17,8 @@ async function exemplo(a1, a2, a3, a4, a5, a6,database) {
   const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
   const palavras = [a1, a2, a3, a4, a5, a6];
-  const prompt = `Dê um sinônimo de cada uma dessas palavras, em duas únicas palavra para cada, na mesma ordem, separadas por vírgula, nunca repetindo ele mesmo, sendo um sinônimo fácil em comum, se vir algo muito antigo ou inutilizado, refiltre: ${palavras.join(", ")}`;
+  const prompt = `Forneça apenas um sinônimo simples e moderno para as seguintes palavras, na mesma ordem, com exatamente duas palavras por item, separados por vírgula. Não adicione explicações, quebras de linha, nem texto extra. Apenas os sinônimos: ${palavras.join(", ")}`;
+
   
   try {
     const result = await model.generateContent(prompt);
@@ -124,4 +125,4 @@ async function procurarDadosDificil() {
 
 procurarDadosFaceis();
 procurarDadosMedio();
-procurarDadosDificil();
+procurarDadosDificil(); 

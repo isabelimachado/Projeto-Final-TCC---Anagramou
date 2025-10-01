@@ -488,6 +488,7 @@ body {
     margin: 10px auto 50px auto;
     color: black;
     padding: 20px;
+    animation-duration: 0.7s;
 }
 
 .divdapalavra {
@@ -901,13 +902,13 @@ body {
     }
 }
 
-@keyframes containerGirar {
+@keyframes containerGanhar {
     from {
-        transform: rotateX(360deg);
+        transform: rotateY(0deg);
     }
 
     to {
-        transform: rotateX(0deg);
+        transform: rotateY(360deg);
     }
 }
 

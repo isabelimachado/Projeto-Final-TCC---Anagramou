@@ -92,7 +92,6 @@ window.fecharGaveta = function () {
 window.abrirPlacarProprio = function () {
   document.getElementById("placarProprio").classList.add("aberto");
 };
-
 window.fecharPlacarProprio = function () {
   document.getElementById("placarProprio").classList.remove("aberto");
 };
@@ -119,7 +118,9 @@ window.retornarPalavras = function () {
   document.getElementById("campos5").style.display = "flex";
   document.getElementById("campos6").style.display = "flex";
   const container = document.getElementById("divdobrayan");
-  container.style.animationName = "containerGirar";
+  console.log(container.style.animationName)
+  container.style.animationName = "containerGanhar";
+  console.log(container.style.animationName)
   container.style.backgroundColor = "#ffe6f8"
 }
 //////////////////// FLUXO ANAGRAMAS //////////////////////////////
@@ -291,7 +292,7 @@ document.addEventListener("DOMContentLoaded", () => {
           return
         }
         timer++;
-        if (listaAchou.length === 6 && checagemJaAcertou == false) {
+        if (listaAchou.length === 1 && checagemJaAcertou == false || desistiu) {
           document.getElementById("input-jogar").style.display = "none"
           checagemJaAcertou = true;
           let container = document.getElementById("divdobrayan");
