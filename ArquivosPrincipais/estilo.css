@@ -922,23 +922,9 @@ body {
     cursor: pointer;
 }
 
-
-
-
-/* #placarProprio label {
-  font-weight: bold;
-  display: block;
-  margin-top: 10px;
+#placarAuxiliar{
+    display: none;
 }
-
-#placarProprio input[type="url"] {
-  width: 100%;
-  padding: 8px;
-  margin-top: 5px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-} */
-
 
 /*muda tudo outra hora */
 #modalImagens {

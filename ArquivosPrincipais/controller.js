@@ -391,6 +391,7 @@ window.InputResposta = function () {
   }
   inputField.value = "";
 };
+
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("input-jogar").addEventListener("keydown", function (e) {
     if (e.key === "Enter") {
@@ -399,6 +400,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
 document.addEventListener("DOMContentLoaded", () => {
   const input = document.getElementById("input-jogar");
   const tempo = document.getElementById("timeDisplay");
@@ -729,9 +731,11 @@ auth.onAuthStateChanged(async (user) => {
     document.getElementById("botao-iconeID").removeAttribute("onclick");
     document.getElementById("iconeEntrar").className = "fa-solid fa-arrow-right-from-bracket";
     document.getElementById("botao-iconeID").addEventListener("click", sair);
+    document.getElementById("placarAuxiliar").style.display = "in-line"
     revelarTudo(user.email);
   }
 });
+
 async function salvarResultado(guardarTempo, JaAcertou, id) {
   if (!usuario) {
     console.log("Chamando janela pra registro!");
@@ -783,6 +787,7 @@ async function salvarResultado(guardarTempo, JaAcertou, id) {
 window.addEventListener("beforeunload", () => {
   signOut(auth);
 });
+
 window.EnviarRegistro = function (id) {
   const email = document.getElementById("emailRegistro").value;
   const nome = document.getElementById("nomeRegistro").value;
@@ -801,11 +806,13 @@ window.EnviarRegistro = function (id) {
   }
   registro(email, nome, senha, tempo, seAcertou, totalPontos, id);
 };
+
 window.EnviarLogin = function () {
   const email = document.getElementById("emailLogin").value;
   const senha = document.getElementById("senhaLogin").value;
   login(email, senha);
 };
+
 window.dica = function () {
   let lista = [1, 2, 3, 4, 5, 6];
   let camposVazios = lista.filter(i => {
@@ -830,6 +837,7 @@ window.dica = function () {
     campo.parentElement.style.boxShadow = "0 6px 12px rgba(0, 0, 0, 0.25), 4px 4px 0px #e9b8edff";
   } campo.parentElement.style.animationName = "aoPedirDica"
 }
+
 window.mudarImagem = async function () {
   let urlDado = document.getElementById("urlImagem").value
   if (urlDado.includes("jpeg") || urlDado.includes("png") || urlDado.includes("webp") | urlDado.includes("jpg")) {
@@ -848,6 +856,7 @@ window.mudarImagem = async function () {
   }
 
 }
+
 // FUNÇÃO EXTRA DE TROCAR IMAGEM!
 /* document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("urlImagem").addEventListener("keydown", function (e) {
