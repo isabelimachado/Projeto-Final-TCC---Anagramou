@@ -90,10 +90,6 @@ window.fecharGaveta = function () {
 
 }
 window.abrirPlacarProprio = function () {
-  //   if (!usuario) {
-  //   alert("Precisa estar logado para abrir o próprio placar!");
-  //   return;
-  // }
   document.getElementById("placarProprio").classList.add("aberto");
 };
 window.fecharPlacarProprio = function () {
@@ -128,7 +124,7 @@ window.retornarPalavras = function () {
 }
 
 //funcao da galeria
-const imagensDisponiveis = [
+/* const imagensDisponiveis = [
   "imagensAleatorias/gatodandojoia.jpeg",
   "imagensAleatorias/cachorroSalsicha.jpg",
   "imagensAleatorias/sillycat.webp",
@@ -136,9 +132,9 @@ const imagensDisponiveis = [
   "imagensAleatorias/cachorroengraçado.avif",
   "imagensAleatorias/gatoLinguarudo.jpg",
   "imagensAleatorias/gatoEngracado.jpg"
-];
+]; */
 
-let imagemSelecionada = null;
+/* let imagemSelecionada = null;
 
 window.populaGridImagens = function () {
   const grid = document.getElementById('gridImagens');
@@ -155,9 +151,9 @@ window.populaGridImagens = function () {
     img.onclick = () => selecionarImagem(url, img);
     grid.appendChild(img);
   });
-}
+} */
 
-window.selecionarImagem = function (url, elemento) {
+/* window.selecionarImagem = function (url, elemento) {
   document.querySelectorAll('.imagem-opcao').forEach(img => {
     img.classList.remove('selecionada');
   });
@@ -166,9 +162,9 @@ window.selecionarImagem = function (url, elemento) {
   imagemSelecionada = url;
   const inputUrl = document.getElementById('urlImagem');
   if (inputUrl) inputUrl.value = '';
-}
+} */
 
-window.abrirSeletorImagem = function () {
+/* window.abrirSeletorImagem = function () {
   if (!usuario) {
     alert("Você precisa estar logado para alterar a foto!");
     return;
@@ -181,16 +177,16 @@ window.abrirSeletorImagem = function () {
     console.error("Modal não encontrado!");
   }
 }
-
-window.fecharSeletorImagem = function () {
+ */
+/* window.fecharSeletorImagem = function () {
   const modal = document.getElementById('modalImagens');
   if (modal) {
     modal.classList.remove('ativo');
   }
   imagemSelecionada = null;
 }
-
-window.confirmarImagem = async function () {
+ */
+/* window.confirmarImagem = async function () {
   if (!usuario) {
     alert("Você precisa estar logado!");
     return;
@@ -234,9 +230,9 @@ window.confirmarImagem = async function () {
     console.error("Erro ao atualizar imagem:", err);
     alert("Erro ao atualizar a imagem. Tente novamente.");
   }
-}
+} */
 //isso eh pra sair fora do modal
-document.addEventListener('DOMContentLoaded', () => {
+/* document.addEventListener('DOMContentLoaded', () => {
   const modal = document.getElementById('modalImagens');
   if (modal) {
     modal.addEventListener('click', (e) => {
@@ -245,7 +241,10 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
-});
+}); */
+
+
+
 //////////////////// FLUXO ANAGRAMAS //////////////////////////////
 window.buscarDados = async function (tipo) {
   let databasePalavra = ""
@@ -784,6 +783,7 @@ async function salvarResultado(guardarTempo, JaAcertou, id) {
     console.error("Erro ao atualizar:", err);
   }
 }
+
 window.addEventListener("beforeunload", () => {
   signOut(auth);
 });
