@@ -1,9 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 import { getFirestore, collection, doc, getDoc, getDocs, query, where, orderBy, setDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js';
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, setPersistence, browserSessionPersistence, inMemoryPersistence, signInWithRedirect } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js';
-// IA GEMINI
-const API_KEY = "AIzaSyCMozEyqIb-VR62uMWtylxYpzNtTPxrzzQ";
-const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 // FUNÇÃO DA PALAVRA DO DIA//
 const firebaseConfig = {
   apiKey: "AIzaSyByESGl7b8-X74bPX3GXpArf5SixfEQ_Ew",
