@@ -806,24 +806,35 @@ body {
 #placarProprio {
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease;
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 20px;
+    transform: translate(-50%, -50%) scale(0.95);
+    background: linear-gradient(135deg, #a885c9, #7d5fa7);
+    border-radius: 16px;
+    padding: 24px;
     z-index: 2000;
-    color: #020101;
+    color: #fff;
     width: 90%;
     max-width: 600px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(6px);
 }
 
 #placarProprio.aberto {
     opacity: 1;
     pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+#placarProprio h2 {
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #fff;
+    letter-spacing: 1px;
 }
 
 .conteudo-placar {
@@ -833,35 +844,40 @@ body {
     margin-bottom: 20px;
 }
 
-.esquerdo img {
-    width: 140px;
-    height: 140px;
-    border-radius: 40px;
-    object-fit: cover;
-    border:solid 3px rgb(185, 182, 182);
-    margin-bottom: 10px;
-    background-color: whitesmoke;
-}
-
-
 .esquerdo {
     flex: 1;
     min-width: 180px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 10px;
-    border-radius: 10px;
-    background-color: #007bff;
+    padding: 14px;
+    border-radius: 12px;
+    background: #ffffff1a;
+}
+
+.esquerdo img {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: solid 3px #fff;
+    margin-bottom: 10px;
+    background-color: #f8f8f8;
+    transition: transform 0.2s ease;
+}
+
+.esquerdo img:hover {
+    transform: scale(1.05);
 }
 
 .info {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    
+    color: #f0eaf7;
+    font-size: 15px;
+    gap: 4px;
 }
-
 
 .direito {
     flex: 2;
@@ -870,15 +886,44 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background-color: #007bff;
-    border-radius: 10px;
-    padding-left: 20px;
-    padding-top: 10px;
+    background: #ffffff1f;
+    border-radius: 12px;
+    padding: 15px 20px;
+    color: #fff;
+    box-shadow: inset 0 2px 6px #00000026;
 }
 
-#nomeUsuario{
-    font-size: 17px;
+.direito h3 {
+    margin-bottom: 8px;
+    font-size: 18px;
+    color: #ffe9ff;
+    font-weight: bold;
+    padding-bottom: 4px;
 }
+
+.direito span {
+    margin: 2px 0;
+    font-size: 15px;
+}
+
+#nomeUsuario {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.botao-sair {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+
+
 
 /* #placarProprio label {
   font-weight: bold;
@@ -904,10 +949,9 @@ body {
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.8);
-  z-index: 1000;
   align-items: center;
   justify-content: center;
-  z-index: 1001;
+  z-index: 3000;
 }
 
 #modalImagens.ativo {
@@ -926,9 +970,10 @@ body {
 }
 
 .modal-conteudo h3 {
-  color: #667eea;
+  color: #a885c9;
   margin-bottom: 15px;
   font-size: 20px;
+  font-weight: bold;
   text-align: center;
 }
 
@@ -936,14 +981,13 @@ body {
   position: absolute;
   top: 10px;
   right: 10px;
-  background: #ff4757;
-  color: white;
+  background: none;
+  color: rgb(0, 0, 0);
   border: none;
   width: 25px;
   height: 25px;
-  border-radius: 50%;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 25px;
 }
 
 .grid-imagens {
@@ -954,7 +998,7 @@ body {
 
 .imagem-opcao {
   width: 100%;
-  height: 80px;
+  height: 90px;
   object-fit: cover;
   border-radius: 8px;
   cursor: pointer;
@@ -963,11 +1007,11 @@ body {
 
 .imagem-opcao:hover {
   transform: scale(1.05);
-  border-color: #667eea;
+  border-color: #8c6bac;
 }
 
 .imagem-opcao.selecionada {
-  border-color: #667eea;
+  border-color: #8c6bac;
 }
 
 .url-personalizada {
@@ -988,7 +1032,7 @@ body {
 .botao-confirmar {
   width: 100%;
   padding: 12px;
-  background: #667eea;
+  background: #8c6bac;
   color: white;
   border: none;
   border-radius: 8px;
@@ -1012,6 +1056,7 @@ body {
   transform: scale(1.05);
 }
 
+/*div do cursor do pincel*/
 .foto-overlay {
   position: absolute;
   top: 0;

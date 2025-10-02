@@ -1,18 +1,12 @@
-2- arrumar o style dos campos -> tb melhora tema escuro (ok)
 
 9- melhora o estilo em geral -> segundo a cris
 
-lá no final qnd for apresenta pra banca, apresentar a nossa motivação pro projeto e td mais -> talvez fazer um slidezinho? -> claro
-
-13- se sobrar muitooooo tempo altera os nomes das classes pra fica bonitinho e organizar o style(vai ser dificilkkkk) -> mt trampo no back ta ;-; -> puts vdd, mas so coisa q nao envolva o back ent
 
 14-talvez melhora a paleta de cores? nao sei algo me incomoda - > me incomoda algo no tem claro sla -> ideias?
 
-15-arruma a div do usuario no placar
+15-arruma a div do usuario no placar -> so o formato da foto e mudar para TEMA ESCURO
 
-16-adiciona na instruções que acina do campo é uma dica da palavra do anagrama
 
 coisas arrumadas:
 
 IA do gemini pega mas as vezes retorna uns negocios nd a ver mas ok     ;_;
-z
