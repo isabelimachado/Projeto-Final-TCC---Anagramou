@@ -358,12 +358,6 @@ window.revelarTudo = async function (email) {
   }
 }
 window.InputResposta = function () {
-  if (desistiu) {
-    document.getElementById("input-jogar").addEventListener("mousedown", function (e) {
-      this.disabled = true;
-    });
-    return
-  }
   const inputField = document.getElementById("input-jogar");
   const input = inputField.value.toLowerCase().trim();
   const idx = listaAnagramas.indexOf(input);
@@ -418,11 +412,7 @@ document.addEventListener("DOMContentLoaded", () => {
           document.getElementById("input-jogar").style.display = "none"
           checagemJaAcertou = true;
           let container = document.getElementById("divdobrayan");
-          if (container) {
-            console.log("existe")
-          } else {
-            console.log("nao existe")
-          }
+          console.log(desistiu);
           container.style.animationName = "aoAcertar";
           document.getElementById("campos1").style.display = "none";
           document.getElementById("campos2").style.display = "none";
@@ -439,6 +429,7 @@ document.addEventListener("DOMContentLoaded", () => {
           novo.src = "logo.ico"
           setTimeout(() => retornarPalavras(), 2000);
           setTimeout(() => container.removeChild(novo), 2000)
+      
           setTimeout(() => salvarResultado(tempo.textContent, checagemJaAcertou, pontos), 4000);
           clearInterval(intervalo);
           intervalo = null;
@@ -461,71 +452,81 @@ window.MostrarDados = async function (id) { // função do ranking
       colecao = "pontosDificies"
       break;
   }
+ /*  const usuariosCol = collection(db, "usuarios");
+
+const unsubscribe = onSnapshot(usuariosCol, (querySnapshot) => {
+  querySnapshot.forEach((doc) => {
+    console.log(doc.id, doc.data());
+  });
+}) */
+
   try {
     const usuariosRef = collection(db, "usuarios");
     const q = query(usuariosRef, orderBy(colecao, "desc"));
     const querySnapshot = await getDocs(q);
-    let posicao = 1; //variavel pra mostra posicao do jogado
-    querySnapshot.forEach(doc => {
-      const infos = doc.data();
-      if (infos[colecao] <= 0) {
-        return
-      }
-      const divPlayer = document.createElement("div");
-      divPlayer.id = "divJogador"; //div que fica o fundo com nome e tempo do jogador
-
-      const posicaoSpan = document.createElement("span");
-      posicaoSpan.className = "jogador-posicao"; //span pra mostra a posicao 
-      if (posicao === 1) posicaoSpan.classList.add("primeiro"); //se tiver na posicao 1 vai adicionar na classe 1 e assim por diante
-      else if (posicao === 2) posicaoSpan.classList.add("segundo");
-      else if (posicao === 3) posicaoSpan.classList.add("terceiro");
-      if (posicao === 1) {
-        posicaoSpan.textContent = "🥇"
-      }
-      else if (posicao === 2) {
-        posicaoSpan.textContent = "🥈"
-      }
-      else if (posicao === 3) {
-        posicaoSpan.textContent = "🥉"
-      } else {
-        posicaoSpan.textContent = posicao;
-      }
-      //coloca o conteudo da posicao dentro do span
-      //aqui eh so informaçoes do jogador: tempo posicao e ome
-      const infoDiv = document.createElement("div");
-
-      const pNome = document.createElement("p");
-      pNome.className = "jogador-nome";
-      pNome.textContent = infos.nome;
-
-      const pTempo = document.createElement("p");
-      pTempo.className = "jogador-tempo";
-      pTempo.textContent = "Pontos: " + Math.round(infos[colecao])
-
-      const containerFoto = document.createElement("div");
-      containerFoto.style.width = "125px";
-      containerFoto.style.height = "100px";
-      containerFoto.style.borderRadius = "60px"
-      containerFoto.style.position = "absolute";
-      containerFoto.style.right = "2px";
-
-      const imagensAleatorias = ["imagensAleatorias/gatodandojoia.jpeg", "imagensAleatorias/cachorroSalsicha.jpg", "imagensAleatorias/sillycat.webp", "imagensAleatorias/cachorroSorridente.jpg", "imagensAleatorias/cachorroengraçado.avif", "imagensAleatorias/gatoLinguarudo.jpg", "imagensAleatorias/gatoEngracado.jpg"]
-      const fotoURL = infos.foto || imagensAleatorias[Math.floor(Math.random() * imagensAleatorias.length)];
-      const pFoto = document.createElement("img");
-      pFoto.src = fotoURL;
-      pFoto.className = "foto-ranking"
-
-      infoDiv.appendChild(pNome);
-      infoDiv.appendChild(pTempo);
-
-      divPlayer.appendChild(posicaoSpan);
-      divPlayer.appendChild(infoDiv);
-      divPlayer.appendChild(containerFoto)
-
-      containerFoto.appendChild(pFoto)
-      document.getElementById("ranking").appendChild(divPlayer);
-
-      posicao++; // sempre vai ter mais posicoes
+    let posicao = 1; //variavel pra mostra posicao do jogador
+    const retorno  = onSnapshot(usuariosRef,(querySnapshot) =>{
+      querySnapshot.forEach(doc => {
+        const infos = doc.data();
+        if (infos[colecao] <= 0) {
+          return
+        }
+        const divPlayer = document.createElement("div");
+        divPlayer.id = "divJogador"; //div que fica o fundo com nome e tempo do jogador
+  
+        const posicaoSpan = document.createElement("span");
+        posicaoSpan.className = "jogador-posicao"; //span pra mostra a posicao 
+        if (posicao === 1) posicaoSpan.classList.add("primeiro"); //se tiver na posicao 1 vai adicionar na classe 1 e assim por diante
+        else if (posicao === 2) posicaoSpan.classList.add("segundo");
+        else if (posicao === 3) posicaoSpan.classList.add("terceiro");
+        if (posicao === 1) {
+          posicaoSpan.textContent = "🥇"
+        }
+        else if (posicao === 2) {
+          posicaoSpan.textContent = "🥈"
+        }
+        else if (posicao === 3) {
+          posicaoSpan.textContent = "🥉"
+        } else {
+          posicaoSpan.textContent = posicao;
+        }
+        //coloca o conteudo da posicao dentro do span
+        //aqui eh so informaçoes do jogador: tempo posicao e ome
+        const infoDiv = document.createElement("div");
+  
+        const pNome = document.createElement("p");
+        pNome.className = "jogador-nome";
+        pNome.textContent = infos.nome;
+  
+        const pTempo = document.createElement("p");
+        pTempo.className = "jogador-tempo";
+        pTempo.textContent = "Pontos: " + Math.round(infos[colecao])
+  
+        const containerFoto = document.createElement("div");
+        containerFoto.style.width = "125px";
+        containerFoto.style.height = "100px";
+        containerFoto.style.borderRadius = "60px"
+        containerFoto.style.position = "absolute";
+        containerFoto.style.right = "2px";
+  
+        const imagensAleatorias = ["imagensAleatorias/gatodandojoia.jpeg", "imagensAleatorias/cachorroSalsicha.jpg", "imagensAleatorias/sillycat.webp", "imagensAleatorias/cachorroSorridente.jpg", "imagensAleatorias/cachorroengraçado.avif", "imagensAleatorias/gatoLinguarudo.jpg", "imagensAleatorias/gatoEngracado.jpg"]
+        const fotoURL = infos.foto || imagensAleatorias[Math.floor(Math.random() * imagensAleatorias.length)];
+        const pFoto = document.createElement("img");
+        pFoto.src = fotoURL;
+        pFoto.className = "foto-ranking"
+  
+        infoDiv.appendChild(pNome);
+        infoDiv.appendChild(pTempo);
+  
+        divPlayer.appendChild(posicaoSpan);
+        divPlayer.appendChild(infoDiv);
+        divPlayer.appendChild(containerFoto)
+  
+        containerFoto.appendChild(pFoto)
+        document.getElementById("ranking").appendChild(divPlayer);
+  
+        posicao++; // sempre vai ter mais posicoes
+      });
     });
   } catch (err) {
     console.error("Achei nada!!", err);
