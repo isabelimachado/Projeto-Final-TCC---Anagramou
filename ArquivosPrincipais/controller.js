@@ -1,9 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 import { getFirestore, collection, doc, getDoc, getDocs, query, where, orderBy, setDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js';
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, setPersistence, browserSessionPersistence, inMemoryPersistence, signInWithRedirect } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js';
-// IA GEMINI
-const API_KEY = "AIzaSyCMozEyqIb-VR62uMWtylxYpzNtTPxrzzQ";
-const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 // FUNÇÃO DA PALAVRA DO DIA//
 const firebaseConfig = {
   apiKey: "AIzaSyByESGl7b8-X74bPX3GXpArf5SixfEQ_Ew",
@@ -90,10 +87,6 @@ window.fecharGaveta = function () {
 
 }
 window.abrirPlacarProprio = function () {
-  //   if (!usuario) {
-  //   alert("Precisa estar logado para abrir o próprio placar!");
-  //   return;
-  // }
   document.getElementById("placarProprio").classList.add("aberto");
 };
 window.fecharPlacarProprio = function () {
@@ -128,7 +121,7 @@ window.retornarPalavras = function () {
 }
 
 //funcao da galeria
-const imagensDisponiveis = [
+/* const imagensDisponiveis = [
   "imagensAleatorias/gatodandojoia.jpeg",
   "imagensAleatorias/cachorroSalsicha.jpg",
   "imagensAleatorias/sillycat.webp",
@@ -136,9 +129,9 @@ const imagensDisponiveis = [
   "imagensAleatorias/cachorroengraçado.avif",
   "imagensAleatorias/gatoLinguarudo.jpg",
   "imagensAleatorias/gatoEngracado.jpg"
-];
+]; */
 
-let imagemSelecionada = null;
+/* let imagemSelecionada = null;
 
 window.populaGridImagens = function () {
   const grid = document.getElementById('gridImagens');
@@ -155,9 +148,9 @@ window.populaGridImagens = function () {
     img.onclick = () => selecionarImagem(url, img);
     grid.appendChild(img);
   });
-}
+} */
 
-window.selecionarImagem = function (url, elemento) {
+/* window.selecionarImagem = function (url, elemento) {
   document.querySelectorAll('.imagem-opcao').forEach(img => {
     img.classList.remove('selecionada');
   });
@@ -166,9 +159,9 @@ window.selecionarImagem = function (url, elemento) {
   imagemSelecionada = url;
   const inputUrl = document.getElementById('urlImagem');
   if (inputUrl) inputUrl.value = '';
-}
+} */
 
-window.abrirSeletorImagem = function () {
+/* window.abrirSeletorImagem = function () {
   if (!usuario) {
     alert("Você precisa estar logado para alterar a foto!");
     return;
@@ -181,16 +174,16 @@ window.abrirSeletorImagem = function () {
     console.error("Modal não encontrado!");
   }
 }
-
-window.fecharSeletorImagem = function () {
+ */
+/* window.fecharSeletorImagem = function () {
   const modal = document.getElementById('modalImagens');
   if (modal) {
     modal.classList.remove('ativo');
   }
   imagemSelecionada = null;
 }
-
-window.confirmarImagem = async function () {
+ */
+/* window.confirmarImagem = async function () {
   if (!usuario) {
     alert("Você precisa estar logado!");
     return;
@@ -234,9 +227,9 @@ window.confirmarImagem = async function () {
     console.error("Erro ao atualizar imagem:", err);
     alert("Erro ao atualizar a imagem. Tente novamente.");
   }
-}
+} */
 //isso eh pra sair fora do modal
-document.addEventListener('DOMContentLoaded', () => {
+/* document.addEventListener('DOMContentLoaded', () => {
   const modal = document.getElementById('modalImagens');
   if (modal) {
     modal.addEventListener('click', (e) => {
@@ -245,7 +238,10 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
-});
+}); */
+
+
+
 //////////////////// FLUXO ANAGRAMAS //////////////////////////////
 window.buscarDados = async function (tipo) {
   let databasePalavra = ""
@@ -362,12 +358,6 @@ window.revelarTudo = async function (email) {
   }
 }
 window.InputResposta = function () {
-  if (desistiu) {
-    document.getElementById("input-jogar").addEventListener("mousedown", function (e) {
-      this.disabled = true;
-    });
-    return
-  }
   const inputField = document.getElementById("input-jogar");
   const input = inputField.value.toLowerCase().trim();
   const idx = listaAnagramas.indexOf(input);
@@ -391,6 +381,7 @@ window.InputResposta = function () {
   }
   inputField.value = "";
 };
+
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("input-jogar").addEventListener("keydown", function (e) {
     if (e.key === "Enter") {
@@ -399,6 +390,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
 document.addEventListener("DOMContentLoaded", () => {
   const input = document.getElementById("input-jogar");
   const tempo = document.getElementById("timeDisplay");
@@ -420,11 +412,7 @@ document.addEventListener("DOMContentLoaded", () => {
           document.getElementById("input-jogar").style.display = "none"
           checagemJaAcertou = true;
           let container = document.getElementById("divdobrayan");
-          if (container) {
-            console.log("existe")
-          } else {
-            console.log("nao existe")
-          }
+          console.log(desistiu);
           container.style.animationName = "aoAcertar";
           document.getElementById("campos1").style.display = "none";
           document.getElementById("campos2").style.display = "none";
@@ -441,6 +429,7 @@ document.addEventListener("DOMContentLoaded", () => {
           novo.src = "logo.ico"
           setTimeout(() => retornarPalavras(), 2000);
           setTimeout(() => container.removeChild(novo), 2000)
+      
           setTimeout(() => salvarResultado(tempo.textContent, checagemJaAcertou, pontos), 4000);
           clearInterval(intervalo);
           intervalo = null;
@@ -463,71 +452,81 @@ window.MostrarDados = async function (id) { // função do ranking
       colecao = "pontosDificies"
       break;
   }
+ /*  const usuariosCol = collection(db, "usuarios");
+
+const unsubscribe = onSnapshot(usuariosCol, (querySnapshot) => {
+  querySnapshot.forEach((doc) => {
+    console.log(doc.id, doc.data());
+  });
+}) */
+
   try {
     const usuariosRef = collection(db, "usuarios");
     const q = query(usuariosRef, orderBy(colecao, "desc"));
     const querySnapshot = await getDocs(q);
-    let posicao = 1; //variavel pra mostra posicao do jogado
-    querySnapshot.forEach(doc => {
-      const infos = doc.data();
-      if (infos[colecao] <= 0) {
-        return
-      }
-      const divPlayer = document.createElement("div");
-      divPlayer.id = "divJogador"; //div que fica o fundo com nome e tempo do jogador
-
-      const posicaoSpan = document.createElement("span");
-      posicaoSpan.className = "jogador-posicao"; //span pra mostra a posicao 
-      if (posicao === 1) posicaoSpan.classList.add("primeiro"); //se tiver na posicao 1 vai adicionar na classe 1 e assim por diante
-      else if (posicao === 2) posicaoSpan.classList.add("segundo");
-      else if (posicao === 3) posicaoSpan.classList.add("terceiro");
-      if (posicao === 1) {
-        posicaoSpan.textContent = "🥇"
-      }
-      else if (posicao === 2) {
-        posicaoSpan.textContent = "🥈"
-      }
-      else if (posicao === 3) {
-        posicaoSpan.textContent = "🥉"
-      } else {
-        posicaoSpan.textContent = posicao;
-      }
-      //coloca o conteudo da posicao dentro do span
-      //aqui eh so informaçoes do jogador: tempo posicao e ome
-      const infoDiv = document.createElement("div");
-
-      const pNome = document.createElement("p");
-      pNome.className = "jogador-nome";
-      pNome.textContent = infos.nome;
-
-      const pTempo = document.createElement("p");
-      pTempo.className = "jogador-tempo";
-      pTempo.textContent = "Pontos: " + Math.round(infos[colecao])
-
-      const containerFoto = document.createElement("div");
-      containerFoto.style.width = "125px";
-      containerFoto.style.height = "100px";
-      containerFoto.style.borderRadius = "60px"
-      containerFoto.style.position = "absolute";
-      containerFoto.style.right = "2px";
-
-      const imagensAleatorias = ["imagensAleatorias/gatodandojoia.jpeg", "imagensAleatorias/cachorroSalsicha.jpg", "imagensAleatorias/sillycat.webp", "imagensAleatorias/cachorroSorridente.jpg", "imagensAleatorias/cachorroengraçado.avif", "imagensAleatorias/gatoLinguarudo.jpg", "imagensAleatorias/gatoEngracado.jpg"]
-      const fotoURL = infos.foto || imagensAleatorias[Math.floor(Math.random() * imagensAleatorias.length)];
-      const pFoto = document.createElement("img");
-      pFoto.src = fotoURL;
-      pFoto.className = "foto-ranking"
-
-      infoDiv.appendChild(pNome);
-      infoDiv.appendChild(pTempo);
-
-      divPlayer.appendChild(posicaoSpan);
-      divPlayer.appendChild(infoDiv);
-      divPlayer.appendChild(containerFoto)
-
-      containerFoto.appendChild(pFoto)
-      document.getElementById("ranking").appendChild(divPlayer);
-
-      posicao++; // sempre vai ter mais posicoes
+    let posicao = 1; //variavel pra mostra posicao do jogador
+    const retorno  = onSnapshot(usuariosRef,(querySnapshot) =>{
+      querySnapshot.forEach(doc => {
+        const infos = doc.data();
+        if (infos[colecao] <= 0) {
+          return
+        }
+        const divPlayer = document.createElement("div");
+        divPlayer.id = "divJogador"; //div que fica o fundo com nome e tempo do jogador
+  
+        const posicaoSpan = document.createElement("span");
+        posicaoSpan.className = "jogador-posicao"; //span pra mostra a posicao 
+        if (posicao === 1) posicaoSpan.classList.add("primeiro"); //se tiver na posicao 1 vai adicionar na classe 1 e assim por diante
+        else if (posicao === 2) posicaoSpan.classList.add("segundo");
+        else if (posicao === 3) posicaoSpan.classList.add("terceiro");
+        if (posicao === 1) {
+          posicaoSpan.textContent = "🥇"
+        }
+        else if (posicao === 2) {
+          posicaoSpan.textContent = "🥈"
+        }
+        else if (posicao === 3) {
+          posicaoSpan.textContent = "🥉"
+        } else {
+          posicaoSpan.textContent = posicao;
+        }
+        //coloca o conteudo da posicao dentro do span
+        //aqui eh so informaçoes do jogador: tempo posicao e ome
+        const infoDiv = document.createElement("div");
+  
+        const pNome = document.createElement("p");
+        pNome.className = "jogador-nome";
+        pNome.textContent = infos.nome;
+  
+        const pTempo = document.createElement("p");
+        pTempo.className = "jogador-tempo";
+        pTempo.textContent = "Pontos: " + Math.round(infos[colecao])
+  
+        const containerFoto = document.createElement("div");
+        containerFoto.style.width = "125px";
+        containerFoto.style.height = "100px";
+        containerFoto.style.borderRadius = "60px"
+        containerFoto.style.position = "absolute";
+        containerFoto.style.right = "2px";
+  
+        const imagensAleatorias = ["imagensAleatorias/gatodandojoia.jpeg", "imagensAleatorias/cachorroSalsicha.jpg", "imagensAleatorias/sillycat.webp", "imagensAleatorias/cachorroSorridente.jpg", "imagensAleatorias/cachorroengraçado.avif", "imagensAleatorias/gatoLinguarudo.jpg", "imagensAleatorias/gatoEngracado.jpg"]
+        const fotoURL = infos.foto || imagensAleatorias[Math.floor(Math.random() * imagensAleatorias.length)];
+        const pFoto = document.createElement("img");
+        pFoto.src = fotoURL;
+        pFoto.className = "foto-ranking"
+  
+        infoDiv.appendChild(pNome);
+        infoDiv.appendChild(pTempo);
+  
+        divPlayer.appendChild(posicaoSpan);
+        divPlayer.appendChild(infoDiv);
+        divPlayer.appendChild(containerFoto)
+  
+        containerFoto.appendChild(pFoto)
+        document.getElementById("ranking").appendChild(divPlayer);
+  
+        posicao++; // sempre vai ter mais posicoes
+      });
     });
   } catch (err) {
     console.error("Achei nada!!", err);
@@ -729,9 +728,11 @@ auth.onAuthStateChanged(async (user) => {
     document.getElementById("botao-iconeID").removeAttribute("onclick");
     document.getElementById("iconeEntrar").className = "fa-solid fa-arrow-right-from-bracket";
     document.getElementById("botao-iconeID").addEventListener("click", sair);
+    document.getElementById("placarAuxiliar").style.display = "in-line"
     revelarTudo(user.email);
   }
 });
+
 async function salvarResultado(guardarTempo, JaAcertou, id) {
   if (!usuario) {
     console.log("Chamando janela pra registro!");
@@ -780,9 +781,11 @@ async function salvarResultado(guardarTempo, JaAcertou, id) {
     console.error("Erro ao atualizar:", err);
   }
 }
+
 window.addEventListener("beforeunload", () => {
   signOut(auth);
 });
+
 window.EnviarRegistro = function (id) {
   const email = document.getElementById("emailRegistro").value;
   const nome = document.getElementById("nomeRegistro").value;
@@ -801,11 +804,13 @@ window.EnviarRegistro = function (id) {
   }
   registro(email, nome, senha, tempo, seAcertou, totalPontos, id);
 };
+
 window.EnviarLogin = function () {
   const email = document.getElementById("emailLogin").value;
   const senha = document.getElementById("senhaLogin").value;
   login(email, senha);
 };
+
 window.dica = function () {
   let lista = [1, 2, 3, 4, 5, 6];
   let camposVazios = lista.filter(i => {
@@ -830,6 +835,7 @@ window.dica = function () {
     campo.parentElement.style.boxShadow = "0 6px 12px rgba(0, 0, 0, 0.25), 4px 4px 0px #e9b8edff";
   } campo.parentElement.style.animationName = "aoPedirDica"
 }
+
 window.mudarImagem = async function () {
   let urlDado = document.getElementById("urlImagem").value
   if (urlDado.includes("jpeg") || urlDado.includes("png") || urlDado.includes("webp") | urlDado.includes("jpg")) {
@@ -848,6 +854,7 @@ window.mudarImagem = async function () {
   }
 
 }
+
 // FUNÇÃO EXTRA DE TROCAR IMAGEM!
 /* document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("urlImagem").addEventListener("keydown", function (e) {
