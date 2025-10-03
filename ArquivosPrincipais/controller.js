@@ -491,7 +491,7 @@ const unsubscribe = onSnapshot(usuariosCol, (querySnapshot) => {
           posicaoSpan.textContent = posicao;
         }
         //coloca o conteudo da posicao dentro do span
-        //aqui eh so informaçoes do jogador: tempo posicao e ome
+        //aqui eh so informaçoes do jogador: tempo posicao e nome
         const infoDiv = document.createElement("div");
   
         const pNome = document.createElement("p");

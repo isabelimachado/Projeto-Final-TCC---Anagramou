@@ -1,10 +1,175 @@
-
-/*so tentativa de deixar o anagramou para mobile*/
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap');
 
 a {
     text-decoration: none;
     color: black;
+}
+
+[data-theme="dark"] {
+    --fundo-principal: #1a1a1a;
+    --texto-principal: #f0f0f0;
+    --botao-fundo: #333333;
+    --borda-ativa: #007bff;
+}
+
+[data-theme="dark"] body,
+[data-theme="dark"] .titulo,
+[data-theme="dark"] .botao-dificuldade,
+[data-theme="dark"] .botao-dificuldade.ativo,
+[data-theme="dark"] .texto-rodape p {
+    color: var(--texto-principal);
+}
+
+[data-theme="dark"] .cabecalho .botao-icone,
+[data-theme="dark"] .rodape {
+    background: #2c2c2c;
+    color: var(--texto-principal);
+}
+
+[data-theme="dark"] .cabecalho .botao-icone:hover,
+[data-theme="dark"] .botao-dificuldade.ativo {
+    background: #444444;
+}
+
+[data-theme="dark"] .rodape {
+    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] .link-rodape {
+    background: #444444;
+    color: var(--texto-principal);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .link-rodape:hover {
+    background: #292b2e;
+    color: whitesmoke;
+}
+
+[data-theme="dark"] .input-autenticacao {
+    background-color: #1a1a1a;
+    color: #f0f0f0;
+    border: 1px solid #555;
+}
+
+[data-theme="dark"] .input-autenticacao:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+}
+
+[data-theme="dark"] .instrucoes {
+    background: rgba(0, 0, 0, 0.85);
+}
+
+[data-theme="dark"] .conteudo-instrucoes {
+    background: var(--fundo-principal);
+    color: #dcdcdc;
+}
+
+[data-theme="dark"] .subtitulo-instrucoes,
+[data-theme="dark"] .anagramas-exemplo {
+    color: #bbbbbb;
+}
+
+[data-theme="dark"] .etapas-instrucoes,
+[data-theme="dark"] .texto-etapa,
+[data-theme="dark"] .numero-etapa {
+    background-color: #3a3a41;
+    color: #dcdcdc;
+}
+
+[data-theme="dark"] .etapa-instrucao {
+    color: #eeeeee;
+}
+
+[data-theme="dark"] .caixa-exemplo {
+    background: #3a3a41;
+    color: #e0e0e0;
+}
+
+[data-theme="dark"] .palavra-exemplo {
+    color: #e4dbbf;
+}
+
+[data-theme="dark"] .botao-sair {
+    background: none;
+    color: white;
+}
+
+[data-theme="dark"] .divdobrayan {
+    background: #2c2c2c;
+}
+
+[data-theme="dark"] .botaoderesposta {
+    background-color: #3b3a3a;
+}
+
+[data-theme="dark"] .botaoderesposta:hover {
+    background-color: #252424;
+}
+
+[data-theme="dark"] #campos1,
+[data-theme="dark"] #campos2,
+[data-theme="dark"] #campos3,
+[data-theme="dark"] #campos4,
+[data-theme="dark"] #campos5,
+[data-theme="dark"] #campos6 {
+    background-color: #faeaeaf8;
+    box-shadow:
+        0 6px 12px rgba(0, 0, 0, 0.25),
+        4px 4px 0px #3d3333;
+}
+
+[data-theme="dark"] #p1,
+[data-theme="dark"] #p2,
+[data-theme="dark"] #p3,
+[data-theme="dark"] #p4,
+[data-theme="dark"] #p5,
+[data-theme="dark"] #p6 {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .botao-dificuldade,
+[data-theme="dark"] #input-jogar,
+[data-theme="dark"] .divdapalavra {
+    background-color: whitesmoke;
+}
+
+[data-theme="dark"] #ranking {
+    background-color: #535353;
+    color: #f0f0f0;
+}
+
+[data-theme="dark"] #ranking h2 {
+    color: #f0f0f0;
+}
+
+[data-theme="dark"] #divJogador {
+    background-color: #2a2a2a;
+    color: #f0f0f0;
+}
+
+[data-theme="dark"] .jogador-posicao {
+    background-color: #444;
+    color: #f0f0f0;
+}
+
+[data-theme="dark"] .jogador-nome {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .jogador-tempo {
+    color: #cccccc;
+}
+
+[data-theme="dark"] .verproprioplacar {
+    background-color: #222;
+    color: #f0f0f0;
+}
+
+[data-theme="dark"] .verproprioplacar i,
+[data-theme="dark"] .verproprioplacar span {
+    color: wheat;
 }
 
 :root {
@@ -23,12 +188,12 @@ body {
     font-family: 'DM Sans', sans-serif;
     background: var(--fundo-principal);
     color: white;
-    min-height: 50px;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    padding: 0 10px;
+    padding: 0;
 }
 
 .cabecalho {
@@ -56,6 +221,7 @@ body {
     cursor: pointer;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: all 0.2s ease;
+    color: #333;
 }
 
 .botao-icone:hover {
@@ -69,31 +235,54 @@ body {
     color: white;
     text-align: center;
     flex: 1;
+    min-width: 200px;
 }
 
 .selecionarDificuldade {
+    width: 100%;
+    display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
     margin: 10px 0 20px;
     border-top: 1px solid rgba(255, 255, 255, 0.3);
-    padding-top: 8px;
+    padding: 10px 15px 0;
 }
 
 .botao-dificuldade {
     padding: 10px 20px;
-    font-size: 14px;
+    border: none;
     border-radius: 6px;
+    background: #e7e4e4;
+    color: #4b4b4b;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
 .rodape {
     width: 100%;
-    padding: 20px 15px;
+    background: #e7e4e4;
     border-radius: 20px 20px 0 0;
+    padding: 20px 15px;
+    margin-top: auto;
     box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.conteudo-rodape {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
 }
 
 .texto-rodape p {
+    color: #333;
     font-size: 14px;
+    margin: 0;
 }
 
 .links-rodape {
@@ -104,8 +293,24 @@ body {
 }
 
 .link-rodape {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #333;
+    text-decoration: none;
+    font-weight: 600;
     font-size: 14px;
+    transition: all 0.3s ease;
     padding: 8px 12px;
+    border-radius: 8px;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.link-rodape:hover {
+    background: #333;
+    color: white;
+    transform: translateY(-2px);
 }
 
 .instrucoes {
@@ -114,10 +319,11 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
+    background: rgba(0, 0, 0, 0.8);
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0, 0, 0, 0.8);
+    opacity: 1;
     z-index: 2000;
 }
 
@@ -128,43 +334,77 @@ body {
 }
 
 .conteudo-instrucoes {
-    width: 95%;
-    max-width: 360px;
     background: #fcfafa;
     padding: 15px;
     border-radius: 12px;
+    width: 95%;
+    max-width: 360px;
     animation: entrada 0.3s ease;
+}
+
+.cabecalho-instrucoes {
+    text-align: center;
+    margin-bottom: 12px;
 }
 
 .titulo-instrucoes {
     font-weight: 1000;
-    font-size: 1.2rem;
-    color: #5d70c4;
     margin-bottom: 6px;
+    color: #5d70c4;
+    font-size: 1.2rem;
 }
 
-.subtitulo-instrucoes,
-.anagramas-exemplo {
+.subtitulo-instrucoes {
     font-size: 11px;
+    color: #333333;
+    font-weight: 500;
 }
 
 .caixa-exemplo {
+    background: #d4c3d8;
+    color: rgb(0, 0, 0);
     padding: 10px;
     border-radius: 10px;
+    text-align: center;
+    margin-bottom: 12px;
 }
 
 .palavra-exemplo {
     font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.anagramas-exemplo {
+    font-size: 11px;
+}
+
+.etapas-instrucoes {
+    margin-bottom: 12px;
+    background-color: #d4c3d8;
+    border-radius: 8px;
 }
 
 .etapa-instrucao {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 10px;
     padding: 10px;
+    transition: all 0.3s ease;
+    color: black;
     font-size: 12px;
 }
 
 .numero-etapa {
+    color: rgb(0, 0, 0);
     width: 20px;
     height: 20px;
+    border-radius: 50%;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 11px;
 }
 
@@ -173,54 +413,133 @@ body {
 }
 
 .botao-comecar-jogo {
+    width: 100%;
     padding: 10px;
-    font-size: 14px;
+    background: #336094;
+    color: white;
+    border: none;
     border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.botao-comecar-jogo:hover {
+    background: #114d81;
+    transform: translateY(-2px);
 }
 
 .input-autenticacao {
+    width: 100%;
     padding: 10px;
-    font-size: 14px;
+    margin-bottom: 12px;
     border-radius: 10px;
+    border: 1px solid #bbb;
+    font-size: 14px;
+    background-color: #f8f8f8;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.input-autenticacao:focus {
+    outline: none;
+    border-color: #5d70c4;
+    box-shadow: 0 0 8px rgba(93, 112, 196, 0.4);
 }
 
 .links {
+    display: flex;
     flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    margin-top: 8px;
 }
 
 .link-registrar,
 .link-google {
-    font-size: 12px;
+    flex: 1;
+    gap: 6px;
     padding: 8px;
+    font-size: 12px;
+    border-radius: 6px;
+    border: 2px solid #336094;
+    background: transparent;
+    color: #336094;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.link-registrar:hover,
+.link-google:hover {
+    background: #336094;
+    color: white;
+}
+
+.botao-sair {
+    font-size: 20px;
+    background-color: #fcfafa;
+    border: none;
+    font-weight: bold;
+    caret-color: transparent;
 }
 
 .divdotimer {
+    position: fixed;
     bottom: 20px;
     right: 20px;
+    z-index: 100;
 }
 
 .timerr {
-    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
     padding: 10px 18px;
+    border-radius: 12px;
+    background-color: #ffffff;
+    color: #333333;
+    font-size: 16px;
+    font-weight: bold;
+    caret-color: transparent;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .divdobrayan {
     width: 90%;
-    height: auto;
-    flex-direction: column;
-    gap: 10px;
+    max-width: 400px;
+    min-height: 280px;
+    background-color: #f1f1f1;
+    border-radius: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin: 10px auto 30px auto;
+    color: black;
     padding: 15px;
+    animation-duration: 0.7s;
 }
 
 .divdapalavra {
     width: 100%;
     max-width: 180px;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
     height: 40px;
+    margin: 0 auto 15px auto;
+    background: #ffffff;
+    border: 2px solid #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .palavradodia {
+    color: #1c2833;
     font-size: 20px;
     letter-spacing: 2px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    font-family: 'Arial Black', Arial, sans-serif;
 }
 
 #campos1,
@@ -229,9 +548,20 @@ body {
 #campos4,
 #campos5,
 #campos6 {
-    width: 45%;
+    background: #9f8db0;
+    color: #f7f4fa;
     height: 45px;
+    width: 45%;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     margin: 5px;
+    box-shadow:
+        0 6px 12px rgba(0, 0, 0, 0.25),
+        4px 4px 0px #8a7a9a;
+    animation-duration: 1s;
 }
 
 #p1,
@@ -240,97 +570,565 @@ body {
 #p4,
 #p5,
 #p6 {
+    display: flex;
+    animation-duration: 1s;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    caret-color: transparent;
     font-size: 14px;
 }
 
 #ranking {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
     max-width: 100%;
+    height: 100vh;
+    background-color: #d9bcf3;
     padding: 20px;
+    box-shadow: -5px 0 25px rgba(0, 0, 0, 0.3);
+    border-left: 3px solid rgba(255, 255, 255, 0.2);
+    overflow-y: auto;
+    z-index: 1000;
+    transition: right 0.6s ease;
+}
+
+#ranking::-webkit-scrollbar {
+    display: none;
+}
+
+#ranking.aberta {
+    right: 0;
 }
 
 .botaoRanking {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #ff4757;
+    color: white;
+    border: none;
+    border-radius: 50%;
     width: 35px;
     height: 35px;
     font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
 }
 
-.verproprioplacar {
-    width: 95%;
-    max-width: 300px;
-    padding: 12px 16px;
-    font-size: 14px;
+.botaoRanking:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(255, 71, 87, 0.4);
 }
 
-#placarProprio {
-    width: 90%;
-    max-width: 320px;
-    padding: 16px;
+#ranking h2 {
+    background-clip: text;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 4px #0000004d;
+    color: #020101;
 }
 
-.galeria {
-    width: 95%;
-    max-width: 360px;
+#divJogador {
+    background: #17202a;
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
 }
 
-.imagenstodas {
-    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+.jogador-posicao {
+    background: #696363;
+    color: white;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 13px;
+    margin-right: 12px;
+    box-shadow: 0 3px 10px rgba(116, 112, 113, 0.3);
 }
 
-.imagem-opcao {
-    height: 70px;
+.jogador-posicao.primeiro {
+    background: #f39c12;
 }
 
-#foto {
-    width: 80px;
-    height: 80px;
+.jogador-posicao.segundo {
+    background: #a5c0c2;
 }
 
-.foto-overlay {
-    width: 80px;
-    height: 80px;
+.jogador-posicao.terceiro {
+    background: #d3540098;
 }
 
-.foto-overlay::before {
-    font-size: 20px;
+.jogador-nome {
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 3px;
+}
+
+.jogador-tempo {
+    font-weight: 500;
+    font-size: 13px;
+}
+
+.foto-ranking {
+    width: 100%;
+    height: 100%;
+    border-radius: 50px;
 }
 
 .inputzao {
+    display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 8px;
+    max-width: 400px;
+    width: 90%;
+    margin: -30px auto 0 auto;
+    position: relative;
+    z-index: 10;
 }
 
 #input-jogar {
+    width: 100%;
     padding: 10px;
+    text-align: center;
     font-size: 14px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.3s ease;
 }
 
 .botaoderesposta {
     width: 100%;
     padding: 10px;
+    background-color: #8b7291;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.botaoderesposta:hover {
+    background-color: #4e3d52;
+}
+
+#mensagemErroRegistro,
+#mensagemErroLogin {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    background-color: #ff4d4f;
+    border-radius: 8px;
+    padding: 10px 15px;
+    font-size: 13px;
+    font-weight: 500;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: none;
+    opacity: 0;
+    transition: opacity 0.4s ease, top 0.4s ease;
+    z-index: 1000;
+}
+
+#mensagemErroRegistro.ativo,
+#mensagemErroLogin.ativo {
+    display: block;
+    opacity: 1;
+    top: 20px;
+}
+
+.novoclasse {
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.verproprioplacar {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translate(-50%, 20px);
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 95%;
+    max-width: 300px;
+    background-color: #f0f0f0;
+    padding: 12px 16px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    z-index: 1000;
+    caret-color: transparent;
     font-size: 14px;
 }
 
-[data-theme="dark"] body,
-[data-theme="dark"] .titulo,
-[data-theme="dark"] .botao-dificuldade,
-[data-theme="dark"] .botao-dificuldade.ativo,
-[data-theme="dark"] .texto-rodape p {
-    color: var(--texto-principal);
+#ranking.aberta .verproprioplacar {
+    opacity: 1;
+    transform: translate(-50%, 0);
 }
 
-[data-theme="dark"] .cabecalho .botao-icone,
-[data-theme="dark"] .rodape {
-    background: #2c2c2c;
-    color: var(--texto-principal);
+#placarProprio {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.95);
+    background: linear-gradient(135deg, #a885c9, #7d5fa7);
+    border-radius: 16px;
+    padding: 16px;
+    z-index: 2000;
+    color: #fff;
+    width: 90%;
+    max-width: 320px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(6px);
 }
 
-[data-theme="dark"] .cabecalho .botao-icone:hover,
-[data-theme="dark"] .botao-dificuldade.ativo {
-    background: #444444;
+#placarProprio.aberto {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
 }
 
-[data-theme="dark"] .rodape {
-    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.6);
+#placarProprio h2 {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #fff;
+    letter-spacing: 1px;
+}
+
+.placar {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.esquerdo {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px;
+    border-radius: 12px;
+    background: #ffffff1a;
+}
+
+.esquerdo img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: solid 3px #fff;
+    margin-bottom: 8px;
+    background-color: #f8f8f8;
+    transition: transform 0.2s ease;
+}
+
+.esquerdo img:hover {
+    transform: scale(1.05);
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #f0eaf7;
+    font-size: 14px;
+    gap: 4px;
+}
+
+.direito {
+    width: 100%;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #ffffff1f;
+    border-radius: 12px;
+    padding: 12px 15px;
+    color: #fff;
+    box-shadow: inset 0 2px 6px #00000026;
+}
+
+.direito h3 {
+    margin-bottom: 6px;
+    font-size: 16px;
+    color: #ffe9ff;
+    font-weight: bold;
+    padding-bottom: 4px;
+}
+
+.direito span {
+    margin: 2px 0;
+    font-size: 14px;
+}
+
+#nomeUsuario {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.verproprioplacar i {
+    font-size: 18px;
+    color: #333;
+}
+
+.verproprioplacar span {
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+}
+
+.botao-sair {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#modalImagens {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    align-items: center;
+    justify-content: center;
+    z-index: 3000;
+}
+
+#modalImagens.ativo {
+    display: flex;
+}
+
+.galeria {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    max-width: 360px;
+    width: 95%;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.galeria h3 {
+    color: #a885c9;
+    margin-bottom: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.botaofechargaleria {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: none;
+    color: rgb(0, 0, 0);
+    border: none;
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    font-size: 22px;
+}
+
+.imagenstodas {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 8px;
+}
+
+.imagem-opcao {
+    width: 100%;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.imagem-opcao:hover {
+    transform: scale(1.05);
+    border-color: #8c6bac;
+}
+
+.imagem-opcao.selecionada {
+    border-color: #8c6bac;
+}
+
+.url-personalizada {
+    margin-top: 12px;
+    padding-top: 8px;
+    border-top: 1px solid #e9ecef;
+}
+
+.url-personalizada input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.confirmarr {
+    width: 100%;
+    padding: 10px;
+    background: #8c6bac;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.foto-container {
+    position: relative;
+    cursor: pointer;
+}
+
+#foto {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid white;
+}
+
+.foto-container:hover #foto {
+    transform: scale(1.05);
+}
+
+.foto-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.foto-container:hover .foto-overlay {
+    opacity: 1;
+}
+
+.foto-overlay::before {
+    content: '✏️';
+    color: white;
+    font-size: 20px;
+}
+
+@keyframes aoAcertar {
+    from {
+        transform: rotateY(0deg);
+    }
+
+    to {
+        transform: rotateY(360deg);
+    }
+}
+
+@keyframes AnimPulando {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes containerGanhar {
+    from {
+        transform: rotateY(0deg);
+    }
+
+    to {
+        transform: rotateY(360deg);
+    }
+}
+
+@keyframes aoPedirDica {
+    from {
+        transform: rotateY(0deg);
+    }
+
+    to {
+        transform: rotateY(360deg);
+    }
+}
+
+@keyframes aoDesistir {
+    from {
+        transform: rotateX(0deg);
+    }
+
+    to {
+        transform: rotateX(360deg);
+    }
+}
+
+@keyframes cair {
+    to {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+}
+
+@keyframes entrada {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 @media screen and (max-width: 480px) {
@@ -353,7 +1151,6 @@ body {
     #campos4,
     #campos5,
     #campos6 {
-        width: 40%;
         height: 40px;
     }
 
@@ -364,5 +1161,66 @@ body {
     #p5,
     #p6 {
         font-size: 12px;
+    }
+
+    .timerr {
+        font-size: 14px;
+        padding: 8px 15px;
+        gap: 8px;
+    }
+
+    .divdotimer {
+        bottom: 15px;
+        right: 15px;
+    }
+
+    #ranking h2 {
+        font-size: 20px;
+    }
+
+    .novoclasse {
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .titulo {
+        font-size: 18px;
+    }
+
+    .cabecalho {
+        padding: 10px;
+    }
+
+    .botao-icone {
+        padding: 5px;
+        font-size: 15px;
+    }
+
+    #campos1,
+    #campos2,
+    #campos3,
+    #campos4,
+    #campos5,
+    #campos6 {
+        height: 38px;
+        width: 44%;
+    }
+
+    #p1,
+    #p2,
+    #p3,
+    #p4,
+    #p5,
+    #p6 {
+        font-size: 11px;
+    }
+
+    .palavradodia {
+        font-size: 16px;
+    }
+
+    .divdobrayan {
+        padding: 10px;
     }
 }
