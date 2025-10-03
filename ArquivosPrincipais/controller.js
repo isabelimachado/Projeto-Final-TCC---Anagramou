@@ -543,12 +543,12 @@ async function criarPlacarProprio(email) {
     snapshot.forEach(doc => {
       const dados = doc.data();
       const fotoURL = dados.foto || imagensAleatorias[Math.floor(Math.random() * imagensAleatorias.length)];
-      document.getElementById("nomeUsuario").textContent = "Nome:" + dados.nome
-      document.getElementById("dataInscricao").textContent = "Membro desde:" + dados.criadoEm || hoje
-      document.getElementById("tempoHoje").textContent = "Tempo Hoje:" + dados.tempo
-      document.getElementById("pontosFacilPlacar").textContent = "Pontos Fácil:" + dados.pontosFaceis
-      document.getElementById("pontosMedioPlacar").textContent = "Pontos Médio:" + dados.pontosMedios
-      document.getElementById("pontosDificilPlacar").textContent = "Pontos Difícil:" + dados.pontosDificies
+      document.getElementById("nomeUsuario").textContent = "Nome: " + dados.nome
+      document.getElementById("dataInscricao").textContent = "Membro desde: " + dados.criadoEm || hoje
+      document.getElementById("tempoHoje").textContent = "Tempo Hoje: " + dados.tempo
+      document.getElementById("pontosFacilPlacar").textContent = "Pontos Fácil: " + dados.pontosFaceis
+      document.getElementById("pontosMedioPlacar").textContent = "Pontos Médio: " + dados.pontosMedios
+      document.getElementById("pontosDificilPlacar").textContent = "Pontos Difícil: " + dados.pontosDificies
       document.getElementById("foto").src = fotoURL
     });
 

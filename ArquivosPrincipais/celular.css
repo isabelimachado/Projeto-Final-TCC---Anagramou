@@ -267,12 +267,12 @@ body {
     padding: 16px;
 }
 
-.modal-conteudo {
+.galeria {
     width: 95%;
     max-width: 360px;
 }
 
-.grid-imagens {
+.imagenstodas {
     grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
 }
 

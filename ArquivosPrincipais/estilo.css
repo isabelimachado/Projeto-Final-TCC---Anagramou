@@ -58,14 +58,6 @@ a {
     box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
 }
 
-[data-theme="dark"] .link-registrar {
-    color: #aabbee;
-}
-
-[data-theme="dark"] .link-registrar:hover {
-    color: #4a90e2;
-}
-
 [data-theme="dark"] .instrucoes {
     background: rgba(0, 0, 0, 0.85);
 }
@@ -101,7 +93,7 @@ a {
 }
 
 [data-theme="dark"] .botao-sair {
-    background: var(--fundo-principal);
+    background: none;
     color: white;
 }
 
@@ -143,6 +135,44 @@ a {
 [data-theme="dark"] .divdapalavra {
     background-color: whitesmoke;
 }
+
+[data-theme="dark"] #ranking {
+    background-color: #535353;
+    color: #f0f0f0;
+}
+
+[data-theme="dark"] #ranking h2 {
+    color: #f0f0f0;
+}
+
+[data-theme="dark"] #divJogador {
+    background-color: #2a2a2a;
+    color: #f0f0f0;
+}
+
+[data-theme="dark"] .jogador-posicao {
+    background-color: #444;
+    color: #f0f0f0;
+}
+
+[data-theme="dark"] .jogador-nome {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .jogador-tempo {
+    color: #cccccc;
+}
+
+[data-theme="dark"] .verproprioplacar {
+    background-color: #222;
+    color: #f0f0f0;
+}
+
+[data-theme="dark"] .verproprioplacar i,
+[data-theme="dark"] .verproprioplacar span {
+    color: wheat;
+}
+
 
 /* variaveis globais do tema claro */
 :root {
@@ -282,7 +312,6 @@ body {
     color: white;
     transform: translateY(-2px);
 }
-
 
 .instrucoes {
     position: fixed;
@@ -444,7 +473,6 @@ body {
     color: white;
 }
 
-
 .botao-sair {
     font-size: 20px;
     background-color: #fcfafa;
@@ -504,8 +532,6 @@ body {
 
 }
 
-
-
 .palavradodia {
     color: #1c2833;
     font-size: 28px;
@@ -551,8 +577,6 @@ body {
     /*melhor coisa pra tira aquele | irritante */
 }
 
-
-
 #ranking {
     position: fixed;
     top: 0;
@@ -569,9 +593,7 @@ body {
     transition: right 0.6s ease;
 }
 
-
 #ranking::-webkit-scrollbar {
-    /* pro scroll fica invisivel*/
     display: none;
 }
 
@@ -639,7 +661,6 @@ body {
     box-shadow: 0 3px 10px rgba(116, 112, 113, 0.3);
 }
 
-
 .jogador-posicao.primeiro {
     background: #f39c12;
 }
@@ -669,9 +690,6 @@ body {
     border-radius: 50px;
 }
 
-/*o input de enviar e o botao pra enviar */
-
-
 .inputzao {
     display: flex;
     align-items: center;
@@ -692,7 +710,6 @@ body {
     outline: none;
     transition: border-color 0.3s ease;
 }
-
 
 .botaoderesposta {
     padding: 12px 15px;
@@ -788,10 +805,6 @@ body {
     opacity: 1;
 }
 
-.verproprioplacar:hover {
-    background-color: #e0e0e0;
-}
-
 .verproprioplacar i {
     font-size: 20px;
     color: #333;
@@ -837,7 +850,7 @@ body {
     letter-spacing: 1px;
 }
 
-.conteudo-placar {
+.placar {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
@@ -922,25 +935,8 @@ body {
     cursor: pointer;
 }
 
-
-
-
-/* #placarProprio label {
-  font-weight: bold;
-  display: block;
-  margin-top: 10px;
-}
-
-#placarProprio input[type="url"] {
-  width: 100%;
-  padding: 8px;
-  margin-top: 5px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-} */
-
-
 /*muda tudo outra hora */
+
 #modalImagens {
   display: none;
   position: fixed;
@@ -958,7 +954,7 @@ body {
   display: flex;
 }
 
-.modal-conteudo {
+.galeria {
   background: white;
   padding: 20px;
   border-radius: 10px;
@@ -969,7 +965,7 @@ body {
   position: relative;
 }
 
-.modal-conteudo h3 {
+.galeria h3 {
   color: #a885c9;
   margin-bottom: 15px;
   font-size: 20px;
@@ -977,7 +973,7 @@ body {
   text-align: center;
 }
 
-.botao-fechar-modal {
+.botaofechargaleria {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -990,7 +986,7 @@ body {
   font-size: 25px;
 }
 
-.grid-imagens {
+.imagenstodas {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   gap: 10px;
@@ -1029,7 +1025,7 @@ body {
   margin-bottom: 10px;
 }
 
-.botao-confirmar {
+.confirmarr {
   width: 100%;
   padding: 12px;
   background: #8c6bac;
@@ -1081,7 +1077,7 @@ body {
   font-size: 24px;
 }
 
-/* troca esses parametros pra outro lugar se quiser*/
+/*keyframes para todas as animacoes*/
 @keyframes aoAcertar {
     from {
         transform: rotateY(0deg);
