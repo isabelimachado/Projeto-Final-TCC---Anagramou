@@ -97,7 +97,7 @@ body {
     padding: 20px 15px;
     border-radius: 20px 20px 0 0;
     box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.1);
-    padding-bottom: 50%;
+    margin-bottom: auto;
 }
 
 .texto-rodape p {
