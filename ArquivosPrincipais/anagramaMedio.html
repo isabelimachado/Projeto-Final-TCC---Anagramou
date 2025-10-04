@@ -7,8 +7,8 @@
   <title>ANAGRAMOU!</title>
   <link rel="shortcut icon" type="image/x-icon" href="logo.ico">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-  <!--font awesome dos simbolos dos ngc-->
   <link rel="stylesheet" type="text/css" href="estilo.css">
+  <link rel="stylesheet" type="text/css" href="celular.css" media="screen and (max-width: 768px)">
   <script type="module" src="controller.js"></script>
 </head>
 
@@ -24,7 +24,7 @@
         <i class="fas fa-moon"></i>
       </button>
       <button class="botao-icone" onclick="dica()">
-        <i class="fas fa-lightbulb"></i> <!--dica-->
+        <i class="fas fa-lightbulb"></i>
       </button>
     </div>
 
@@ -37,7 +37,7 @@
 
       <button class="botao-icone" onclick="desistir()">
         <i class="fa-brands fa-font-awesome"></i>
-      </button> <!--desistir-->
+      </button>
 
       <button class="botao-icone" onclick="mostrarRanking()">
         <i class="fas fa-chart-bar"></i>
@@ -46,13 +46,11 @@
     </div>
   </header>
 
-
   <div class="selecionarDificuldade">
     <button class="botao-dificuldade"><a href=index.html>FÁCIL</a></button>
     <button class="botao-dificuldade"><a href=anagramaMedio.html>MÉDIO</a></button>
     <button class="botao-dificuldade"><a href=anagramaDificil.html>DÍFICIL</a></button>
   </div>
-
 
   <div class="divdapalavra">
     <span class="palavradodia" id="palavraDoDia"> </span>
@@ -91,14 +89,12 @@
     </button>
   </div>
 
-
   <div class=" divdotimer" id="timerContainer">
     <div class="timerr" id="timer">
       <i class="fas fa-clock"></i>
       <p id="timeDisplay">0:00</p>
     </div>
   </div>
-
 
   <footer class="rodape">
     <div class="conteudo-rodape">
@@ -119,7 +115,7 @@
   </footer>
 
 
-  <!-- login uau -->
+  <!--! login -->
 
   <div class="instrucoes oculto" id="Login">
     <p id="mensagemErroLogin">
@@ -146,7 +142,8 @@
     </div>
   </div>
 
-  <!--registro -->
+  <!--!registro -->
+
   <div class="instrucoes oculto" id="Registro">
     <p id="mensagemErroRegistro"></p>
     <div class="conteudo-instrucoes">
@@ -158,11 +155,11 @@
       <input type="email" placeholder="Email" id="emailRegistro" class="input-autenticacao" />
       <input type="text" placeholder="Nome de usuário" id="nomeRegistro" class="input-autenticacao" />
       <input type="password" placeholder="Senha" id="senhaRegistro" class="input-autenticacao" />
-      <button class="botao-comecar-jogo" onclick="EnviarRegistro(2)">REGISTRAR</button>
+      <button class="botao-comecar-jogo" onclick="EnviarRegistro(1)">REGISTRAR</button>
     </div>
   </div>
 
-  <!-- como q joga/instruções -->
+  <!--! como q joga/instruções -->
   <div class="instrucoes" id="Instrucoes">
     <div class="conteudo-instrucoes">
       <div class="cabecalho-instrucoes">
@@ -170,13 +167,11 @@
         <p class="subtitulo-instrucoes">Descubra todos os anagramas da palavra principal</p>
       </div>
 
-      <!--quando puder da uma olhadinha nesses textinhos pra ve se ta bom ou adiciona algo-->
 
       <div class="caixa-exemplo">
         <div class="palavra-exemplo">CASAR</div>
         <div class="anagramas-exemplo">Exemplo: SACRA, ARCAS, SACAR...</div>
       </div>
-
 
       <ul class="etapas-instrucoes">
         <li class="etapa-instrucao">
@@ -202,12 +197,17 @@
         <li class="etapa-instrucao">
           <div class="numero-etapa">4</div>
           <div class="texto-etapa">
+            <b>Se estiver díficil:</b> Você pode desistir ou pedir dicas que serão sinônimos de algum dos anagramas.
+          </div>
+        </li>
+        <li class="etapa-instrucao">
+          <div class="numero-etapa">5</div>
+          <div class="texto-etapa">
             <b>Complete o desafio:</b> Encontre todos os anagramas possíveis no menor tempo e apareça no
             ranking!
           </div>
         </li>
       </ul>
-
 
       <button class="botao-comecar-jogo" onclick="fecharInstrucoes()">
         COMEÇAR A JOGAR!
@@ -217,10 +217,8 @@
 
 
   <script>
-
-    /*oq for de coisa visual de js vai fica aq outro arquivo eh pras funcionalidade do jogo*/
     function alternarTema() {
-      const body = document.body; //contsante do body pq vai ser alteradi
+      const body = document.body; //constante do body pq vai ser alterado
       const iconeTema = document.querySelector('.botao-tema i');//pra indicar qual o icone do botao
 
       if (body.getAttribute('data-theme') === 'dark') { //se o body tem os dados do tema escuro -> ativo
@@ -231,17 +229,104 @@
         iconeTema.className = 'fas fa-sun';
       }
     }
-    //funcoes so pra abrir e fechar as coisas de antes
+
+    //pra quando clicar fora de algum modal modal
+    document.addEventListener('click', function (event) {
+      const login = document.getElementById('Login');
+      const registro = document.getElementById('Registro');
+      const instrucoes = document.getElementById('Instrucoes');
+
+      setTimeout(() => {
+
+        if (login && !login.classList.contains('oculto')) {
+          const conteudo = login.querySelector('.conteudo-instrucoes');
+          const botaoPerfil = document.getElementById('botao-iconeID');
+          if (conteudo && !conteudo.contains(event.target) && event.target !== botaoPerfil && !botaoPerfil.contains(event.target)) {
+            login.classList.add('oculto');
+          }
+        }
+
+        if (registro && !registro.classList.contains('oculto')) {
+          const conteudo = registro.querySelector('.conteudo-instrucoes');
+          const linkRegistrar = event.target.closest('.link-registrar');
+          if (conteudo && !conteudo.contains(event.target) && !linkRegistrar) {
+            registro.classList.add('oculto');
+          }
+        }
+
+        if (instrucoes && !instrucoes.classList.contains('oculto')) {
+          const conteudo = instrucoes.querySelector('.conteudo-instrucoes');
+          const botaoInstrucoes = event.target.closest('.botao-icone');
+          if (conteudo && !conteudo.contains(event.target) && !botaoInstrucoes) {
+            instrucoes.classList.add('oculto');
+          }
+        }
+
+      }, 10);
+    });
   </script>
 
-  <!-- como isso ta fora da tela vou deixar aq  -->
+  <!--! ranking-->
 
-  <!--ranking uau-->
   <div id="ranking">
     <button class="botaoRanking" id="fechar" onclick="fecharGaveta()">X</button>
 
     <h2>RANKING GLOBAL</h2>
+    <div class="verproprioplacar" onclick="abrirPlacarProprio()" id="placarAuxiliar">
+      <i class="fa-solid fa-user" style="font-size: 30px; position: relative; right: 15px;"></i>
+      <span>Acessar perfil</span>
+    </div>
 
+  </div>
+  <div id="placarProprio">
+    <button class="botao-sair" onclick="fecharPlacarProprio()">✖</button>
+    <h2 style="text-align: center;">MEU PERFIL</h2>
+
+    <!--! placar próprio-->
+    <div class="placar">
+      <div class="esquerdo">
+        <div class="foto-container" onclick="abrirSeletorImagem()">
+          <img id="foto" src="https://via.placeholder.com/120" />
+          <div class="foto-overlay"></div>
+        </div>
+        <div class="info">
+          <span id="nomeUsuario">Nome: --</span>
+          <span id="dataInscricao">Membro desde: --</span>
+        </div>
+      </div>
+
+      <div class="informacoess">
+        <div class="direito">
+          <h3>TEMPO</h3>
+          <span id="tempoHoje">Tempo Hoje: --</span>
+          <span id="melhorTempo">Melhor Tempo: --</span>
+        </div>
+        <div class="direito">
+          <h3>PONTUAÇÃO</h3>
+          <span id="pontosFacilPlacar">Fácil: --</span>
+          <span id="pontosMedioPlacar">Médio: --</span>
+          <span id="pontosDificilPlacar">Difícil: --</span>
+          <span id="melhorPontuacao">Melhor: --</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--! galeria de imagens-->
+  <div id="modalImagens">
+    <div class="galeria">
+      <button class="botaofechargaleria" onclick="fecharSeletorImagem()">✖</button>
+      <h3>ESCOLHA SUA FOTO DE PERFIL !</h3>
+
+      <div class="imagenstodas" id="gridImagens"></div>
+
+      <div class="url-personalizada">
+        <h4>Ou use uma URL personalizada:</h4>
+        <input type="text" id="urlImagem" placeholder="Cole a URL da imagem aqui (jpg, png, webp)">
+        <button class="confirmarr" onclick="confirmarImagem()">Confirmar Alteração</button>
+      </div>
+    </div>
+  </div>
   </div>
 
 </html>

@@ -5,9 +5,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ANAGRAMOU!</title>
-  <link rel="shortcut icon" type="image/x-icon" href="logo.ico">
+  <link rel="shortcut icon" type="image/x-icon" href="logo.ico"> <!--logo A!-->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-  <!--font awesome dos simbolos dos ngc-->
+  <!--! CSS de computador e mobile-->
   <link rel="stylesheet" type="text/css" href="estilo.css">
   <link rel="stylesheet" type="text/css" href="celular.css" media="screen and (max-width: 768px)">
   <script type="module" src="controller.js"></script>
@@ -25,7 +25,7 @@
         <i class="fas fa-moon"></i>
       </button>
       <button class="botao-icone" onclick="dica()">
-        <i class="fas fa-lightbulb"></i> <!--dica-->
+        <i class="fas fa-lightbulb"></i> 
       </button>
     </div>
 
@@ -38,8 +38,7 @@
 
       <button class="botao-icone" onclick="desistir()">
         <i class="fa-brands fa-font-awesome"></i>
-      </button> <!--desistir-->
-
+      </button>
 
       <button class="botao-icone" onclick="apertarBotao(7)">
         <i class="fas fa-chart-bar"></i>
@@ -48,13 +47,11 @@
     </div>
   </header>
 
-
   <div class="selecionarDificuldade">
     <button class="botao-dificuldade"><a href=index.html>FÁCIL</a></button>
     <button class="botao-dificuldade"><a href=anagramaMedio.html>MÉDIO</a></button>
     <button class="botao-dificuldade"><a href=anagramaDificil.html>DÍFICIL</a></button>
   </div>
-
 
   <div class="divdapalavra">
     <span class="palavradodia" id="palavraDoDia"> </span>
@@ -93,7 +90,6 @@
     </button>
   </div>
 
-
   <div class=" divdotimer" id="timerContainer">
     <div class="timerr" id="timer">
       <i class="fas fa-clock"></i>
@@ -119,8 +115,7 @@
     </div>
   </footer>
 
-
-  <!-- login uau -->
+  <!--! login  -->
 
   <div class="instrucoes oculto" id="Login">
     <p id="mensagemErroLogin">
@@ -147,7 +142,8 @@
     </div>
   </div>
 
-  <!--registro -->
+  <!--!registro -->
+
   <div class="instrucoes oculto" id="Registro">
     <p id="mensagemErroRegistro"></p>
     <div class="conteudo-instrucoes">
@@ -163,7 +159,7 @@
     </div>
   </div>
 
-  <!-- como q joga/instruções -->
+  <!--! como q joga/instruções -->
   <div class="instrucoes" id="Instrucoes">
     <div class="conteudo-instrucoes">
       <div class="cabecalho-instrucoes">
@@ -171,13 +167,10 @@
         <p class="subtitulo-instrucoes">Descubra todos os anagramas da palavra principal</p>
       </div>
 
-      <!--quando puder da uma olhadinha nesses textinhos pra ve se ta bom ou adiciona algo-->
-
       <div class="caixa-exemplo">
         <div class="palavra-exemplo">CASAR</div>
         <div class="anagramas-exemplo">Exemplo: SACRA, ARCAS, SACAR...</div>
       </div>
-
 
       <ul class="etapas-instrucoes">
         <li class="etapa-instrucao">
@@ -224,9 +217,8 @@
 
 
   <script>
-    /*oq for de coisa visual de js vai fica aq outro arquivo eh pras funcionalidade do jogo*/
     function alternarTema() {
-      const body = document.body; //contsante do body pq vai ser alteradi
+      const body = document.body; //constante do body pq vai ser alterado
       const iconeTema = document.querySelector('.botao-tema i');//pra indicar qual o icone do botao
 
       if (body.getAttribute('data-theme') === 'dark') { //se o body tem os dados do tema escuro -> ativo
@@ -237,7 +229,8 @@
         iconeTema.className = 'fas fa-sun';
       }
     }
-    //pra quando clicar fora do modal
+
+    //pra quando clicar fora de algum modal modal
     document.addEventListener('click', function (event) {
       const login = document.getElementById('Login');
       const registro = document.getElementById('Registro');
@@ -273,8 +266,7 @@
     });
   </script>
 
-  <!-- como isso ta fora da tela vou deixar aq  -->
-  <!--ranking uau-->
+  <!--! ranking-->
 
   <div id="ranking">
     <button class="botaoRanking" id="fechar" onclick="apertarBotao(8)">X</button>
@@ -290,15 +282,16 @@
     <button class="botao-sair" onclick="fecharPlacarProprio()">✖</button>
     <h2 style="text-align: center;">MEU PERFIL</h2>
 
-    <div class="conteudo-placar">
+    <!--! placar próprio-->
+    <div class="placar">
       <div class="esquerdo">
         <div class="foto-container" onclick="abrirSeletorImagem()">
           <img id="foto" src="https://via.placeholder.com/120" />
           <div class="foto-overlay"></div>
         </div>
         <div class="info">
-          <span id="nomeUsuario">Nome: Usuário</span>
-          <span id="dataInscricao">Membro desde: 01/10/2025</span>
+          <span id="nomeUsuario">Nome: --</span>
+          <span id="dataInscricao">Membro desde: --</span>
         </div>
       </div>
 
@@ -319,17 +312,18 @@
     </div>
   </div>
 
+  <!--! galeria de imagens-->
   <div id="modalImagens">
-    <div class="modal-conteudo">
-      <button class="botao-fechar-modal" onclick="fecharSeletorImagem()">✖</button>
+    <div class="galeria">
+      <button class="botaofechargaleria" onclick="fecharSeletorImagem()">✖</button>
       <h3>ESCOLHA SUA FOTO DE PERFIL !</h3>
 
-      <div class="grid-imagens" id="gridImagens"></div>
+      <div class="imagenstodas" id="gridImagens"></div>
 
       <div class="url-personalizada">
         <h4>Ou use uma URL personalizada:</h4>
         <input type="text" id="urlImagem" placeholder="Cole a URL da imagem aqui (jpg, png, webp)">
-        <button class="botao-confirmar" onclick="confirmarImagem()">Confirmar Alteração</button>
+        <button class="confirmarr" onclick="confirmarImagem()">Confirmar Alteração</button>
       </div>
     </div>
   </div>

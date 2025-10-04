@@ -13,6 +13,12 @@ a {
     --borda-ativa: #007bff;
 }
 
+[data-theme="dark"] {
+    --fundo-principal: #1a1a1a;
+    --texto-principal: #ffffff;
+    --botao-fundo: #2c2c2c;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -23,7 +29,7 @@ body {
     font-family: 'DM Sans', sans-serif;
     background: var(--fundo-principal);
     color: white;
-    min-height: 50px;
+    min-height: 100vh; 
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -56,6 +62,7 @@ body {
     cursor: pointer;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: all 0.2s ease;
+    color: #333;
 }
 
 .botao-icone:hover {
@@ -80,7 +87,7 @@ body {
 }
 
 .botao-dificuldade {
-    padding: 10px 20px;
+    padding: 5px 20px;
     font-size: 14px;
     border-radius: 6px;
 }
@@ -90,6 +97,7 @@ body {
     padding: 20px 15px;
     border-radius: 20px 20px 0 0;
     box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.1);
+    margin-bottom: auto; 
 }
 
 .texto-rodape p {
@@ -267,12 +275,12 @@ body {
     padding: 16px;
 }
 
-.modal-conteudo {
+.galeria {
     width: 95%;
     max-width: 360px;
 }
 
-.grid-imagens {
+.imagenstodas {
     grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
 }
 
@@ -310,26 +318,40 @@ body {
     font-size: 14px;
 }
 
-[data-theme="dark"] body,
-[data-theme="dark"] .titulo,
-[data-theme="dark"] .botao-dificuldade,
-[data-theme="dark"] .botao-dificuldade.ativo,
-[data-theme="dark"] .texto-rodape p {
-    color: var(--texto-principal);
+[data-theme="dark"] body {
+    background: #1a1a1a;
+    color: #ffffff;
 }
 
-[data-theme="dark"] .cabecalho .botao-icone,
-[data-theme="dark"] .rodape {
+[data-theme="dark"] .titulo {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .botao-icone {
     background: #2c2c2c;
-    color: var(--texto-principal);
+    color: #ffffff;
 }
 
-[data-theme="dark"] .cabecalho .botao-icone:hover,
+[data-theme="dark"] .botao-icone:hover {
+    background: #444444;
+}
+
+[data-theme="dark"] .botao-dificuldade {
+    background: #2c2c2c;
+    color: #ffffff;
+}
+
 [data-theme="dark"] .botao-dificuldade.ativo {
     background: #444444;
 }
 
+[data-theme="dark"] .texto-rodape p {
+    color: #ffffff;
+}
+
 [data-theme="dark"] .rodape {
+    background: #2c2c2c;
+    color: #ffffff;
     box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.6);
 }
 
@@ -339,7 +361,7 @@ body {
     }
 
     .botao-dificuldade {
-        padding: 8px 15px;
+        padding: 4px 15px;
         font-size: 13px;
     }
 
