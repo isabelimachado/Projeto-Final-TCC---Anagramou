@@ -258,16 +258,18 @@ window.revelarTudo = async function(email) {
 
 /////// FUNÇÃO DE RANKING ////////
 
-window.MostrarDados = async function() {
+window.MostrarDados = async function() { // sinceramente que função insuportavel]
     const rankingDiv = document.getElementById("ranking");
     try{
         const usuariosDoc = collection(db, "usuarios")
         const pesquisa = query(usuariosDoc, orderBy(tipoPonto,"desc"))
         const pesquisaSnapshot = await getDocs(pesquisa)
-        let posicao = 1
-        const retornaPlacar = onSnapshot(usuariosDoc,(pesquisaSnapshot) => {
+        onSnapshot(usuariosDoc,(pesquisaSnapshot) => {
+            const divsExistentes = document.querySelectorAll("#divJogador");
+            divsExistentes.forEach(div => div.remove());
+            let posicao = 1
             pesquisaSnapshot.forEach(doc => {
-                 const infos = doc.data();
+                const infos = doc.data();
                 if (infos[tipoPonto] <= 0) {
                 return
                 }
@@ -319,13 +321,12 @@ window.MostrarDados = async function() {
                 divPlayer.appendChild(containerFoto)
         
                 containerFoto.appendChild(pFoto)
-                document.getElementById("ranking").appendChild(divPlayer);
+                rankingDiv.appendChild(divPlayer);
         
                 posicao++;
             })
         })
     }catch(err){
-        rankingDiv.innerHTML = "Ainda não há registro de pontos hoje!"
         console.log("Erro ao mostrar qualquer tipo de pontuação!")
     }
 }
@@ -554,7 +555,47 @@ window.EnviarRegistro = function(){
 
 window.salvarResultado = async function() { 
   if(globalUser){
-    console.log("logado")
+    const ref = doc(db,"usuarios",globalUser)
+    try{
+      const snapshot = await getDoc(ref);
+      if(!snapshot.exists){
+        console.log("Esse documento não existe ainda :(")
+        return
+      }
+      const dados = snapshot.data()
+      if(paginaAtual == "facil" && dados.jaAcertouHojeFacil){ return}
+      if(paginaAtual == "medio" && dados.jaAcertouHojeMedio){ return}
+      if(paginaAtual == "dificil" && dados.jaAcertouHojeDificil){ return}
+
+      switch(paginaAtual){
+        case "facil":
+          await setDoc(ref, {
+            tempo : document.getElementById("timeDisplay").textContent,
+            jaAcertouHojeFacil: true,
+            pontosFaceis : document.getElementById("pointsDisplay").textContent
+          },{merge:true})
+          alert("Atualizado!")
+          break
+        case "medio":
+            await setDoc(ref, {
+              tempo : null,
+              jaAcertouHojeMedio: true,
+              pontosMedios : document.getElementById("pointsDisplay").textContent
+          },{merge:true})
+          alert("Atualizado!")
+          break
+        case "dificil":
+            await setDoc(ref, {
+              tempo : document.getElementById("timeDisplay").textContent,
+              jaAcertouHojeDificil: true,
+              pontosDificies : document.getElementById("pointsDisplay").textContent
+          },{merge:true})
+          alert("Atualizado!")
+          break
+      }
+    }catch(err){
+      console.log("Erro ao salvar resultado/ ERRO:"+err)
+    }
   }else{
     console.log("nao logado")
   }
