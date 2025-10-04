@@ -85,7 +85,7 @@
   <br>
   <div class="inputzao">
     <input id="input-jogar" type="text" placeholder="Digite seu palpite" />
-    <button class="botaoderesposta" onclick="InputResposta()">
+    <button class="botaoderesposta" id="botaoResposta" onclick="InputResposta()">
       <i class="fas fa-paper-plane"></i>
     </button>
   </div>
@@ -94,6 +94,13 @@
     <div class="timerr" id="timer">
       <i class="fas fa-clock"></i>
       <p id="timeDisplay">0:00</p>
+    </div>
+  </div>
+
+  <div class=" divdospontos" id="timerContainer">
+    <div class="timerr" id="timer">
+      <i class="fa-solid fa-trophy""></i>
+      <p id="pointsDisplay">0</p>
     </div>
   </div>
 
@@ -286,7 +293,6 @@
     <div class="placar">
       <div class="esquerdo">
         <div class="foto-container" onclick="abrirSeletorImagem()">
-          <img id="foto" src="https://via.placeholder.com/120" />
           <div class="foto-overlay"></div>
         </div>
         <div class="info">

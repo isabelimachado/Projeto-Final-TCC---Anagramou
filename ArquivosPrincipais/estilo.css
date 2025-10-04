@@ -488,6 +488,12 @@ body {
     right: 30px;
     z-index: 100;
 }
+.divdospontos {
+    position: fixed;
+    bottom: 30px;
+    right: 165px;
+    z-index: 100;
+}
 
 .timerr {
     display: flex;

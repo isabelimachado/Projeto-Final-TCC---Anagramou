@@ -1,7 +1,7 @@
 // Chamada do firebase e APIs relacionadas:
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 import { getFirestore, collection, doc, getDoc, getDocs, query, where, orderBy, setDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js';
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js';
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged,signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyByESGl7b8-X74bPX3GXpArf5SixfEQ_Ew",
@@ -16,7 +16,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app)
+let globalUser = null
 const provider = new GoogleAuthProvider();
+
+
 /////////////////////////////////////////////////////////////
 
 //////////////-VARIAVEIS E FUNÇÕES GLOBAIS-////////////
@@ -27,6 +30,7 @@ let databaseAtual = ""
 let databaseSinonimos = ""
 let usuarioDesistiu = false
 let timer = 0
+let contadordicas = 0
 
 const imagensAleatorias = [
     "imagensAleatorias/gatodandojoia.jpeg", 
@@ -66,7 +70,9 @@ if (window.location.pathname === "/anagramaDificil.html") {
     databaseAtual = "palavraDoDiaDificil"
     databaseSinonimos = "descPalavraDificil" 
 }
+
 let listaVariaveis = [tipoPonto,destinoPontosPagina,paginaAtual,databaseAtual,databaseSinonimos,diaAtual]
+
 window.variaveisAtuais = function(){
   for(let i = 0; i < listaVariaveis.length; i++){
     console.log("variavel:"+(listaVariaveis[i]))
@@ -203,6 +209,7 @@ window.tempoFunc = function(){
     const sec = timer % 60
     tempo.textContent = `${min}:${sec < 10 ? '0' : ''}${sec}`;
     timer += 1
+    calcularPontos(timer)
     return timer
 }
 
@@ -221,7 +228,7 @@ window.dica = function () { // feito
   campo.textContent = listaSinonimos[randomIndice - 1].toLowerCase();
   campo.style.animationName = "aoAcertar"
   const temaAtual = document.body.getAttribute('data-theme');
-
+  contadordicas += 1
   if (temaAtual === 'dark') {
     campo.parentElement.style.backgroundColor = '#6e6e6eff';
     campo.parentElement.querySelector('span').style.color = 'white';
@@ -257,11 +264,11 @@ window.MostrarDados = async function() {
         const usuariosDoc = collection(db, "usuarios")
         const pesquisa = query(usuariosDoc, orderBy(tipoPonto,"desc"))
         const pesquisaSnapshot = await getDocs(pesquisa)
-        let posicao = 0
+        let posicao = 1
         const retornaPlacar = onSnapshot(usuariosDoc,(pesquisaSnapshot) => {
             pesquisaSnapshot.forEach(doc => {
                  const infos = doc.data();
-                if (infos[colecao] <= 0) {
+                if (infos[tipoPonto] <= 0) {
                 return
                 }
                 const divPlayer = document.createElement("div");
@@ -290,7 +297,7 @@ window.MostrarDados = async function() {
         
                 const pTempo = document.createElement("p");
                 pTempo.className = "jogador-tempo";
-                pTempo.textContent = "Pontos: " + Math.round(infos[colecao])
+                pTempo.textContent = "Pontos: " + Math.round(infos[tipoPonto])
         
                 const containerFoto = document.createElement("div");
                 containerFoto.style.width = "125px";
@@ -344,21 +351,14 @@ window.PlacarProprio = async function(email){
     }
 }
 
-window.calcularPontos = function(tempo,pontos){
-    pontos = 0
-    const [min, sec] = tempo.split(":").map(Number)
-    const totalSegundos = min * 60 + sec
-    if (!usuarioDesistiu && listaAchou.length === 6) {
-    pontos = listaAchou.length * 1000 -  (totalSegundos * 0.25);
-    } 
-    else if (usuarioDesistiu && listaAchou.length >= 1) {
-        pontos = listaAchou.length * 1000 - (totalSegundos * 0.25);
-    } 
-    else {
-    console.log("Desistiu e não colocou então zero pontos!")
-    pontos = 0
-  }
-  return tempo,pontos
+window.calcularPontos = function(tempo){
+    let totalPontos = 0
+    totalPontos = listaAchou.length * 1000 - (tempo * 0.25) - contadordicas * 50;
+    if(totalPontos < 0){
+      totalPontos = 0
+    }
+    console.log(totalPontos)
+    document.getElementById("pointsDisplay").textContent = Math.round(totalPontos)
 }
 /////////////////////////////////////
 
@@ -384,7 +384,10 @@ document.addEventListener("DOMContentLoaded", () =>{ // feito
             intervalo = setInterval(() => {
                 tempoFunc()
                 if(listaAchou.length === 6 ||  usuarioDesistiu){
+                    document.getElementById("input-jogar").style.display = "none"
+                    document.getElementById("botaoResposta").style.display = "none"
                     funcEnfeites();
+                    setTimeout(() => salvarResultado(),10)
                     clearInterval(intervalo)
                     intervalo = null
                     return
@@ -421,9 +424,7 @@ window.retornarPalavras = function () { // feito
     document.getElementById("campos5").style.display = "flex";
     document.getElementById("campos6").style.display = "flex";
     const container = document.getElementById("divdobrayan");
-    console.log(container.style.animationName)
     container.style.animationName = "containerGanhar";
-    console.log(container.style.animationName)
 }
 
 window.funcEnfeites = function(){ // feito
@@ -447,9 +448,6 @@ window.funcEnfeites = function(){ // feito
     jogarConfetes()
     setTimeout(() => retornarPalavras(), 2000)
     setTimeout(() => container.removeChild(novo), 2000)
-
-    // SALVAR OS RESULTADOS AQUI //
-    setTimeout(() => salvarResultado(tempo.textContent,true,tipoPonto),4000) 
 }
 /////////////////////////////////////////////////
 
@@ -528,10 +526,8 @@ window.LoginGoogle = async function () {
                 email: user.email,
                 foto: user.photoURL,
                 tempo: document.getElementById("timeDisplay").textContent,
-                JaAcertouHojeFacil: checagemJaAcertou,
-                criadoEm: hoje
+                criadoEm: diaAtual
             });
-            docSnap = await getDoc(docRef)
         }
         const dados = docSnapShot.data()
         console.log(dados)
@@ -552,12 +548,41 @@ window.EnviarRegistro = function(){
     const nome = document.getElementById("nomeRegistro").value;
     const senha = document.getElementById("senhaRegistro").value;
     const tempo = document.getElementById("timeDisplay").textContent;
-
-    let totalPontos = 0
-    calcularPontos(tempo,totalPontos)
-    registro(email,nome,senha,tempo,totalPontos)
+    const pontos = document.getElementById("pointsDisplay").textContent
+    registro(email,nome,senha,tempo,pontos)
 }
 
+window.salvarResultado = async function() { 
+  if(globalUser){
+    console.log("logado")
+  }else{
+    console.log("nao logado")
+  }
+}
+
+window.trocarIcone = function(){
+    document.getElementById("botao-iconeID").removeAttribute("onclick");
+    document.getElementById("iconeEntrar").className = "fa-solid fa-arrow-right-from-bracket";
+    document.getElementById("botao-iconeID").addEventListener("click", sairDaConta);
+    document.getElementById("placarAuxiliar").style.display = "in-line"
+}
+
+window.sairDaConta = async function(){
+  signOut(auth).then(() => {
+    window.location.reload();
+  })
+}
+
+onAuthStateChanged(auth, (user) =>{
+  if(user){
+    globalUser = user.uid;
+    console.log("pessoa logada:"+globalUser)
+    trocarIcone()
+  }
+  else{
+    console.log("ninguem logado!")
+  }
+})
 
 ////////////////////////////////////////////////
 
