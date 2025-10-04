@@ -3,6 +3,14 @@ const path = require('path');
 const admin = require('firebase-admin');
 const serviceAccount = require('./seguranca.json');
 
+
+const hoje = new Date();
+const diaAtual = new Intl.DateTimeFormat('pt-BR')
+  .format(hoje)
+  .replace(/\//g, '-');  
+
+console.log(diaAtual)
+
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
@@ -56,9 +64,7 @@ async function AcharPalavra(jsonTipo, identificador) {
       }
     }
 
-    const hoje = new Date().toISOString().split("T")[0];
-
-    const docRef = db.collection(colecao).doc(hoje); 
+    const docRef = db.collection(colecao).doc(diaAtual); 
     const docSnap = await docRef.get();
 
     const usuariosSnapshot = await db.collection("usuarios").get();
@@ -112,4 +118,4 @@ async function Descompactar() {
   }
 }
 
-Descompactar();
+Descompactar(); 

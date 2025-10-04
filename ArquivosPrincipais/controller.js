@@ -1,6 +1,595 @@
+// Chamada do firebase e APIs relacionadas:
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 import { getFirestore, collection, doc, getDoc, getDocs, query, where, orderBy, setDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js';
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, setPersistence, browserSessionPersistence, inMemoryPersistence, signInWithRedirect } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js';
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyByESGl7b8-X74bPX3GXpArf5SixfEQ_Ew",
+  authDomain: "anagramou.firebaseapp.com",
+  projectId: "anagramou",
+  storageBucket: "anagramou.firebasestorage.app",
+  messagingSenderId: "518755435289",
+  appId: "1:518755435289:web:b33e54e698718914323b88",
+  measurementId: "G-BBQX4DEE5V"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app)
+const provider = new GoogleAuthProvider();
+/////////////////////////////////////////////////////////////
+
+//////////////-VARIAVEIS E FUNÇÕES GLOBAIS-////////////
+let tipoPonto = ""
+let destinoPontosPagina = ""
+let paginaAtual = ""
+let databaseAtual = ""
+let databaseSinonimos = ""
+let usuarioDesistiu = false
+let timer = 0
+
+const imagensAleatorias = [
+    "imagensAleatorias/gatodandojoia.jpeg", 
+    "imagensAleatorias/cachorroSalsicha.jpg", 
+    "imagensAleatorias/sillycat.webp",
+     "imagensAleatorias/cachorroSorridente.jpg",
+    "imagensAleatorias/cachorroengraçado.avif",
+    "imagensAleatorias/gatoLinguarudo.jpg",
+    "imagensAleatorias/gatoEngracado.jpg"
+]
+
+// dia de hoje
+const hoje = new Date();
+const diaAtual = new Intl.DateTimeFormat('pt-BR')
+  .format(hoje)
+  .replace(/\//g, '-');  
+
+
+if (window.location.pathname === "/index.html") {
+    tipoPonto = "pontosFaceis"
+    destinoPontosPagina = "JaAcertouHojeFacil"
+    paginaAtual = "facil"
+    databaseAtual = "palavraDoDiaFacil"
+    databaseSinonimos = "descPalavraFacil"
+}
+if (window.location.pathname === "/anagramaMedio.html") {
+    tipoPonto = "pontosMedios"
+    destinoPontosPagina = "JaAcertouHojeMedio"
+    paginaAtual = "medio"
+    databaseAtual = "palavraDoDiaMedia"
+    databaseSinonimos = "descPalavraMedia"
+}
+if (window.location.pathname === "/anagramaDificil.html") {
+    tipoPonto = "pontosDificies"
+    destinoPontosPagina = "JaAcertouHojeDificil"
+    paginaAtual = "dificil"
+    databaseAtual = "palavraDoDiaDificil"
+    databaseSinonimos = "descPalavraDificil" 
+}
+let listaVariaveis = [tipoPonto,destinoPontosPagina,paginaAtual,databaseAtual,databaseSinonimos,diaAtual]
+window.variaveisAtuais = function(){
+  for(let i = 0; i < listaVariaveis.length; i++){
+    console.log("variavel:"+(listaVariaveis[i]))
+  }
+}
+
+let casosInteracaoUsuario = 0
+
+window.apertarBotao = function(parametro){
+    casosInteracaoUsuario = parametro
+    console.log(casosInteracaoUsuario)
+    mudarEstado()
+}
+
+window.mudarEstado = function(){    
+    switch(casosInteracaoUsuario){
+        case 1: // FecharJanelaAbrirGaveta
+            document.getElementById("ranking").classList.toggle("aberta")
+            document.getElementById("divJogador").classList.toggle("aberta")
+            break;
+        case 2: // fecharX
+            document.getElementById('Login').classList.add('oculto');
+            document.getElementById('Registro').classList.add('oculto');
+            break;
+        case 3: // mostrarInstrucoes
+            document.getElementById('Instrucoes').classList.remove('oculto');
+            break;
+        case 4: // fecharInstrucoes
+            document.getElementById('Instrucoes').classList.add('oculto');
+            break;
+        case 5: // mostrarPerfil
+            document.getElementById('Login').classList.remove('oculto');
+            break;
+        case 6: // mostrarRegistro
+            document.getElementById('Registro').classList.remove('oculto');
+            document.getElementById('Login').classList.add('oculto');
+            break;
+        case 7: // mostrarRanking
+            document.getElementById("ranking").classList.toggle("aberta");
+            document.getElementById("divJogador").classList.toggle("aberta");
+            break;
+        case 8: // fecharGaveta
+            document.getElementById("ranking").classList.remove("aberta");
+            document.getElementById("divJogador").classList.remove("aberta");
+            break;
+        case 9: //abrirPlacarProprio
+            document.getElementById("placarProprio").classList.add("aberto");
+            break;
+        case 10: // fecharPlacarProprio
+            document.getElementById("placarProprio").classList.remove("aberto");
+            break; 
+        default:
+            console.log("Nada ocorreu ainda!")
+    }
+}
+////////////////////////////////////////////
+
+///// FUNÇÕES IMPORTANTES PARA FLUXO DO JOGO //////
+let listaAnagramas = []
+let listaSinonimos = []
+let listaAchou = []
+
+window.buscarDados = async function(){ // feito
+  const refSinonimos = doc(db, databaseSinonimos, diaAtual);
+  const refPalavras = doc(db, databaseAtual, diaAtual);
+  const snapSin = await getDoc(refSinonimos)
+  const snapPalavras = await getDoc(refPalavras)
+    try{
+        if(!snapSin.exists() && !snapPalavras.exists()){
+            alert("O backend ainda não foi rodado!")
+            return
+        }
+        const exemplosInfo = snapSin.data()
+        const palavrasInfo = snapPalavras.data()
+
+        const palavraPrincipal = palavrasInfo.palavra;
+        
+        const exemplo1 = exemplosInfo.resumo1;
+        const exemplo2 = exemplosInfo.resumo2;
+        const exemplo3 = exemplosInfo.resumo3;
+        const exemplo4 = exemplosInfo.resumo4;
+        const exemplo5 = exemplosInfo.resumo5;
+        const exemplo6 = exemplosInfo.resumo6;
+
+        const anagrama1 = palavrasInfo.anagrama1;
+        const anagrama2 = palavrasInfo.anagrama2;
+        const anagrama3 = palavrasInfo.anagrama3;
+        const anagrama4 = palavrasInfo.anagrama4;
+        const anagrama5 = palavrasInfo.anagrama5;
+        const anagrama6 = palavrasInfo.anagrama6;
+
+        MostrarPalavras(palavraPrincipal, anagrama1, anagrama2, anagrama3, anagrama4, anagrama5, anagrama6, exemplo1, exemplo2, exemplo3, exemplo4, exemplo5, exemplo6)   
+    }catch(err){
+        console.log("Algum erro aconteceu ao tentar pegar palavras e seus sinônimos"+"Erro:"+err)
+    }
+}
+
+window.MostrarPalavras =  function(pPrincipal, a1, a2, a3, a4, a5, a6, e1, e2, e3, e4, e5, e6){ // feito
+    document.getElementById("palavraDoDia").textContent = pPrincipal
+    listaAnagramas = [a1,a2,a3,a4,a5,a6]
+    listaSinonimos = [e1,e2,e3,e4,e5,e6]
+    console.log("Palavra principal:"+pPrincipal)
+    console.log("Lista de anagramas:"+listaAnagramas)
+    console.log("Lista de sinônimos:"+listaSinonimos)
+}
+
+window.InputResposta = function () {  // feito
+  const campodeInput = document.getElementById("input-jogar");
+  const input = campodeInput.value.toLowerCase().trim();
+  const idx = listaAnagramas.indexOf(input);
+  if (idx !== -1) {
+    if (!listaAchou.includes(input)) {
+      listaAchou.push(input);
+      const pos = idx + 1;
+      const x = document.getElementById(`p${pos}`);
+      const y = document.getElementById(`campos${pos}`);
+      y.style.backgroundColor = "#0df940ff"
+      y.style.boxShadow = "0 6px 12px rgba(0, 0, 0, 0.25), 4px 4px 0px #0df940ff";
+      x.textContent = input;
+      x.style.animationName = "AnimPulando";
+      y.style.animationName = "aoAcertar";
+    } else {
+      console.log("Já foi incluso!");
+    }
+  } else {
+    console.log("Resposta incorreta !");
+  }
+  campodeInput.value = "";
+}
+
+window.tempoFunc = function(){
+    const tempo = document.getElementById("timeDisplay")
+    const min = Math.floor(timer / 60);
+    const sec = timer % 60
+    tempo.textContent = `${min}:${sec < 10 ? '0' : ''}${sec}`;
+    timer += 1
+    return timer
+}
+
+window.dica = function () { // feito
+  let lista = [1, 2, 3, 4, 5, 6];
+  let camposVazios = lista.filter(i => {
+    const elementoAleatorio = document.getElementById(`p${i}`);
+    return elementoAleatorio && elementoAleatorio.textContent === "";
+  });
+  if (camposVazios.length === 0) {
+    alert("As dicas já foram usadas!");
+    return;
+  }
+  const randomIndice = camposVazios[Math.floor(Math.random() * camposVazios.length)];
+  const campo = document.getElementById(`p${randomIndice}`);
+  campo.textContent = listaSinonimos[randomIndice - 1].toLowerCase();
+  campo.style.animationName = "aoAcertar"
+  const temaAtual = document.body.getAttribute('data-theme');
+
+  if (temaAtual === 'dark') {
+    campo.parentElement.style.backgroundColor = '#6e6e6eff';
+    campo.parentElement.querySelector('span').style.color = 'white';
+  } else {
+    campo.parentElement.style.backgroundColor = '#e9b8edff';
+    campo.parentElement.style.boxShadow = "0 6px 12px rgba(0, 0, 0, 0.25), 4px 4px 0px #e9b8edff";
+  } campo.parentElement.style.animationName = "aoPedirDica"
+}
+
+window.desistir = function () { // feito
+  usuarioDesistiu = true;
+  for (let i = 0; i < 6; i++) {
+    const y = document.getElementById(`campos${1 + i}`);
+    if (y.style.backgroundColor !== "rgb(13, 249, 64)") {
+      document.getElementById(`p${i + 1}`).textContent = listaAnagramas[i].toLowerCase();
+      y.style.backgroundColor = "#ff4545bf";
+      y.style.animationName = "aoDesistir"
+      y.style.boxShadow = "0 6px 12px rgba(0, 0, 0, 0.25), 4px 4px 0px #ff4545bf";
+    }
+  }
+}
+
+window.revelarTudo = async function(email) {
+    console.log("reformular função")
+}
+//////////////////////////////////////
+
+/////// FUNÇÃO DE RANKING ////////
+
+window.MostrarDados = async function() {
+    const rankingDiv = document.getElementById("ranking");
+    try{
+        const usuariosDoc = collection(db, "usuarios")
+        const pesquisa = query(usuariosDoc, orderBy(tipoPonto,"desc"))
+        const pesquisaSnapshot = await getDocs(pesquisa)
+        let posicao = 0
+        const retornaPlacar = onSnapshot(usuariosDoc,(pesquisaSnapshot) => {
+            pesquisaSnapshot.forEach(doc => {
+                 const infos = doc.data();
+                if (infos[colecao] <= 0) {
+                return
+                }
+                const divPlayer = document.createElement("div");
+                divPlayer.id = "divJogador"; 
+                const posicaoSpan = document.createElement("span");
+                posicaoSpan.className = "jogador-posicao"; 
+                if (posicao === 1) posicaoSpan.classList.add("primeiro"); 
+                else if (posicao === 2) posicaoSpan.classList.add("segundo");
+                else if (posicao === 3) posicaoSpan.classList.add("terceiro");
+                if (posicao === 1) {
+                posicaoSpan.textContent = "🥇"
+                }
+                else if (posicao === 2) {
+                posicaoSpan.textContent = "🥈"
+                }
+                else if (posicao === 3) {
+                posicaoSpan.textContent = "🥉"
+                } else {
+                posicaoSpan.textContent = posicao;
+                }
+                const infoDiv = document.createElement("div");
+        
+                const pNome = document.createElement("p");
+                pNome.className = "jogador-nome";
+                pNome.textContent = infos.nome;
+        
+                const pTempo = document.createElement("p");
+                pTempo.className = "jogador-tempo";
+                pTempo.textContent = "Pontos: " + Math.round(infos[colecao])
+        
+                const containerFoto = document.createElement("div");
+                containerFoto.style.width = "125px";
+                containerFoto.style.height = "100px";
+                containerFoto.style.borderRadius = "60px"
+                containerFoto.style.position = "absolute";
+                containerFoto.style.right = "2px";
+        
+                const fotoURL = infos.foto || imagensAleatorias[Math.floor(Math.random() * imagensAleatorias.length)];
+                const pFoto = document.createElement("img");
+                pFoto.src = fotoURL;
+                pFoto.className = "foto-ranking"
+        
+                infoDiv.appendChild(pNome);
+                infoDiv.appendChild(pTempo);
+        
+                divPlayer.appendChild(posicaoSpan);
+                divPlayer.appendChild(infoDiv);
+                divPlayer.appendChild(containerFoto)
+        
+                containerFoto.appendChild(pFoto)
+                document.getElementById("ranking").appendChild(divPlayer);
+        
+                posicao++;
+            })
+        })
+    }catch(err){
+        rankingDiv.innerHTML = "Ainda não há registro de pontos hoje!"
+        console.log("Erro ao mostrar qualquer tipo de pontuação!")
+    }
+}
+
+window.PlacarProprio = async function(email){
+    document.getElementById("placarAuxiliar").style.display = "in-line"
+    try{
+        const pesquisa = query(collection(db,"usuarios"), where("email","==",email))
+        const resultado = await getDocs(pesquisa)
+        resultado.forEach(doc => {
+            const dados = doc.data();
+            const fotoURL = dados.foto || imagensAleatorias[Math.floor(Math.random() * imagensAleatorias.length)];
+            document.getElementById("nomeUsuario").textContent = "Nome:" + dados.nome
+            document.getElementById("dataInscricao").textContent = "Membro desde:" + dados.criadoEm || diaAtual
+            document.getElementById("tempoHoje").textContent = "Tempo Hoje:" + dados.tempo
+            document.getElementById("pontosFacilPlacar").textContent = "Pontos Fácil:" + dados.pontosFaceis
+            document.getElementById("pontosMedioPlacar").textContent = "Pontos Médio:" + dados.pontosMedios
+            document.getElementById("pontosDificilPlacar").textContent = "Pontos Difícil:" + dados.pontosDificies
+            document.getElementById("foto").src = fotoURL
+        })
+    }catch(err){
+        console.log("Erro ao invocar placar próprio")
+    }
+}
+
+window.calcularPontos = function(tempo,pontos){
+    pontos = 0
+    const [min, sec] = tempo.split(":").map(Number)
+    const totalSegundos = min * 60 + sec
+    if (!usuarioDesistiu && listaAchou.length === 6) {
+    pontos = listaAchou.length * 1000 -  (totalSegundos * 0.25);
+    } 
+    else if (usuarioDesistiu && listaAchou.length >= 1) {
+        pontos = listaAchou.length * 1000 - (totalSegundos * 0.25);
+    } 
+    else {
+    console.log("Desistiu e não colocou então zero pontos!")
+    pontos = 0
+  }
+  return tempo,pontos
+}
+/////////////////////////////////////
+
+
+//////// TODO EVENT LISTENER /////
+
+// click input
+document.addEventListener("DOMContentLoaded", () => { // feito
+  document.getElementById("input-jogar").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+      e.preventDefault(); // nao deixa recarregar o codigo
+      InputResposta();
+    }
+  });
+});
+
+//tempo
+document.addEventListener("DOMContentLoaded", () =>{ // feito
+    const input = document.getElementById("input-jogar")
+    let intervalo = null
+    input.addEventListener("focus", () => {
+        if(!intervalo){
+            intervalo = setInterval(() => {
+                tempoFunc()
+                if(listaAchou.length === 6 ||  usuarioDesistiu){
+                    funcEnfeites();
+                    clearInterval(intervalo)
+                    intervalo = null
+                    return
+                }
+            },1000)
+        }
+    })
+})
+
+///////////////////////////////////////////////
+
+/////////// FUNCAO ENFEITES ///////////////
+window.jogarConfetes = function () { // feito
+  const emotes = ["🎉", "🏆", "🎊"];
+  for (let i = 0; i < 150; i++) {
+    const emote = document.createElement("div");
+    emote.textContent = emotes[Math.floor(Math.random() * emotes.length)];
+    emote.style.position = "fixed";
+    emote.style.left = Math.random() * 100 + "vw";
+    emote.style.top = "-50px";
+    emote.style.fontSize = "2rem";
+    emote.style.animation = `cair ${2 + Math.random() * 3}s linear forwards`;
+    document.body.appendChild(emote);
+
+    setTimeout(() => emote.remove(), 5000);
+  }
+}
+
+window.retornarPalavras = function () { // feito
+    document.getElementById("campos1").style.display = "flex";
+    document.getElementById("campos2").style.display = "flex";
+    document.getElementById("campos3").style.display = "flex";
+    document.getElementById("campos4").style.display = "flex";
+    document.getElementById("campos5").style.display = "flex";
+    document.getElementById("campos6").style.display = "flex";
+    const container = document.getElementById("divdobrayan");
+    console.log(container.style.animationName)
+    container.style.animationName = "containerGanhar";
+    console.log(container.style.animationName)
+}
+
+window.funcEnfeites = function(){ // feito
+    if(usuarioDesistiu) return
+    document.getElementById("input-jogar").style.display = "none"
+    
+    ///// aqui serve pra fazer os efeitos atuais /////
+    let container = document.getElementById("divdobrayan");
+    const novo = document.createElement("img")
+    novo.style.width = "200px"
+    novo.style.height = "200px"
+    container.appendChild(novo)
+    novo.src = "logo.ico"    
+    container.style.animationName = "aoAcertar";
+    //////////////////////////////////////
+
+    for(let i = 1; i < 7; i++){
+        document.getElementById(`campos${i}`).style.display = "none"
+    }
+
+    jogarConfetes()
+    setTimeout(() => retornarPalavras(), 2000)
+    setTimeout(() => container.removeChild(novo), 2000)
+
+    // SALVAR OS RESULTADOS AQUI //
+    setTimeout(() => salvarResultado(tempo.textContent,true,tipoPonto),4000) 
+}
+/////////////////////////////////////////////////
+
+/////   FUNÇÕES HAVER COM USUARIOS ///////
+
+window.registro = async function(email,nome,senha,tempo,totalPontos) {
+    let acertouTudo = null
+    if(listaAchou.length === 6) acertouTudo = true
+    try{
+        const userCredential = await createUserWithEmailAndPassword(auth, email, senha)
+        const user = userCredential.user
+        switch(paginaAtual){
+            case "facil":
+                await setDoc(doc,"usuarios",user.uid), {
+                    nome : nome,
+                    tempo: tempo,
+                    email: email,
+                    jaAcertouHojeFacil : acertouTudo,
+                    pontosFaceis : totalPontos,
+                    criadoEm: diaAtual
+                }
+                break
+            case "medio":
+                await setDoc(doc,"usuarios",user.uid), {
+                    nome : nome,
+                    tempo: tempo,
+                    email: email,
+                    jaAcertouHojeMedio : acertouTudo,
+                    pontosMedios : totalPontos,
+                    criadoEm: diaAtual
+                }
+                break
+            case "dificil":  
+                await setDoc(doc,"usuarios",user.uid), {
+                    nome : nome,
+                    tempo: tempo,
+                    email: email,
+                    jaAcertouHojeDificil : acertouTudo,
+                    pontosDificies : totalPontos,
+                    criadoEm: diaAtual
+                }
+                break
+        }
+    }catch(err){
+        console.log("Erro em algum parametro do registro")
+    }
+}
+
+window.login = async function(email,senha){
+    try{
+        const auth = getAuth();
+        const userCredential = await signInWithEmailAndPassword(auth, email, senha);
+        const user = userCredential.user;
+        const docRef = doc(db, "usuarios", user.uid);
+        const docSnap = await getDoc(docRef);
+        if(docSnap.exists()){
+            const dados = docSnap.data()
+        }
+        return dados
+    }catch(err){
+        console.log("Erro ao fazer login")
+    }
+}
+
+window.LoginGoogle = async function () {
+    auth.languageCode = 'pt'
+    try{
+        const result = await signInWithPopup(auth,provider)
+        const user = result.user
+        const docRef = doc(db,"usuarios",user.uid)
+        let docSnapShot = await getDoc(docRef)
+
+        if(!docSnapShot.exists()){
+            await setDoc(docRef, {
+                nome: user.displayName,
+                email: user.email,
+                foto: user.photoURL,
+                tempo: document.getElementById("timeDisplay").textContent,
+                JaAcertouHojeFacil: checagemJaAcertou,
+                criadoEm: hoje
+            });
+            docSnap = await getDoc(docRef)
+        }
+        const dados = docSnapShot.data()
+        console.log(dados)
+        alert("Bem vindo,"+user.displayName)
+    }catch(err){
+        console.log("Erro ao tentar autenticar com google")
+    }
+}
+
+window.EnviarLogin = function(){
+    const email = document.getElementById("emailLogin").value
+    const senha = document.getElementById("senhaLogin").value
+    login(email, senha)
+}
+
+window.EnviarRegistro = function(){
+    const email = document.getElementById("emailRegistro").value;
+    const nome = document.getElementById("nomeRegistro").value;
+    const senha = document.getElementById("senhaRegistro").value;
+    const tempo = document.getElementById("timeDisplay").textContent;
+
+    let totalPontos = 0
+    calcularPontos(tempo,totalPontos)
+    registro(email,nome,senha,tempo,totalPontos)
+}
+
+
+////////////////////////////////////////////////
+
+///////////// ERROS DO FIREBASE /////////////
+
+export function errorFirebase(code) {
+  switch (code) {
+    case 'auth/invalid-email':
+      return 'O email está em um formato inválido.';
+    case 'auth/user-not-found':
+      return 'Usuário não encontrado. Verifique o email.';
+    case 'auth/invalid-credential':
+      return 'Senha incorreta. Tente novamente.';
+    case 'auth/email-already-in-use':
+      return 'Este email já está em uso.';
+    case 'auth/weak-password':
+      return 'A senha precisa ter pelo menos 6 caracteres.';
+    case 'auth/too-many-requests':
+      return 'Muitas tentativas. Tente novamente mais tarde.';
+    case 'auth/missing-password':
+      return 'Digite a senha.';
+    default:
+      return `Erro ao autenticar: ${code}`;
+  }
+}
+
+
+////////// CODIGO VELHO ///////////
+/* 
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+import { getFirestore, collection, doc, getDoc, getDocs, query, where, orderBy, setDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js';
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js';
 // FUNÇÃO DA PALAVRA DO DIA//
 const firebaseConfig = {
   apiKey: "AIzaSyByESGl7b8-X74bPX3GXpArf5SixfEQ_Ew",
@@ -84,7 +673,6 @@ window.mostrarRanking = function () {
 window.fecharGaveta = function () {
   document.getElementById("ranking").classList.remove("aberta");
   document.getElementById("divJogador").classList.remove("aberta");
-
 }
 window.abrirPlacarProprio = function () {
   document.getElementById("placarProprio").classList.add("aberto");
@@ -119,128 +707,6 @@ window.retornarPalavras = function () {
   container.style.animationName = "containerGanhar";
   console.log(container.style.animationName)
 }
-
-//funcao da galeria
-/* const imagensDisponiveis = [
-  "imagensAleatorias/gatodandojoia.jpeg",
-  "imagensAleatorias/cachorroSalsicha.jpg",
-  "imagensAleatorias/sillycat.webp",
-  "imagensAleatorias/cachorroSorridente.jpg",
-  "imagensAleatorias/cachorroengraçado.avif",
-  "imagensAleatorias/gatoLinguarudo.jpg",
-  "imagensAleatorias/gatoEngracado.jpg"
-]; */
-
-/* let imagemSelecionada = null;
-
-window.populaGridImagens = function () {
-  const grid = document.getElementById('gridImagens');
-  if (!grid) {
-    console.error("Elemento gridImagens não encontrado!");
-    return;
-  }
-  grid.innerHTML = '';
-
-  imagensDisponiveis.forEach(url => {
-    const img = document.createElement('img');
-    img.src = url;
-    img.className = 'imagem-opcao';
-    img.onclick = () => selecionarImagem(url, img);
-    grid.appendChild(img);
-  });
-} */
-
-/* window.selecionarImagem = function (url, elemento) {
-  document.querySelectorAll('.imagem-opcao').forEach(img => {
-    img.classList.remove('selecionada');
-  });
-  
-  elemento.classList.add('selecionada');
-  imagemSelecionada = url;
-  const inputUrl = document.getElementById('urlImagem');
-  if (inputUrl) inputUrl.value = '';
-} */
-
-/* window.abrirSeletorImagem = function () {
-  if (!usuario) {
-    alert("Você precisa estar logado para alterar a foto!");
-    return;
-  }
-  const modal = document.getElementById('modalImagens');
-  if (modal) {
-    modal.classList.add('ativo');
-    populaGridImagens();
-  } else {
-    console.error("Modal não encontrado!");
-  }
-}
- */
-/* window.fecharSeletorImagem = function () {
-  const modal = document.getElementById('modalImagens');
-  if (modal) {
-    modal.classList.remove('ativo');
-  }
-  imagemSelecionada = null;
-}
- */
-/* window.confirmarImagem = async function () {
-  if (!usuario) {
-    alert("Você precisa estar logado!");
-    return;
-  }
-
-  let urlFinal = imagemSelecionada;
-  const inputUrl = document.getElementById('urlImagem');
-  const urlPersonalizada = inputUrl ? inputUrl.value.trim() : '';
-
-  if (urlPersonalizada) {
-    const formatosValidos = ['jpeg', 'jpg', 'png', 'webp', 'avif'];
-    const extensao = urlPersonalizada.split('.').pop().toLowerCase();
-    
-    if (!formatosValidos.includes(extensao)) {
-      alert("Formato de imagem inválido! Use: jpg, jpeg, png, webp ou avif");
-      return;
-    }
-    urlFinal = urlPersonalizada;
-  }
-
-  if (!urlFinal) {
-    alert("Selecione uma imagem ou cole uma URL!");
-    return;
-  }
-
-  try {
-    const ref = doc(db, "usuarios", usuario.uid);
-    await setDoc(ref, {
-      foto: urlFinal,
-    }, { merge: true });
-
-    const fotoElement = document.getElementById('foto');
-    if (fotoElement) {
-      fotoElement.src = urlFinal;
-    }
-
-    fecharSeletorImagem();
-    alert("Foto de perfil atualizada com sucesso!");
-    console.log("Imagem atualizada:", urlFinal);
-  } catch (err) {
-    console.error("Erro ao atualizar imagem:", err);
-    alert("Erro ao atualizar a imagem. Tente novamente.");
-  }
-} */
-//isso eh pra sair fora do modal
-/* document.addEventListener('DOMContentLoaded', () => {
-  const modal = document.getElementById('modalImagens');
-  if (modal) {
-    modal.addEventListener('click', (e) => {
-      if (e.target.id === 'modalImagens') {
-        fecharSeletorImagem();
-      }
-    });
-  }
-}); */
-
-
 
 //////////////////// FLUXO ANAGRAMAS //////////////////////////////
 window.buscarDados = async function (tipo) {
@@ -293,15 +759,9 @@ window.buscarDados = async function (tipo) {
     return;
   }
 }
+
 window.MostrarPalavras = async function (pPrincipal, a1, a2, a3, a4, a5, a6, e1, e2, e3, e4, e5, e6) {
   palavraDoDia.textContent = pPrincipal.toUpperCase();
-  /*   anagrama1.textContent = e1.toLowerCase()
-    anagrama2.textContent = e2.toLowerCase()
-    anagrama3.textContent = e3.toLowerCase()
-    anagrama4.textContent = e4.toLowerCase()
-    anagrama5.textContent = e5.toLowerCase()
-    anagrama6.textContent = e6.toLowerCase() */
-
   listaSinonimos.push(e1)
   listaSinonimos.push(e2)
   listaSinonimos.push(e3)
@@ -318,6 +778,7 @@ window.MostrarPalavras = async function (pPrincipal, a1, a2, a3, a4, a5, a6, e1,
   console.log("Lista dos anagramas:" + listaAnagramas)
   console.log("Lista dos sinonimos:" + listaSinonimos)
 }
+
 window.desistir = function () {
   desistiu = true;
   for (let i = 0; i < 6; i++) {
@@ -330,6 +791,7 @@ window.desistir = function () {
     }
   }
 }
+
 window.revelarTudo = async function (email) {
   console.log(email)
   try {
@@ -357,6 +819,7 @@ window.revelarTudo = async function (email) {
     console.log("🎉erro ao mostrar tudo!🎉")
   }
 }
+
 window.InputResposta = function () {
   const inputField = document.getElementById("input-jogar");
   const input = inputField.value.toLowerCase().trim();
@@ -425,7 +888,6 @@ document.addEventListener("DOMContentLoaded", () => {
           novo.style.width = "200px"
           novo.style.height = "200px"
           container.appendChild(novo)
-          /*  novo.classList.add("novoclasse"); */
           novo.src = "logo.ico"
           setTimeout(() => retornarPalavras(), 2000);
           setTimeout(() => container.removeChild(novo), 2000)
@@ -452,20 +914,13 @@ window.MostrarDados = async function (id) { // função do ranking
       colecao = "pontosDificies"
       break;
   }
- /*  const usuariosCol = collection(db, "usuarios");
-
-const unsubscribe = onSnapshot(usuariosCol, (querySnapshot) => {
-  querySnapshot.forEach((doc) => {
-    console.log(doc.id, doc.data());
-  });
-}) */
-
   try {
     const usuariosRef = collection(db, "usuarios");
     const q = query(usuariosRef, orderBy(colecao, "desc"));
     const querySnapshot = await getDocs(q);
     let posicao = 1; //variavel pra mostra posicao do jogador
     const retorno  = onSnapshot(usuariosRef,(querySnapshot) =>{
+      const ranking = document.getElementById("ranking").innerHTML = ""
       querySnapshot.forEach(doc => {
         const infos = doc.data();
         if (infos[colecao] <= 0) {
@@ -577,7 +1032,6 @@ export function errorFirebase(code) {
   }
 }
 ///////////// AUTENTICAÇÃO//////////////
-/* email, nome, senha, tempo,seAcertou,totalPontos,1 */
 async function registro(email, nome, senha, tempo, seAcertou, totalPontos, id) {
   const mensagemErro = document.getElementById("mensagemErroRegistro");
   mensagemErro.textContent = "";
@@ -714,11 +1168,13 @@ window.LoginGoogle = async function () {
     throw err;
   }
 }
+
 function sair() {
   signOut(auth).then(() => {
     window.location.reload();
   })
 }
+
 auth.onAuthStateChanged(async (user) => {
   usuario = user;
   console.log(user);
@@ -855,12 +1311,12 @@ window.mudarImagem = async function () {
 
 }
 
-// FUNÇÃO EXTRA DE TROCAR IMAGEM!
-/* document.addEventListener("DOMContentLoaded", () => {
+// FUNÇÃO EXTRA DE TROCAR IMAGEM!document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("urlImagem").addEventListener("keydown", function (e) {
     if (e.key === "Enter") {
       e.preventDefault();
       mudarImagem()
     }
   });
-}); */
+ 
+ */

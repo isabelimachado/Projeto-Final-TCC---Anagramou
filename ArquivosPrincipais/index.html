@@ -13,12 +13,12 @@
   <script type="module" src="controller.js"></script>
 </head>
 
-<body onload="buscarDados(1); MostrarDados(1)">
+<body onload="buscarDados(); MostrarDados();variaveisAtuais()">
 
   <header class="cabecalho">
 
     <div class="botoes-esquerda">
-      <button class="botao-icone" onclick="mostrarInstrucoes()">
+      <button class="botao-icone" onclick="apertarBotao(3)">
         <i class="fas fa-question"></i>
       </button>
       <button class="botao-icone botao-tema" onclick="alternarTema()">
@@ -32,7 +32,7 @@
     <div class="titulo"><b>ANAGRAMOU!</b></div>
 
     <div class="botoes-direita">
-      <button class="botao-icone" id="botao-iconeID" onclick="mostrarPerfil()">
+      <button class="botao-icone" id="botao-iconeID" onclick="apertarBotao(5)">
         <i class="fas fa-user" id="iconeEntrar"></i>
       </button>
 
@@ -41,7 +41,7 @@
       </button> <!--desistir-->
 
 
-      <button class="botao-icone" onclick="mostrarRanking()">
+      <button class="botao-icone" onclick="apertarBotao(7)">
         <i class="fas fa-chart-bar"></i>
       </button>
 
@@ -128,7 +128,7 @@
       <button class="botao-ok" onclick="fecharAlerta()">OK</button>
     </p>
     <div class="conteudo-instrucoes">
-      <button class="botao-sair" onclick="fecharX()">✖</button>
+      <button class="botao-sair" onclick="apertarBotao(2)">✖</button>
       <div class="cabecalho-instrucoes">
         <h1 class="titulo-instrucoes">LOGIN</h1>
         <p class="subtitulo-instrucoes">Entre com seu e-mail e senha para marcar seu tempo!</p>
@@ -151,7 +151,7 @@
   <div class="instrucoes oculto" id="Registro">
     <p id="mensagemErroRegistro"></p>
     <div class="conteudo-instrucoes">
-      <button class="botao-sair" onclick="fecharX()">✖</button>
+      <button class="botao-sair" onclick="apertarBotao(2)">✖</button>
       <div class="cabecalho-instrucoes">
         <h1 class="titulo-instrucoes">REGISTRO</h1>
         <p class="subtitulo-instrucoes">Crie sua conta com e-mail, senha e nome de usuário</p>
@@ -159,7 +159,7 @@
       <input type="email" placeholder="Email" id="emailRegistro" class="input-autenticacao" />
       <input type="text" placeholder="Nome de usuário" id="nomeRegistro" class="input-autenticacao" />
       <input type="password" placeholder="Senha" id="senhaRegistro" class="input-autenticacao" />
-      <button class="botao-comecar-jogo" onclick="EnviarRegistro(1)">REGISTRAR</button>
+      <button class="botao-comecar-jogo" onclick="EnviarRegistro()">REGISTRAR</button>
     </div>
   </div>
 
@@ -216,7 +216,7 @@
       </ul>
 
 
-      <button class="botao-comecar-jogo" onclick="fecharInstrucoes()">
+      <button class="botao-comecar-jogo" onclick="apertarBotao(4)">
         COMEÇAR A JOGAR!
       </button>
     </div>
@@ -277,7 +277,7 @@
   <!--ranking uau-->
 
   <div id="ranking">
-    <button class="botaoRanking" id="fechar" onclick="fecharGaveta()">X</button>
+    <button class="botaoRanking" id="fechar" onclick="apertarBotao(8)">X</button>
 
     <h2>RANKING GLOBAL</h2>
     <div class="verproprioplacar" onclick="abrirPlacarProprio()" id="placarAuxiliar">

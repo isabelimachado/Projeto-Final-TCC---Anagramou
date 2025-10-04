@@ -8,6 +8,12 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
 
+const hoje = new Date();
+const diaAtual = new Intl.DateTimeFormat('pt-BR')
+  .format(hoje)
+  .replace(/\//g, '-');  
+
+
 const db = admin.firestore();
 async function exemplo(a1, a2, a3, a4, a5, a6,database) {
   let banco = ""
@@ -28,8 +34,7 @@ async function exemplo(a1, a2, a3, a4, a5, a6,database) {
 
     console.log("sinonimos gerados:", sinonimos);
 
-    const hoje = new Date().toISOString().split('T')[0];
-    const docRef = db.collection(banco).doc(hoje);
+    const docRef = db.collection(banco).doc(diaAtual);
     const docSnap = await docRef.get();
 
     if (docSnap.exists) {
@@ -55,8 +60,7 @@ async function exemplo(a1, a2, a3, a4, a5, a6,database) {
 
 
 async function procurarDadosFaceis() {
-    const hoje = new Date().toISOString().split('T')[0];
-    const docRef = db.collection("palavraDoDiaFacil").doc(hoje);
+    const docRef = db.collection("palavraDoDiaFacil").doc(diaAtual);
     try{
       const docSnap = await docRef.get();
       if(!docSnap.exists){
@@ -78,8 +82,7 @@ async function procurarDadosFaceis() {
 }
 
 async function procurarDadosMedio() {
-    const hoje = new Date().toISOString().split('T')[0];
-    const docRef = db.collection("palavraDoDiaMedia").doc(hoje);
+    const docRef = db.collection("palavraDoDiaMedia").doc(diaAtual);
     try{
       const docSnap = await docRef.get();
       if(!docSnap.exists){
@@ -101,8 +104,7 @@ async function procurarDadosMedio() {
 }
 
 async function procurarDadosDificil() {
-    const hoje = new Date().toISOString().split('T')[0];
-    const docRef = db.collection("palavraDoDiaDificil").doc(hoje);
+    const docRef = db.collection("palavraDoDiaDificil").doc(diaAtual);
     try{
       const docSnap = await docRef.get();
       if(!docSnap.exists){
