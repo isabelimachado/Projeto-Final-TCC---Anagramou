@@ -48,22 +48,21 @@ const diaAtual = new Intl.DateTimeFormat('pt-BR')
   .format(hoje)
   .replace(/\//g, '-');  
 
-
-if (window.location.pathname === "/index.html") {
+if (window.location.pathname.includes("index.html") || window.location.pathname === "/") {
     tipoPonto = "pontosFaceis"
     destinoPontosPagina = "JaAcertouHojeFacil"
     paginaAtual = "facil"
     databaseAtual = "palavraDoDiaFacil"
     databaseSinonimos = "descPalavraFacil"
 }
-if (window.location.pathname === "/anagramaMedio.html") {
+if (window.location.pathname.includes("anagramaMedio.html")) {
     tipoPonto = "pontosMedios"
     destinoPontosPagina = "JaAcertouHojeMedio"
     paginaAtual = "medio"
     databaseAtual = "palavraDoDiaMedia"
     databaseSinonimos = "descPalavraMedia"
 }
-if (window.location.pathname === "/anagramaDificil.html") {
+if (window.location.pathname.includes("anagramaDificil.html")) {
     tipoPonto = "pontosDificies"
     destinoPontosPagina = "JaAcertouHojeDificil"
     paginaAtual = "dificil"
@@ -83,7 +82,6 @@ let casosInteracaoUsuario = 0
 
 window.apertarBotao = function(parametro){
     casosInteracaoUsuario = parametro
-    console.log(casosInteracaoUsuario)
     mudarEstado()
 }
 
@@ -250,15 +248,11 @@ window.desistir = function () { // feito
     }
   }
 }
-
-window.revelarTudo = async function(email) {
-    console.log("reformular função")
-}
 //////////////////////////////////////
 
 /////// FUNÇÃO DE RANKING ////////
 
-window.MostrarDados = async function() { // sinceramente que função insuportavel]
+window.MostrarDados = async function() { // sinceramente que função insuportavel
     const rankingDiv = document.getElementById("ranking");
     try{
         const usuariosDoc = collection(db, "usuarios")
@@ -358,7 +352,6 @@ window.calcularPontos = function(tempo){
     if(totalPontos < 0){
       totalPontos = 0
     }
-    console.log(totalPontos)
     document.getElementById("pointsDisplay").textContent = Math.round(totalPontos)
 }
 /////////////////////////////////////
@@ -468,6 +461,7 @@ window.registro = async function(email,nome,senha,tempo,totalPontos) {
                     email: email,
                     jaAcertouHojeFacil : acertouTudo,
                     pontosFaceis : totalPontos,
+                    melhorTempo : 0,
                     criadoEm: diaAtual
                 }
                 break
@@ -478,6 +472,7 @@ window.registro = async function(email,nome,senha,tempo,totalPontos) {
                     email: email,
                     jaAcertouHojeMedio : acertouTudo,
                     pontosMedios : totalPontos,
+                    melhorTempo : 0,
                     criadoEm: diaAtual
                 }
                 break
@@ -488,6 +483,7 @@ window.registro = async function(email,nome,senha,tempo,totalPontos) {
                     email: email,
                     jaAcertouHojeDificil : acertouTudo,
                     pontosDificies : totalPontos,
+                    melhorTempo : 0,
                     criadoEm: diaAtual
                 }
                 break
@@ -563,15 +559,15 @@ window.salvarResultado = async function() {
         return
       }
       const dados = snapshot.data()
-      if(paginaAtual == "facil" && dados.jaAcertouHojeFacil){ return}
-      if(paginaAtual == "medio" && dados.jaAcertouHojeMedio){ return}
-      if(paginaAtual == "dificil" && dados.jaAcertouHojeDificil){ return}
+      if(paginaAtual == "facil" && dados.JaAcertouHojeFacil){ return}
+      if(paginaAtual == "medio" && dados.JaAcertouHojeMedio){ return}
+      if(paginaAtual == "dificil" && dados.JaAcertouHojeDificil){ return}
 
       switch(paginaAtual){
         case "facil":
           await setDoc(ref, {
             tempo : document.getElementById("timeDisplay").textContent,
-            jaAcertouHojeFacil: true,
+            JaAcertouHojeFacil: true,
             pontosFaceis : document.getElementById("pointsDisplay").textContent
           },{merge:true})
           alert("Atualizado!")
@@ -579,7 +575,7 @@ window.salvarResultado = async function() {
         case "medio":
             await setDoc(ref, {
               tempo : null,
-              jaAcertouHojeMedio: true,
+              JaAcertouHojeMedio: true,
               pontosMedios : document.getElementById("pointsDisplay").textContent
           },{merge:true})
           alert("Atualizado!")
@@ -587,7 +583,7 @@ window.salvarResultado = async function() {
         case "dificil":
             await setDoc(ref, {
               tempo : document.getElementById("timeDisplay").textContent,
-              jaAcertouHojeDificil: true,
+              JaAcertouHojeDificil: true,
               pontosDificies : document.getElementById("pointsDisplay").textContent
           },{merge:true})
           alert("Atualizado!")
@@ -602,10 +598,13 @@ window.salvarResultado = async function() {
 }
 
 window.trocarIcone = function(){
-    document.getElementById("botao-iconeID").removeAttribute("onclick");
-    document.getElementById("iconeEntrar").className = "fa-solid fa-arrow-right-from-bracket";
-    document.getElementById("botao-iconeID").addEventListener("click", sairDaConta);
-    document.getElementById("placarAuxiliar").style.display = "in-line"
+  // troca do botao de perfil
+  document.getElementById("botao-iconeID").removeAttribute("onclick");
+  document.getElementById("iconeEntrar").className = "fa-solid fa-arrow-right-from-bracket";
+  document.getElementById("botao-iconeID").addEventListener("click", sairDaConta);
+  document.getElementById("placarAuxiliar").style.display = "in-line"
+  //  aparecer botao do placar
+  document.getElementById("placarAuxiliar").style.display = "flex"
 }
 
 window.sairDaConta = async function(){
@@ -614,11 +613,90 @@ window.sairDaConta = async function(){
   })
 }
 
+window.revelarAnagramas = async function() {
+  if(!globalUser){ console.log("ninguem logado!"); return}
+  let alterarAnagramas = false
+  try{
+      const usuario = doc(db,"usuarios",globalUser)
+      const snap = await getDoc(usuario)
+      const dados = snap.data()
+      switch(destinoPontosPagina){
+        case "JaAcertouHojeFacil":
+          if(dados.JaAcertouHojeFacil){
+            alterarAnagramas = true
+          }
+          break
+        case "JaAcertouHojeMedio":
+          if(dados.JaAcertouHojeMedio){
+            alterarAnagramas = true 
+          }
+          break
+        case "JaAcertouHojeDificil":
+          if(dados.JaAcertouHojeDificil){
+            alterarAnagramas = true
+          }
+          break
+        default:
+            console.log("Ou está variavel nao ta setada ou deu erro!")
+      }
+      if(alterarAnagramas){
+        for (let i = 0; i < 6; i++) {
+          const y = document.getElementById(`campos${1 + i}`);
+          document.getElementById(`p${i + 1}`).textContent = listaAnagramas[i]
+          y.style.backgroundColor = "#0df940ff";
+          y.style.animationName = "aoAcertar"
+          y.style.boxShadow = "0 6px 12px rgba(0, 0, 0, 0.25), 4px 4px 0px #0df940ff";
+        }
+        if(paginaAtual === "facil"){ document.getElementById("pointsDisplay").textContent = dados.pontosFaceis; document.getElementById("timeDisplay").textContent = "🎉" }
+        if(paginaAtual === "medio"){ document.getElementById("pointsDisplay").textContent = dados.pontosFaceis; document.getElementById("timeDisplay").textContent = "🎉"}
+        if(paginaAtual === "dificil"){ document.getElementById("pointsDisplay").textContent = dados.pontosFaceis; document.getElementById("timeDisplay").textContent = "🎉"}
+      }else{
+        console.log("Não vira os anagramas!")
+      }
+  } catch(err){
+      console.log("Algum erro aconteceu ao tentar revelar anagramas! -- ERRO:"+err)
+    }
+}
+
+window.arrumarPerfil = async function(){
+  try{
+    const usuario = doc(db,"usuarios",globalUser)
+    const espera = await getDoc(usuario)
+    const dados = espera.data()
+
+    // variaveis
+    const nome = dados.nome
+    const tempo  = dados.tempo
+    const membroDesde = dados.criadoEm
+
+    const pontoFacil = dados.pontosFaceis
+    const pontoMedio = dados.pontosMedios
+    const pontoDificil = dados.pontosDificies
+
+    const foto  = dados.foto
+
+    document.getElementById("nomeUsuario").textContent = "Nome:"+nome
+    document.getElementById("tempoHoje").textContent = "Tempo Hoje:"+tempo
+    document.getElementById("dataInscricao").textContent = "Membro desde:"+membroDesde
+
+    document.getElementById("pontosFacilPlacar").textContent = "Pontos Fáceis:"+pontoFacil
+    document.getElementById("pontosMedioPlacar").textContent = "Pontos Médios:"+pontoMedio
+    document.getElementById("pontosDificilPlacar").textContent = "Pontos Díficies:"+pontoDificil
+
+    document.getElementById("fotoUsuario").src = foto
+  }catch(err){
+    console.log("Erro ao arrumar perfil -- Erro:"+err)
+  }
+}
 onAuthStateChanged(auth, (user) =>{
   if(user){
     globalUser = user.uid;
     console.log("pessoa logada:"+globalUser)
+    apertarBotao(4)
+    jogarConfetes()
     trocarIcone()
+    arrumarPerfil()
+    setTimeout(() => revelarAnagramas(),1000)
   }
   else{
     console.log("ninguem logado!")

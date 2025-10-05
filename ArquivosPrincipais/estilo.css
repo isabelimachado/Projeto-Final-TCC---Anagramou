@@ -770,7 +770,7 @@ body {
     left: 50%;
     transform: translate(-50%, 20px);
     opacity: 0;
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     width: 90%;
@@ -839,6 +839,7 @@ body {
     max-width: 600px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
     backdrop-filter: blur(6px);
+    animation: isabelly 0.1s linear infinite;
 }
 
 #placarProprio.aberto {
@@ -941,6 +942,28 @@ body {
     cursor: pointer;
 }
 
+#fotoUsuario{
+    width: 90px;
+    height: 90px;
+}
+#configConta{
+    width: 200px;
+    height: 30px;
+    border-radius: 20px;
+    margin-top: 30px;
+    font-family: 'DM Sans', sans-serif;
+    animation: isabelly 0.1s linear infinite;
+}
+@keyframes isabelly {
+    from{
+        transform: rotateZ(0deg);
+       
+    }to{
+        transform: rotateZ(360deg);
+
+  
+    }
+}
 /*muda tudo outra hora */
 
 #modalImagens {

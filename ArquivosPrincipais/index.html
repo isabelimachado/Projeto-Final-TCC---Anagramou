@@ -278,25 +278,27 @@
   <div id="ranking">
     <button class="botaoRanking" id="fechar" onclick="apertarBotao(8)">X</button>
     <h2>RANKING GLOBAL</h2>
-    <div class="verproprioplacar" onclick="abrirPlacarProprio()" id="placarAuxiliar">
+    <div class="verproprioplacar" onclick="apertarBotao(9)" id="placarAuxiliar">
       <i class="fa-solid fa-user" style="font-size: 30px; position: relative; right: 15px;"></i>
       <span>Acessar perfil</span>
     </div>
 
   </div>
   <div id="placarProprio">
-    <button class="botao-sair" onclick="fecharPlacarProprio()">✖</button>
+    <button class="botao-sair" onclick="apertarBotao(10)">✖</button>
     <h2 style="text-align: center;">MEU PERFIL</h2>
 
     <!--! placar próprio-->
     <div class="placar">
       <div class="esquerdo">
-        <div class="foto-container" onclick="abrirSeletorImagem()">
-          <div class="foto-overlay"></div>
+        <div class="foto-container" src="" onclick="abrirSeletorImagem()">
+          <img id="fotoUsuario">
+          <div class="foto-overlay" src=""></div>
         </div>
         <div class="info">
           <span id="nomeUsuario">Nome: --</span>
           <span id="dataInscricao">Membro desde: --</span>
+          <button id="configConta">CONFIGURAÇÕES DA CONTA</button>
         </div>
       </div>
 
@@ -304,14 +306,12 @@
         <div class="direito">
           <h3>TEMPO</h3>
           <span id="tempoHoje">Tempo Hoje: --</span>
-          <span id="melhorTempo">Melhor Tempo: --</span>
         </div>
         <div class="direito">
           <h3>PONTUAÇÃO</h3>
           <span id="pontosFacilPlacar">Fácil: --</span>
           <span id="pontosMedioPlacar">Médio: --</span>
           <span id="pontosDificilPlacar">Difícil: --</span>
-          <span id="melhorPontuacao">Melhor: --</span>
         </div>
       </div>
     </div>
