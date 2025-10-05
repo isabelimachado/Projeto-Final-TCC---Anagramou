@@ -140,7 +140,7 @@
       <button class="botao-comecar-jogo" onclick="EnviarLogin()">ENTRAR</button>
       <div style="display: flex; justify-content: center;">
         <div class="links">
-          <button class="link-registrar" onclick="mostrarRegistro()">Não tem uma conta? Registrar</button>
+          <button class="link-registrar" onclick="apertarBotao(6)">Não tem uma conta? Registrar</button>
           <button class="link-google" onclick="LoginGoogle()">Logar com google
             <i class="fab fa-google"></i>
           </button>
@@ -291,14 +291,13 @@
     <!--! placar próprio-->
     <div class="placar">
       <div class="esquerdo">
-        <div class="foto-container" src="" onclick="abrirSeletorImagem()">
+        <div class="foto-container" src=""> <!--  abrir modal -->
           <img id="fotoUsuario">
-          <div class="foto-overlay" src=""></div>
         </div>
         <div class="info">
           <span id="nomeUsuario">Nome: --</span>
           <span id="dataInscricao">Membro desde: --</span>
-          <button id="configConta">CONFIGURAÇÕES DA CONTA</button>
+          <button id="configConta" onclick="apertarBotao(11)" >CONFIGURAÇÕES DA CONTA</button> <!-- // estiliza esse botao aq -->
         </div>
       </div>
 
@@ -320,15 +319,26 @@
   <!--! galeria de imagens-->
   <div id="modalImagens">
     <div class="galeria">
-      <button class="botaofechargaleria" onclick="fecharSeletorImagem()">✖</button>
+      <button class="botaofechargaleria" onclick="apertarBotao(12)">✖</button> <!-- fechar modal -->
       <h3>ESCOLHA SUA FOTO DE PERFIL !</h3>
-
-      <div class="imagenstodas" id="gridImagens"></div>
-
+      
+      <div class="imagenstodas" id="gridImagens">
+        <img src="https://www.portaldodog.com.br/wp-content/uploads/2016/03/cachorro-aparelho-dentes-02.jpg" id="imagemSelect">
+        <img src="https://thumbs.dreamstime.com/b/ador%C3%A1vel-cachorro-bobo-se-divertindo-l%C3%ADngua-c%C3%A3o-grito-de-fundo-branco-brincadeira-olhando-para-c%C3%A2mera-emo%C3%A7%C3%B5es-positivas-274901735.jpg" id="imagemSelect">
+        <img src="https://st.depositphotos.com/2398521/2608/i/450/depositphotos_26089317-stock-photo-cute-small-dog.jpg" id="imagemSelect">
+        <img src="https://pbs.twimg.com/media/Fi6hVIsXgAYu-a6.png" id="imagemSelect">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAERo789rtZf-5Lp1-7DJqAmjeeixGfXUcbA&s" id="imagemSelect">
+        <img src="https://media.tenor.com/3Cs_AKNDxRwAAAAe/gato-lengua.png" id="imagemSelect">
+        <img src="https://i.pinimg.com/736x/05/63/2d/05632d8b1ebda3f754d7ded0a2d092f9.jpg" id="imagemSelect">
+        <img src="https://preview.redd.it/conte-a%C3%AD-uma-perip%C3%A9cia-do-seu-gato-que-deixou-o-gato-da-v0-oo14dnaru8sd1.jpeg?width=640&crop=smart&auto=webp&s=d5a2cb23fe11d2ecba8b0afea31be9006a84a4f0" id="imagemSelect">
+        <img src="https://media.istockphoto.com/id/184443455/pt/foto/basset.jpg?s=612x612&w=0&k=20&c=Q_7j3aWzTlAitX4eGqqXo1qDBh2M4ZiSEKQxnEhrYWI=" id="imagemSelect">
+        <img src="https://preview.redd.it/silly-wolf-saturday-v0-vlxxuumzrtsb1.jpg?width=640&crop=smart&auto=webp&s=9b7de50bd440907ddb1b062c1701c1489ccfb979" id="imagemSelect">
+      </div>
       <div class="url-personalizada">
-        <h4>Ou use uma URL personalizada:</h4>
-        <input type="text" id="urlImagem" placeholder="Cole a URL da imagem aqui (jpg, png, webp)">
-        <button class="confirmarr" onclick="confirmarImagem()">Confirmar Alteração</button>
+        <h4 style="color:black">Ou use uma URL personalizada e mude seu nome!</h4>
+        <input text="text" id="urlImagem" placeholder="Digite o nome desejado!" class="input-nome">
+        <input type="text" id="urlImagem" placeholder="Cole a URL da imagem aqui (jpg, png, webp)" class="input-url">
+        <button class="confirmarr" onclick="confirmarAlteracoes()">Confirmar Alteração</button> // nao mexe nessa func por enquanto isa
       </div>
     </div>
   </div>

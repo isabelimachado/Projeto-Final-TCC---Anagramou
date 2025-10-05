@@ -122,6 +122,12 @@ window.mudarEstado = function(){
         case 10: // fecharPlacarProprio
             document.getElementById("placarProprio").classList.remove("aberto");
             break; 
+        case 11: // abrir modal
+            document.getElementById("modalImagens").classList.add("ativo")
+            break
+        case 12: // fechar modal
+             document.getElementById("modalImagens").classList.remove("ativo")
+            break
         default:
             console.log("Nada ocorreu ainda!")
     }
@@ -264,7 +270,7 @@ window.MostrarDados = async function() { // sinceramente que função insuportav
             let posicao = 1
             pesquisaSnapshot.forEach(doc => {
                 const infos = doc.data();
-                if (infos[tipoPonto] <= 0) {
+                if (infos[tipoPonto] <= 0 || !infos[tipoPonto]) {
                 return
                 }
                 const divPlayer = document.createElement("div");
@@ -325,27 +331,6 @@ window.MostrarDados = async function() { // sinceramente que função insuportav
     }
 }
 
-window.PlacarProprio = async function(email){
-    document.getElementById("placarAuxiliar").style.display = "in-line"
-    try{
-        const pesquisa = query(collection(db,"usuarios"), where("email","==",email))
-        const resultado = await getDocs(pesquisa)
-        resultado.forEach(doc => {
-            const dados = doc.data();
-            const fotoURL = dados.foto || imagensAleatorias[Math.floor(Math.random() * imagensAleatorias.length)];
-            document.getElementById("nomeUsuario").textContent = "Nome:" + dados.nome
-            document.getElementById("dataInscricao").textContent = "Membro desde:" + dados.criadoEm || diaAtual
-            document.getElementById("tempoHoje").textContent = "Tempo Hoje:" + dados.tempo
-            document.getElementById("pontosFacilPlacar").textContent = "Pontos Fácil:" + dados.pontosFaceis
-            document.getElementById("pontosMedioPlacar").textContent = "Pontos Médio:" + dados.pontosMedios
-            document.getElementById("pontosDificilPlacar").textContent = "Pontos Difícil:" + dados.pontosDificies
-            document.getElementById("foto").src = fotoURL
-        })
-    }catch(err){
-        console.log("Erro ao invocar placar próprio")
-    }
-}
-
 window.calcularPontos = function(tempo){
     let totalPontos = 0
     totalPontos = listaAchou.length * 1000 - (tempo * 0.25) - contadordicas * 50;
@@ -391,6 +376,16 @@ document.addEventListener("DOMContentLoaded", () =>{ // feito
     })
 })
 
+window.addEventListener('DOMContentLoaded', () => { // é pra adicionar listener no inicio, facilita pra mim :)
+  const imagens = document.querySelectorAll('#imagemSelect');
+  imagens.forEach(img => {
+    img.addEventListener('click', (event) => {
+      const srcDaImagem = event.target.src;
+      console.log('link da imagem:', srcDaImagem);
+      mudarImagem(srcDaImagem)
+    });
+  });
+});
 ///////////////////////////////////////////////
 
 /////////// FUNCAO ENFEITES ///////////////
@@ -446,7 +441,6 @@ window.funcEnfeites = function(){ // feito
 /////////////////////////////////////////////////
 
 /////   FUNÇÕES HAVER COM USUARIOS ///////
-
 window.registro = async function(email,nome,senha,tempo,totalPontos) {
     let acertouTudo = null
     if(listaAchou.length === 6) acertouTudo = true
@@ -455,41 +449,40 @@ window.registro = async function(email,nome,senha,tempo,totalPontos) {
         const user = userCredential.user
         switch(paginaAtual){
             case "facil":
-                await setDoc(doc,"usuarios",user.uid), {
+                await setDoc(doc(db,"usuarios",user.uid), {
                     nome : nome,
                     tempo: tempo,
                     email: email,
                     jaAcertouHojeFacil : acertouTudo,
+                    foto: "",
                     pontosFaceis : totalPontos,
-                    melhorTempo : 0,
                     criadoEm: diaAtual
-                }
+                })
                 break
             case "medio":
-                await setDoc(doc,"usuarios",user.uid), {
+                await setDoc(doc(db,"usuarios",user.uid), {
                     nome : nome,
                     tempo: tempo,
                     email: email,
+                    foto: "",
                     jaAcertouHojeMedio : acertouTudo,
                     pontosMedios : totalPontos,
-                    melhorTempo : 0,
                     criadoEm: diaAtual
-                }
+                })
                 break
             case "dificil":  
-                await setDoc(doc,"usuarios",user.uid), {
+                await setDoc(doc(db,"usuarios",user.uid), {
                     nome : nome,
                     tempo: tempo,
                     email: email,
                     jaAcertouHojeDificil : acertouTudo,
                     pontosDificies : totalPontos,
-                    melhorTempo : 0,
                     criadoEm: diaAtual
-                }
+                })
                 break
         }
     }catch(err){
-        console.log("Erro em algum parametro do registro")
+        console.log("Erro em algum parametro do registro"+err)
     }
 }
 
@@ -660,8 +653,28 @@ window.revelarAnagramas = async function() {
 
 window.arrumarPerfil = async function(){
   try{
+    const auxiliarUser = doc(db,"usuarios", globalUser)
+    const auxiliar = await getDoc(auxiliarUser)
+    const dados = auxiliar.data()
+    console.log(dados)
+    if(!dados.pontosFaceis){
+      await setDoc(auxiliarUser,{
+        pontosFaceis : 0
+      },{merge:true})
+    }
+    if(!dados.pontosMedios){
+      await setDoc(auxiliarUser,{
+        pontosMedios : 0
+      },{merge:true})
+    }
+    if(!dados.pontosDificies){
+      await setDoc(auxiliarUser,{
+        pontosDificies : 0
+      },{merge:true})
+    }
     const usuario = doc(db,"usuarios",globalUser)
     const espera = await getDoc(usuario)
+    onSnapshot(usuario,(espera)=>{
     const dados = espera.data()
 
     // variaveis
@@ -672,10 +685,13 @@ window.arrumarPerfil = async function(){
     const pontoFacil = dados.pontosFaceis
     const pontoMedio = dados.pontosMedios
     const pontoDificil = dados.pontosDificies
+    
+    // so pra checar se a foto existe no banco
+    let foto = null
+    if(!dados.foto){ foto = imagensAleatorias[Math.floor(Math.random() * imagensAleatorias.length)];}
+    else{ foto = dados.foto }
 
-    const foto  = dados.foto
-
-    document.getElementById("nomeUsuario").textContent = "Nome:"+nome
+    document.getElementById("nomeUsuario").textContent = nome
     document.getElementById("tempoHoje").textContent = "Tempo Hoje:"+tempo
     document.getElementById("dataInscricao").textContent = "Membro desde:"+membroDesde
 
@@ -684,10 +700,83 @@ window.arrumarPerfil = async function(){
     document.getElementById("pontosDificilPlacar").textContent = "Pontos Díficies:"+pontoDificil
 
     document.getElementById("fotoUsuario").src = foto
+    })
   }catch(err){
     console.log("Erro ao arrumar perfil -- Erro:"+err)
   }
 }
+
+window.mudarImagem = async function(link) {
+  try{
+    const usuario = doc(db,"usuarios",globalUser)
+    await setDoc(usuario, {
+      foto : link 
+    },{merge:true})
+    alert("Sua foto foi atualizada!")
+  }catch(err){
+    console.log("Erro ao mudar imagem ------- ERRO:"+err)
+  }
+}
+
+window.confirmarAlteracoes = async function() {
+  let tipoCaso = 0
+  const inputNome = document.querySelector(".input-nome").value
+  const inputURL = document.querySelector(".input-url").value
+
+  if(inputNome === "" && inputURL === ""){
+    alert("Não tem nada nesses campos!")
+    return
+  }else if(inputNome != "" && inputURL === ""){
+    console.log("Apenas o campo input ta preenchido")
+    tipoCaso = 1
+  }
+  else if(inputNome === "" && inputURL != ""){
+    console.log("Apenas o campo url ta preenchido")
+    if (inputURL.includes("jpeg") || inputURL.includes("png") || inputURL.includes("webp") ||  inputURL.includes("jpg")  ) {
+      console.log("Formato valido!")
+    } else {
+      console.log("Invalido")
+      return
+    }
+    tipoCaso = 2
+  }else{
+     if (inputURL.includes("jpeg") || inputURL.includes("png") || inputURL.includes("webp") ||  inputURL.includes("jpg")  ) {
+      console.log("Formato valido!")
+    } else {
+      console.log("Invalido")
+      return
+    }
+    console.log("os dois tao preenchidos!")
+    tipoCaso = 3
+  }
+  try{
+    const usuario = doc(db,"usuarios",globalUser)
+    switch(tipoCaso){
+      case 1:
+        await setDoc(usuario,{
+          nome : inputNome
+        },{merge:true})
+        break
+      case 2:
+          await setDoc(usuario,{
+          foto : inputURL
+        },{merge:true})
+        break
+      case 3:
+          await setDoc(usuario,{
+          nome: inputNome,
+          foto : inputURL
+        },{merge:true})
+        break
+      default:
+        console.log("Erro")
+        break
+    }
+  }catch(err){
+    console.log("Algum erro ocorreu ao trocar imagem ou nome(ou ambos) ---- ERRO:"+err)
+  }
+}
+
 onAuthStateChanged(auth, (user) =>{
   if(user){
     globalUser = user.uid;
