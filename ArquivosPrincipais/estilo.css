@@ -939,30 +939,29 @@ body {
     border: none;
     color: #fff;
     font-size: 22px;
-    cursor: pointer;
+    cursor: pointer;                             
 }
 
 #fotoUsuario{
     width: 100px;
     height: 100px;
 }
+
 #configConta{
     width: 200px;
     height: 30px;
     border-radius: 20px;
     margin-top: 30px;
+    border: none;
+    background: #f4c6ff;
     font-family: 'DM Sans', sans-serif;
+    transition: transform 0.2s ease;
 }
-@keyframes isabelly {
-    from{
-        transform: rotateZ(0deg);
-       
-    }to{
-        transform: rotateZ(360deg);
 
-  
-    }
+#configConta:hover{
+    transform: scale(1.05);
 }
+
 /*muda tudo outra hora */
 
 #modalImagens {
@@ -1046,9 +1045,6 @@ body {
     border-radius: 50px;
 }
 
-
-
-
 /* ////////////////////// */
 .url-personalizada {
   margin-top: 15px;
@@ -1077,7 +1073,6 @@ body {
 
 .foto-container {
   position: relative;
-  cursor: pointer;
 }
 
 #foto {
@@ -1092,30 +1087,6 @@ body {
   transform: scale(1.05);
 }
 
-/*div do cursor do pincel*/
-.foto-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-}
-
-.foto-container:hover .foto-overlay {
-  opacity: 1;
-}
-
-.foto-overlay::before {
-  content: '✏️';
-  color: white;
-  font-size: 24px;
-}
 
 /*keyframes para todas as animacoes*/
 @keyframes aoAcertar {
@@ -1178,3 +1149,14 @@ body {
         opacity: 0;
     }
 }
+
+/* @keyframes isabelly {
+    from{
+        transform: rotateZ(0deg);
+       
+    }to{
+        transform: rotateZ(360deg);
+
+  
+    }
+} */
