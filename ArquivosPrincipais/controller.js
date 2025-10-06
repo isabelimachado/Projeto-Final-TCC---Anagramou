@@ -457,7 +457,7 @@ window.registro = async function(email,nome,senha,tempo,totalPontos) {
                     nome : nome,
                     tempo: tempo,
                     email: email,
-                    jaAcertouHojeFacil : acertouTudo,
+                    JaAcertouHojeFacil : acertouTudo,
                     foto: "",
                     pontosFaceis : totalPontos,
                     criadoEm: diaAtual
@@ -469,7 +469,7 @@ window.registro = async function(email,nome,senha,tempo,totalPontos) {
                     tempo: tempo,
                     email: email,
                     foto: "",
-                    jaAcertouHojeMedio : acertouTudo,
+                    JaAcertouHojeMedio : acertouTudo,
                     pontosMedios : totalPontos,
                     criadoEm: diaAtual
                 })
@@ -479,7 +479,7 @@ window.registro = async function(email,nome,senha,tempo,totalPontos) {
                     nome : nome,
                     tempo: tempo,
                     email: email,
-                    jaAcertouHojeDificil : acertouTudo,
+                    JaAcertouHojeDificil : acertouTudo,
                     pontosDificies : totalPontos,
                     criadoEm: diaAtual
                 })
@@ -637,6 +637,7 @@ window.revelarAnagramas = async function() {
             console.log("Ou está variavel nao ta setada ou deu erro!")
       }
       if(alterarAnagramas){
+        jogarConfetes()
         for (let i = 0; i < 6; i++) {
           const y = document.getElementById(`campos${1 + i}`);
           document.getElementById(`p${i + 1}`).textContent = listaAnagramas[i]
@@ -760,17 +761,20 @@ window.confirmarAlteracoes = async function() {
         await setDoc(usuario,{
           nome : inputNome
         },{merge:true})
+        alert("Mudou nome com sucesso!")
         break
       case 2:
           await setDoc(usuario,{
           foto : inputURL
         },{merge:true})
+        alert("Mudou foto com sucesso!")
         break
       case 3:
           await setDoc(usuario,{
           nome: inputNome,
           foto : inputURL
         },{merge:true})
+        alert("Mudou foto e nome com sucesso!")
         break
       default:
         console.log("Erro")
@@ -786,7 +790,6 @@ onAuthStateChanged(auth, (user) =>{
     globalUser = user.uid;
     console.log("pessoa logada:"+globalUser)
     apertarBotao(4)
-    jogarConfetes()
     trocarIcone()
     arrumarPerfil()
     setTimeout(() => revelarAnagramas(),1000)

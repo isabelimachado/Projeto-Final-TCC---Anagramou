@@ -45,10 +45,10 @@ async function AcharPalavra(jsonTipo, identificador) {
     while (true) {
       palavraAleatoria = jsonTipo[Math.floor(Math.random() * jsonTipo.length)];
 
-      if (listaExistentes.includes(palavraAleatoria)) {
+/*       if (listaExistentes.includes(palavraAleatoria)) {
         console.log(`⚠️ ${palavraAleatoria} já existe!`);
         continue;
-      }
+      } */
 
       anagramas = jsonTipo.filter(
         (p) =>
