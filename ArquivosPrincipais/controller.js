@@ -263,16 +263,20 @@ window.MostrarDados = async function() { // sinceramente que função insuportav
     try{
         const usuariosDoc = collection(db, "usuarios")
         const pesquisa = query(usuariosDoc, orderBy(tipoPonto,"desc"))
-        const pesquisaSnapshot = await getDocs(pesquisa)
         onSnapshot(pesquisa,(pesquisaSnapshot) => {
-            const divsExistentes = document.querySelectorAll("#divJogador");
-            divsExistentes.forEach(div => div.remove());
-            let posicao = 1
+            document.querySelectorAll("#divJogador").forEach(div => div.remove());
+            // guarda numa lista e dps compara ali no sort 
+            let usuarios = []
             pesquisaSnapshot.forEach(doc => {
                 const infos = doc.data();
-                if (infos[tipoPonto] <= 0 || !infos[tipoPonto]) {
-                return
-                }
+                if (!infos[tipoPonto] || infos[tipoPonto] <= 0) return;
+                usuarios.push(infos);
+            });
+
+             usuarios.sort((a, b) => b[tipoPonto] - a[tipoPonto]);
+
+            let posicao = 1
+            usuarios.forEach(infos => {
                 const divPlayer = document.createElement("div");
                 divPlayer.id = "divJogador"; 
                 const posicaoSpan = document.createElement("span");
