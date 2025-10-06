@@ -1,7 +1,7 @@
 // Chamada do firebase e APIs relacionadas:
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 import { getFirestore, collection, doc, getDoc, getDocs, query, where, orderBy, setDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js';
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged,signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js';
+import { createUserWithEmailAndPassword,deleteUser , getAuth, onAuthStateChanged,signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyByESGl7b8-X74bPX3GXpArf5SixfEQ_Ew",
@@ -784,7 +784,22 @@ window.confirmarAlteracoes = async function() {
     console.log("Algum erro ocorreu ao trocar imagem ou nome(ou ambos) ---- ERRO:"+err)
   }
 }
-
+window.deletarConta = async function() {
+  if(!globalUser){ alert("Algum erro ocorreu"); return}
+  var confirmar = prompt("Digite a palavra Confirmo :")
+  if(confirmar != "Confirmo"){
+    alert("Não houve deleção")
+    return
+  }else{
+    alert("Deletado!")
+    sairDaConta()
+  }
+  deleteUser(globalUser).then(() => {
+   
+  }).catch((error) => {
+    console.log("Erro ao deslogar!!")
+  });
+}
 onAuthStateChanged(auth, (user) =>{
   if(user){
     globalUser = user.uid;
