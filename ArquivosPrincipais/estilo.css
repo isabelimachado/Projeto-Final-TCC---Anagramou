@@ -1043,7 +1043,18 @@ body {
     width: 110px;
     height: 120px;
     border-radius: 50px;
+    border: 3px solid;
+    border-color: white;
+    transition: border-color 0.3s, box-shadow 0.3s ease;
 }
+
+#imagemSelect:hover{
+    transform: scale(1.05);
+    border-color: #8c6bac;
+    transition-duration: 0.7px;
+}
+
+
 
 /* ////////////////////// */
 .url-personalizada {
