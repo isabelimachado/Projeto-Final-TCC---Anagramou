@@ -507,29 +507,39 @@ window.login = async function(email,senha){
 }
 
 window.LoginGoogle = async function () {
-    auth.languageCode = 'pt'
-    try{
-        const result = await signInWithPopup(auth,provider)
-        const user = result.user
-        const docRef = doc(db,"usuarios",user.uid)
-        let docSnapShot = await getDoc(docRef)
+  auth.languageCode = 'pt'
+  try {
+      const result = await signInWithPopup(auth, provider)
+      const user = result.user
+      const docRef = doc(db, "usuarios", user.uid)
+      let docSnapShot = await getDoc(docRef)
 
-        if(!docSnapShot.exists()){
-            await setDoc(docRef, {
-                nome: user.displayName,
-                email: user.email,
-                foto: user.photoURL,
-                tempo: document.getElementById("timeDisplay").textContent,
-                criadoEm: diaAtual
-            });
-        }
-        const dados = docSnapShot.data()
-        console.log(dados)
-        alert("Bem vindo,"+user.displayName)
-    }catch(err){
-        console.log("Erro ao tentar autenticar com google")
-    }
+      if (!docSnapShot.exists()) {
+          const diaAtual = new Date().toLocaleDateString('pt-BR', {
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric'
+          })
+
+          await setDoc(docRef, {
+              nome: user.displayName,
+              email: user.email,
+              foto: user.photoURL,
+              tempo: document.getElementById("timeDisplay").textContent,
+              criadoEm: diaAtual
+          })
+
+          docSnapShot = await getDoc(docRef)
+      }
+
+      const dados = docSnapShot.data()
+      console.log(dados)
+      alert("Bem-vindo, " + user.displayName)
+  } catch (err) {
+      console.log("Erro ao tentar autenticar com Google:", err)
+  }
 }
+
 
 window.EnviarLogin = function(){
     const email = document.getElementById("emailLogin").value
@@ -697,12 +707,12 @@ window.arrumarPerfil = async function(){
     else{ foto = dados.foto }
 
     document.getElementById("nomeUsuario").textContent = nome
-    document.getElementById("tempoHoje").textContent = "Tempo Hoje:"+tempo
-    document.getElementById("dataInscricao").textContent = "Membro desde:"+membroDesde
+    document.getElementById("tempoHoje").textContent = "Tempo Hoje: "+tempo
+    document.getElementById("dataInscricao").textContent = "Membro desde: "+membroDesde
 
-    document.getElementById("pontosFacilPlacar").textContent = "Pontos Fáceis:"+pontoFacil
-    document.getElementById("pontosMedioPlacar").textContent = "Pontos Médios:"+pontoMedio
-    document.getElementById("pontosDificilPlacar").textContent = "Pontos Díficies:"+pontoDificil
+    document.getElementById("pontosFacilPlacar").textContent = "Pontos Fáceis: "+pontoFacil
+    document.getElementById("pontosMedioPlacar").textContent = "Pontos Médios: "+pontoMedio
+    document.getElementById("pontosDificilPlacar").textContent = "Pontos Díficies: "+pontoDificil
 
     document.getElementById("fotoUsuario").src = foto
     })
