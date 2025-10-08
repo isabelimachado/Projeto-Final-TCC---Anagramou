@@ -1,3 +1,10 @@
+o brayan ta dando erro no login, tipo, eu coloquei meu email e uma senha errada e logou ????
+faz um teste pra ver se nao eh so eu
+
+email: teste1606@gmail.com
+senha: isabeli160607
+
+
 
 9- melhora o estilo em geral -> segundo a cris
 
