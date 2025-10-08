@@ -595,7 +595,7 @@ window.LoginGoogle = async function () {
     let docSnapShot = await getDoc(docRef);
 
     if (!docSnapShot.exists()) {
-      const diaAtual = new Date().toLocaleDateString('pt-BR', {
+      const diaAtualAux = new Date().toLocaleDateString('pt-BR', {
         day: 'numeric',
         month: 'long',
         year: 'numeric'
@@ -606,7 +606,7 @@ window.LoginGoogle = async function () {
         email: user.email,
         foto: user.photoURL,
         tempo: document.getElementById("timeDisplay").textContent,
-        criadoEm: diaAtual
+        criadoEm: diaAtualAux
       });
 
       docSnapShot = await getDoc(docRef);
