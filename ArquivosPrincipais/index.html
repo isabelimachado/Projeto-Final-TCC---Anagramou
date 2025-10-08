@@ -225,19 +225,18 @@
 
   <script>
     function alternarTema() {
-      const body = document.body; //constante do body pq vai ser alterado
-      const iconeTema = document.querySelector('.botao-tema i');//pra indicar qual o icone do botao
+      const body = document.body;
+      const iconeTema = document.querySelector('.botao-tema i');
+      const modoEscuro = body.getAttribute('data-theme') === 'dark';
 
-      if (body.getAttribute('data-theme') === 'dark') { //se o body tem os dados do tema escuro -> ativo
-        body.removeAttribute('data-theme'); //tirar os atributos do tema escuro , pra volta pro claro
-        iconeTema.className = 'fas fa-moon'; //adiciona no icone o simbolo da lua pra dizer que ta no claro e pd mudar
+      if (modoEscuro) {
+        body.removeAttribute('data-theme');
+        iconeTema.className = 'fas fa-moon';
       } else {
-        body.setAttribute('data-theme', 'dark'); //senao,tema escuro e icone do sol q eh pra volta pro claro
+        body.setAttribute('data-theme', 'dark');
         iconeTema.className = 'fas fa-sun';
       }
     }
-
-    //pra quando clicar fora de algum modal modal
   </script>
 
   <!--! ranking-->
@@ -315,12 +314,12 @@
         <h4 style="color:black">Ou use uma URL personalizada e mude seu nome!</h4>
         <input text="text" id="urlImagem" placeholder="Digite o nome desejado!" class="input-nome">
         <input type="text" id="urlImagem" placeholder="Cole a URL da imagem aqui (jpg, png, webp)" class="input-url">
-        <button class="confirmarr" onclick="confirmarAlteracoes()">Confirmar Alteração</button> 
+        <button class="confirmarr" onclick="confirmarAlteracoes()">Confirmar Alteração</button>
         <button class="confirmarr" onclick="apertarBotao(15)">Deletar Conta</button>
 
         <div id="confirmardeletar" class="modal">
           <div class="afenaodeleta">
-            <h3>Você quer mesmo deletar a conta :( ?</h3>
+            <h3>Você quer mesmo deletar a conta ? :( </h3>
             <div class="botoess">
               <button class="yes" onclick="deletarConta()">Sim</button>
               <button class="no" onclick="apertarBotao(16)">Não</button>

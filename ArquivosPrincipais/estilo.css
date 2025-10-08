@@ -117,8 +117,7 @@ a {
 [data-theme="dark"] #campos6 {
     background-color: #faeaeaf8;
     box-shadow:
-        0 6px 12px rgba(0, 0, 0, 0.25),
-        4px 4px 0px #3d3333;
+        0 6px 12px rgba(0, 0, 0, 0.25), 4px 4px 0px #3d3333;
 }
 
 [data-theme="dark"] #p1,
@@ -133,7 +132,7 @@ a {
 [data-theme="dark"] .botao-dificuldade,
 [data-theme="dark"] #input-jogar,
 [data-theme="dark"] .divdapalavra {
-    background-color: whitesmoke;
+      background-color: whitesmoke;
 }
 
 [data-theme="dark"] #ranking {
@@ -223,6 +222,7 @@ body {
     font-size: 19px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     transition: all 0.2s ease;
+    caret-color: transparent;
 }
 
 .botao-icone:hover {
@@ -558,7 +558,7 @@ body {
     width: 35%;
     border-radius: 30px;
     display: flex;
-    align-items: center;
+    align-items: center;    
     justify-content: center;
     text-align: center;
     margin: 8px;
@@ -580,7 +580,6 @@ body {
     color: #ffffff;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     caret-color: transparent;
-    /*melhor coisa pra tira aquele | irritante */
 }
 
 #ranking {
@@ -683,7 +682,7 @@ body {
     font-weight: 700;
     font-size: 16px;
     margin-bottom: 3px;
-    margin-left:10px;
+    margin-left: 10px;
 }
 
 .jogador-tempo {
@@ -776,10 +775,10 @@ body {
 
 .verproprioplacar {
     position: absolute;
-    top: 100%; 
+    top: 100%;
     left: 50%;
     transform: translateX(-50%);
-    margin-top: 50px;
+    margin-top: 45px;
     opacity: 0;
     display: none;
     align-items: center;
@@ -787,7 +786,7 @@ body {
     width: 90%;
     max-width: 400px;
     background-color: #f0f0f0;
-    padding: 14px 20px;
+    padding: 10px 20px;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     cursor: pointer;
@@ -973,7 +972,6 @@ body {
     transform: scale(1.05);
 }
 
-/*muda tudo outra hora */
 
 #modalImagens {
     display: none;
@@ -1132,15 +1130,15 @@ body {
     padding: 25px 30px;
     text-align: center;
     max-width: 350px;
-    width: 90%;
+    width: 20%;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-    animation: aparecer 0.3s ease-out;
 }
 
 .afenaodeleta h3 {
     font-size: 18px;
     margin-bottom: 20px;
     color: #333;
+    text-align: center;
 }
 
 .botoess {
@@ -1169,17 +1167,17 @@ body {
 }
 
 .botoess .no {
-    background-color: #bdc3c7;
-    color: #2c3e50;
+    background-color: #12af46;
+    color: white;
 }
 
 .botoess .no:hover {
-    background-color: #95a5a6;
+    background-color: #17a044;
     transform: scale(1.05);
 }
 
 #esqueceu {
-    color: #0250a3;
+    color: #336094;
     text-align: center;
     margin-top: 10px;
     font-size: 15px;
