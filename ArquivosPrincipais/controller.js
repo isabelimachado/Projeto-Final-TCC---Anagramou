@@ -1,7 +1,7 @@
 // Chamada do firebase e APIs relacionadas:
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-import { getFirestore, collection, doc, getDoc, getDocs, query, where, orderBy, setDoc, onSnapshot,deleteDoc } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js';
-import { createUserWithEmailAndPassword, deleteUser, getAuth, onAuthStateChanged, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js';
+import { getFirestore, collection, doc, getDoc, query, where, orderBy, setDoc, onSnapshot,deleteDoc  } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js';
+import { createUserWithEmailAndPassword, deleteUser, getAuth, onAuthStateChanged, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut,sendPasswordResetEmail  } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyByESGl7b8-X74bPX3GXpArf5SixfEQ_Ew",
@@ -894,7 +894,6 @@ window.deletarConta = async function () {
     return;
   }
   const user = auth.currentUser
-  const usuario = doc(db,"usuarios",globalUser)
   try {
       await deleteUser(user).then(() => {
       const msg = document.getElementById("mensagemDeletar");
@@ -910,6 +909,28 @@ window.deletarConta = async function () {
     msg.textContent = "Erro ao deletar conta";
   }
 };
+
+window.redefinirSenha = async function (){
+  const email = document.getElementById("emailLogin").value
+  if(email === ""){
+    console.log("Nada escrito")
+    return
+  }
+  console.log(email)
+  try{
+      sendPasswordResetEmail(auth, email)
+  .then(() => {
+    console.log("enviado!")
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // ..
+  });
+  }catch(err){
+    console.log("Erro Redefinir senha:"+err)
+  }
+}
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
