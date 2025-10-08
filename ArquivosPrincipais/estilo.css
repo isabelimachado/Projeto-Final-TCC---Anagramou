@@ -1107,20 +1107,20 @@ body {
 }
 
 
-#confirmardeletar {
-    display: none; 
+.modal {
+    display: none;
     position: fixed;
     top:0; 
-    left:0;
-    bottom:0; 
-    right:0;
-    background-color: rgba(0, 0, 0, 0.6);
-    z-index: 1000;
+    left:0; 
+    right:0; 
+    bottom:0;
+    background-color: rgba(0,0,0,0.6);
     justify-content: center;
     align-items: center;
+    z-index: 1000;
   }
   
-  #confirmardeletar.ativo {
+  .modal.ativo {
     display: flex; 
   }
   
@@ -1132,13 +1132,13 @@ body {
     max-width: 350px;
     width: 90%;
     box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-    
+    animation: aparecer 0.3s ease-out;
   }
   
   .afenaodeleta h3 {
     font-size: 18px;
-    color: #333;
     margin-bottom: 20px;
+    color: #333;
   }
   
   .botoess {
@@ -1153,13 +1153,14 @@ body {
     border-radius: 10px;
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: 0.2s;
   }
   
   .botoess .yes {
     background-color: #e74c3c;
     color: white;
   }
+  
   .botoess .yes:hover {
     background-color: #c0392b;
     transform: scale(1.05);
@@ -1169,11 +1170,11 @@ body {
     background-color: #bdc3c7;
     color: #2c3e50;
   }
+  
   .botoess .no:hover {
     background-color: #95a5a6;
     transform: scale(1.05);
   }
-
 
 /*keyframes para todas as animacoes*/
 @keyframes aoAcertar {

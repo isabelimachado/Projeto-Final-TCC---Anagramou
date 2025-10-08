@@ -837,7 +837,7 @@ function fecharConfirmacao() {
 }
 
 window.deletarConta = async function () {
-  fecharConfirmacao();
+  abrirConfirmacao();
 
   if (!globalUser) {
     alert("Algum erro ocorreu");
