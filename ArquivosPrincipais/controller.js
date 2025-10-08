@@ -44,9 +44,7 @@ const imagensAleatorias = [
 
 // dia de hoje
 const hoje = new Date();
-const diaAtual = new Intl.DateTimeFormat('pt-BR')
-  .format(hoje)
-  .replace(/\//g, '-');
+const diaAtual = new Intl.DateTimeFormat('pt-BR').format(hoje).replace(/\//g, '-');
 
 if (window.location.pathname.includes("index.html") || window.location.pathname === "/") {
   tipoPonto = "pontosFaceis"
@@ -134,6 +132,12 @@ window.mudarEstado = function () {
     case 14:
       document.getElementById("confirmardeletar").classList.remove("ativo");
       break;
+    case 15:
+      document.getElementById("confirmardeletar").classList.add("ativo"); // abrir confirmação
+      break
+    case 16:
+      document.getElementById("confirmardeletar").classList.remove("ativo"); // fechar confirmação
+      break
     default:
       console.log("Nada ocorreu ainda!")
   }
@@ -385,7 +389,7 @@ document.addEventListener("DOMContentLoaded", () => { // feito
     }
   })
 })
-
+ 
 window.addEventListener('DOMContentLoaded', () => { // é pra adicionar listener no inicio, facilita pra mim :)
   const imagens = document.querySelectorAll('#imagemSelect');
   imagens.forEach(img => {
@@ -828,17 +832,8 @@ window.confirmarAlteracoes = async function () {
     console.log("Algum erro ocorreu ao trocar imagem ou nome(ou ambos) ---- ERRO:" + err)
   }
 }
-function abrirConfirmacao() {
-  document.getElementById("confirmardeletar").classList.add("ativo");
-}
-
-function fecharConfirmacao() {
-  document.getElementById("confirmardeletar").classList.remove("ativo");
-}
 
 window.deletarConta = async function () {
-  abrirConfirmacao();
-
   if (!globalUser) {
     alert("Algum erro ocorreu");
     return;
@@ -850,7 +845,7 @@ window.deletarConta = async function () {
   try {
     await deleteUser(globalUser);
     msg.textContent = "Conta deletada com sucesso";
-    sairDaConta();
+    
   } catch (error) {
     console.error("Erro ao deletar conta:", error);
     msg.textContent = "Erro ao deletar conta";
