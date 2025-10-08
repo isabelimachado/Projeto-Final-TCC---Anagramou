@@ -238,22 +238,6 @@
     }
 
     //pra quando clicar fora de algum modal modal
-    document.addEventListener('click', function (event) {
-      const login = document.getElementById('Login');
-      const registro = document.getElementById('Registro');
-      const instrucoes = document.getElementById('Instrucoes');
-
-      setTimeout(() => {
-        if (instrucoes && !instrucoes.classList.contains('oculto')) {
-          const conteudo = instrucoes.querySelector('.conteudo-instrucoes');
-          const botaoInstrucoes = event.target.closest('.botao-icone');
-          if (conteudo && !conteudo.contains(event.target) && !botaoInstrucoes) {
-            instrucoes.classList.add('oculto');
-          }
-        }
-
-      }, 10);
-    });
   </script>
 
   <!--! ranking-->
@@ -281,7 +265,6 @@
           <span id="nomeUsuario">Nome: --</span>
           <span id="dataInscricao">Membro desde: --</span>
           <button id="configConta" onclick="apertarBotao(11)">CONFIGURAÇÕES DA CONTA</button>
-          <!-- // estiliza esse botao aq -->
         </div>
       </div>
 
@@ -332,13 +315,8 @@
         <h4 style="color:black">Ou use uma URL personalizada e mude seu nome!</h4>
         <input text="text" id="urlImagem" placeholder="Digite o nome desejado!" class="input-nome">
         <input type="text" id="urlImagem" placeholder="Cole a URL da imagem aqui (jpg, png, webp)" class="input-url">
-<<<<<<< Updated upstream
         <button class="confirmarr" onclick="confirmarAlteracoes()">Confirmar Alteração</button> 
         <button class="confirmarr" onclick="apertarBotao(15)">Deletar Conta</button>
-=======
-        <button class="confirmarr" onclick="confirmarAlteracoes()">Confirmar Alteração</button>
-        <button class="confirmarr" onclick="abrirConfirmacao()">Deletar Conta</button>
->>>>>>> Stashed changes
 
         <div id="confirmardeletar" class="modal">
           <div class="afenaodeleta">

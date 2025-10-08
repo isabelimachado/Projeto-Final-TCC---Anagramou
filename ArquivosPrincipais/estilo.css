@@ -642,7 +642,7 @@ body {
 #divJogador {
     background: #17202a;
     border-radius: 15px;
-    padding: 20px;
+    padding: 30px;
     margin-bottom: 15px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
     transition: all 0.3s ease;
@@ -663,7 +663,7 @@ body {
     justify-content: center;
     font-weight: bold;
     font-size: 14px;
-    margin-right: 15px;
+    margin-left: -10px;
     box-shadow: 0 3px 10px rgba(116, 112, 113, 0.3);
 }
 
@@ -683,17 +683,21 @@ body {
     font-weight: 700;
     font-size: 16px;
     margin-bottom: 3px;
+    margin-left:10px;
 }
 
 .jogador-tempo {
     font-weight: 500;
     font-size: 14px;
+    margin-left: 10px;
+
 }
 
 .foto-ranking {
     width: 100%;
-    height: 100%;
-    border-radius: 50px;
+    height: 80%;
+    border-radius: 60px;
+    margin-top: 10px;
 }
 
 .inputzao {
@@ -1061,10 +1065,8 @@ body {
     transition-duration: 0.7px;
 }
 
-
-
 /* ////////////////////// */
-/* .url-personalizada {
+.url-personalizada {
     margin-top: 15px;
     padding-top: 10px;
     border-top: 1px solid #e9ecef;
@@ -1109,86 +1111,81 @@ body {
 .modal {
     display: none;
     position: fixed;
-    top:0; 
-    left:0; 
-    right:0; 
-    bottom:0;
-    background-color: rgba(0,0,0,0.6);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
     justify-content: center;
     align-items: center;
     z-index: 1000;
-  }
-  
-  .modal.ativo {
-    display: flex; 
-  }
-  
-  .afenaodeleta {
+}
+
+.modal.ativo {
+    display: flex;
+}
+
+.afenaodeleta {
     background: #fff;
     border-radius: 15px;
     padding: 25px 30px;
     text-align: center;
     max-width: 350px;
     width: 90%;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
     animation: aparecer 0.3s ease-out;
-  }
-  
-  .afenaodeleta h3 {
+}
+
+.afenaodeleta h3 {
     font-size: 18px;
     margin-bottom: 20px;
     color: #333;
-  }
-  
-  .botoess {
+}
+
+.botoess {
     display: flex;
     justify-content: center;
     gap: 15px;
-  }
-  
-  .botoess button {
+}
+
+.botoess button {
     border: none;
     padding: 10px 25px;
     border-radius: 10px;
     font-weight: bold;
     cursor: pointer;
     transition: 0.2s;
-  }
-  
-  .botoess .yes {
+}
+
+.botoess .yes {
     background-color: #e74c3c;
     color: white;
-  }
-  
-  .botoess .yes:hover {
+}
+
+.botoess .yes:hover {
     background-color: #c0392b;
     transform: scale(1.05);
-  }
-  
-  .botoess .no {
+}
+
+.botoess .no {
     background-color: #bdc3c7;
     color: #2c3e50;
-  }
-  
-  .botoess .no:hover {
+}
+
+.botoess .no:hover {
     background-color: #95a5a6;
     transform: scale(1.05);
-  } */
+}
 
 #esqueceu {
-    color: black;
+    color: #0250a3;
     text-align: center;
     margin-top: 10px;
     font-size: 15px;
     caret-color: transparent;
-
-}
-
-#esqueceu:hover {
-    color: #0250a3;
     cursor: pointer;
-    caret-color: transparent;
 }
+
 
 /*keyframes para todas as animacoes*/
 @keyframes aoAcertar {
