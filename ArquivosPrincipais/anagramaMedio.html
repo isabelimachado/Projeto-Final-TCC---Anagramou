@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ANAGRAMOU!</title>
-  <link rel="shortcut icon" type="image/x-icon" href="logo.ico"> <!--logo A!-->
+  <link rel="shortcut icon" type="image/x-icon" href="logo.ico">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
   <!--! CSS de computador e mobile-->
   <link rel="stylesheet" type="text/css" href="estilo.css">
@@ -25,7 +25,7 @@
         <i class="fas fa-moon"></i>
       </button>
       <button class="botao-icone" onclick="dica()">
-        <i class="fas fa-lightbulb"></i> 
+        <i class="fas fa-lightbulb"></i>
       </button>
     </div>
 
@@ -125,7 +125,7 @@
   <!--! login  -->
 
   <div class="instrucoes oculto" id="Login">
-    <p id="mensagem"  style="display:none;">
+    <p id="mensagem" style="display:none;">
     </p>
     <div class="conteudo-instrucoes">
       <button class="botao-sair" onclick="apertarBotao(2)">✖</button>
@@ -136,11 +136,13 @@
       <input type="email" placeholder="Email" id="emailLogin" class="input-autenticacao" />
       <input type="password" placeholder="Senha" id="senhaLogin" class="input-autenticacao" />
       <button class="botao-comecar-jogo" onclick="EnviarLogin()">ENTRAR</button>
+      <p id="esqueceu"><ins>Esqueceu sua senha ?</ins></p>
+
       <div style="display: flex; justify-content: center;">
         <div class="links">
           <button class="link-registrar" onclick="apertarBotao(6)">Não tem uma conta? Registrar</button>
-          <button class="link-google" onclick="LoginGoogle()">Logar com google
-            <i class="fab fa-google"></i>
+          <button class="link-google" onclick="LoginGoogle()"> <i class="fab fa-google"></i>
+            Logar com google
           </button>
         </div>
       </div>
@@ -150,9 +152,6 @@
   <!--!registro -->
 
   <div class="instrucoes oculto" id="Registro">
-    <p id="mensagem"  style="display:none;">
-      <button class="botao-ok" onclick="fecharAlerta()">OK</button>
-    </p>
     <div class="conteudo-instrucoes">
       <button class="botao-sair" onclick="apertarBotao(2)">✖</button>
       <div class="cabecalho-instrucoes">
@@ -203,7 +202,8 @@
         <li class="etapa-instrucao">
           <div class="numero-etapa">4</div>
           <div class="texto-etapa">
-            <b>Se estiver díficil:</b> Você pode 🏳️desistir ou 💡pedir dicas que serão sinônimos de algum dos anagramas.
+            <b>Se estiver díficil:</b> Você pode 🏳️desistir ou 💡pedir dicas que serão sinônimos de algum dos
+            anagramas.
           </div>
         </li>
         <li class="etapa-instrucao">
@@ -244,23 +244,6 @@
       const instrucoes = document.getElementById('Instrucoes');
 
       setTimeout(() => {
-
-        if (login && !login.classList.contains('oculto')) {
-          const conteudo = login.querySelector('.conteudo-instrucoes');
-          const botaoPerfil = document.getElementById('botao-iconeID');
-          if (conteudo && !conteudo.contains(event.target) && event.target !== botaoPerfil && !botaoPerfil.contains(event.target)) {
-            login.classList.add('oculto');
-          }
-        }
-
-        if (registro && !registro.classList.contains('oculto')) {
-          const conteudo = registro.querySelector('.conteudo-instrucoes');
-          const linkRegistrar = event.target.closest('.link-registrar');
-          if (conteudo && !conteudo.contains(event.target) && !linkRegistrar) {
-            registro.classList.add('oculto');
-          }
-        }
-
         if (instrucoes && !instrucoes.classList.contains('oculto')) {
           const conteudo = instrucoes.querySelector('.conteudo-instrucoes');
           const botaoInstrucoes = event.target.closest('.botao-icone');
@@ -291,20 +274,24 @@
     <!--! placar próprio-->
     <div class="placar">
       <div class="esquerdo">
-        <div class="foto-container" src=""> <!--  abrir modal -->
+        <div class="foto-container" src="">
           <img id="fotoUsuario">
         </div>
         <div class="info">
           <span id="nomeUsuario">Nome: --</span>
           <span id="dataInscricao">Membro desde: --</span>
-          <button id="configConta" onclick="apertarBotao(11)" >CONFIGURAÇÕES DA CONTA</button> <!-- // estiliza esse botao aq -->
+          <button id="configConta" onclick="apertarBotao(11)">CONFIGURAÇÕES DA CONTA</button>
+          <!-- // estiliza esse botao aq -->
         </div>
       </div>
 
       <div class="informacoess">
         <div class="direito">
           <h3>TEMPO</h3>
-          <span id="tempoHoje">Tempo Hoje: --</span>
+          <span id="tempoHoje">Tempo Fácil: --</span>
+          <span id="tempoHoje">Tempo Médio: --</span>
+          <span id="tempoHoje">Tempo Difícil: --</span>
+
         </div>
         <div class="direito">
           <h3>PONTUAÇÃO</h3>
@@ -320,25 +307,48 @@
   <div id="modalImagens">
     <div class="galeria">
       <button class="botaofechargaleria" onclick="apertarBotao(12)">✖</button> <!-- fechar modal -->
-      <h3>ESCOLHA SUA FOTO DE PERFIL !</h3>
-      
+      <h3>PERSONALIZE SEU PERFIL !</h3>
+
       <div class="imagenstodas" id="gridImagens">
-        <img src="https://www.portaldodog.com.br/wp-content/uploads/2016/03/cachorro-aparelho-dentes-02.jpg" id="imagemSelect">
-        <img src="https://s3-sa-east-1.amazonaws.com/mundogum/wp-content/uploads/2007/03/cachorrinho.gif" id="imagemSelect">
-        <img src="https://st.depositphotos.com/2398521/2608/i/450/depositphotos_26089317-stock-photo-cute-small-dog.jpg" id="imagemSelect">
+        <img src="https://www.portaldodog.com.br/wp-content/uploads/2016/03/cachorro-aparelho-dentes-02.jpg"
+          id="imagemSelect">
+        <img src="https://s3-sa-east-1.amazonaws.com/mundogum/wp-content/uploads/2007/03/cachorrinho.gif"
+          id="imagemSelect">
+        <img src="https://st.depositphotos.com/2398521/2608/i/450/depositphotos_26089317-stock-photo-cute-small-dog.jpg"
+          id="imagemSelect">
         <img src="https://pbs.twimg.com/media/Fi6hVIsXgAYu-a6.png" id="imagemSelect">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAERo789rtZf-5Lp1-7DJqAmjeeixGfXUcbA&s" id="imagemSelect">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAERo789rtZf-5Lp1-7DJqAmjeeixGfXUcbA&s"
+          id="imagemSelect">
         <img src="https://media.tenor.com/3Cs_AKNDxRwAAAAe/gato-lengua.png" id="imagemSelect">
         <img src="https://i.pinimg.com/736x/05/63/2d/05632d8b1ebda3f754d7ded0a2d092f9.jpg" id="imagemSelect">
-        <img src="https://preview.redd.it/conte-a%C3%AD-uma-perip%C3%A9cia-do-seu-gato-que-deixou-o-gato-da-v0-oo14dnaru8sd1.jpeg?width=640&crop=smart&auto=webp&s=d5a2cb23fe11d2ecba8b0afea31be9006a84a4f0" id="imagemSelect">
-        <img src="https://media.istockphoto.com/id/184443455/pt/foto/basset.jpg?s=612x612&w=0&k=20&c=Q_7j3aWzTlAitX4eGqqXo1qDBh2M4ZiSEKQxnEhrYWI=" id="imagemSelect">
-        <img src="https://preview.redd.it/silly-wolf-saturday-v0-vlxxuumzrtsb1.jpg?width=640&crop=smart&auto=webp&s=9b7de50bd440907ddb1b062c1701c1489ccfb979" id="imagemSelect">
+        <img
+          src="https://preview.redd.it/conte-a%C3%AD-uma-perip%C3%A9cia-do-seu-gato-que-deixou-o-gato-da-v0-oo14dnaru8sd1.jpeg?width=640&crop=smart&auto=webp&s=d5a2cb23fe11d2ecba8b0afea31be9006a84a4f0"
+          id="imagemSelect">
+        <img
+          src="https://media.istockphoto.com/id/184443455/pt/foto/basset.jpg?s=612x612&w=0&k=20&c=Q_7j3aWzTlAitX4eGqqXo1qDBh2M4ZiSEKQxnEhrYWI="
+          id="imagemSelect">
+        <img
+          src="https://preview.redd.it/silly-wolf-saturday-v0-vlxxuumzrtsb1.jpg?width=640&crop=smart&auto=webp&s=9b7de50bd440907ddb1b062c1701c1489ccfb979"
+          id="imagemSelect">
       </div>
       <div class="url-personalizada">
         <h4 style="color:black">Ou use uma URL personalizada e mude seu nome!</h4>
         <input text="text" id="urlImagem" placeholder="Digite o nome desejado!" class="input-nome">
         <input type="text" id="urlImagem" placeholder="Cole a URL da imagem aqui (jpg, png, webp)" class="input-url">
-        <button class="confirmarr" onclick="confirmarAlteracoes()">Confirmar Alteração</button> // nao mexe nessa func por enquanto isa
+        <button class="confirmarr" onclick="confirmarAlteracoes()">Confirmar Alteração</button> 
+        <button class="confirmarr" onclick="apertarBotao(15)">Deletar Conta</button>
+
+        <div id="confirmardeletar" class="modal">
+          <div class="afenaodeleta">
+            <h3>Você quer mesmo deletar a conta :( ?</h3>
+            <div class="botoess">
+              <button class="yes" onclick="deletarConta()">Sim</button>
+              <button class="no" onclick="apertarBotao(16)">Não</button>
+            </div>
+          </div>
+        </div>
+
+        <p id="mensagemDeletar"></p>
       </div>
     </div>
   </div>
