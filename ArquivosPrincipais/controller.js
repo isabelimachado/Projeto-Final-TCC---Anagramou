@@ -317,8 +317,8 @@ window.MostrarDados = async function () { // sinceramente que função insuporta
 
         const containerFoto = document.createElement("div");
         containerFoto.style.width = "125px";
-        containerFoto.style.height = "100px";
-        containerFoto.style.borderRadius = "60px"
+        containerFoto.style.height = "120px";
+        containerFoto.style.borderRadius = "50px"
         containerFoto.style.position = "absolute";
         containerFoto.style.right = "2px";
 
@@ -389,7 +389,7 @@ document.addEventListener("DOMContentLoaded", () => { // feito
     }
   })
 })
- 
+
 window.addEventListener('DOMContentLoaded', () => { // é pra adicionar listener no inicio, facilita pra mim :)
   const imagens = document.querySelectorAll('#imagemSelect');
   imagens.forEach(img => {
@@ -400,6 +400,22 @@ window.addEventListener('DOMContentLoaded', () => { // é pra adicionar listener
     });
   });
 });
+
+document.addEventListener('click', function (event) {
+  const instrucoes = document.getElementById('Instrucoes');
+
+  setTimeout(() => {
+    if (instrucoes && !instrucoes.classList.contains('oculto')) {
+      const conteudo = instrucoes.querySelector('.conteudo-instrucoes');
+      const botaoInstrucoes = event.target.closest('.botao-icone');
+      if (conteudo && !conteudo.contains(event.target) && !botaoInstrucoes) {
+        instrucoes.classList.add('oculto');
+      }
+    }
+
+  }, 10);
+});
+
 ///////////////////////////////////////////////
 
 /////////// FUNCAO ENFEITES ///////////////
@@ -575,7 +591,6 @@ window.LoginGoogle = async function () {
 
   } catch (err) {
     console.log("Erro ao tentar autenticar com Google:", err);
-    mostrarMensagem("Erro ao autenticar com Google.", "erro");
   }
 }
 
