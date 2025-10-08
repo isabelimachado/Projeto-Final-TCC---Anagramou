@@ -227,30 +227,57 @@ window.tempoFunc = function () {
   return timer
 }
 
-window.dica = function () { // feito
-  let lista = [1, 2, 3, 4, 5, 6];
-  let camposVazios = lista.filter(i => {
+const camposComDica = new Set();
+
+window.dica = function () {
+  let listadecampos = [1, 2, 3, 4, 5, 6];
+  let camposVazios = listadecampos.filter(i => {
     const elementoAleatorio = document.getElementById(`p${i}`);
     return elementoAleatorio && elementoAleatorio.textContent === "";
   });
+  
   if (camposVazios.length === 0) {
     alert("As dicas já foram usadas!");
     return;
   }
+  
   const randomIndice = camposVazios[Math.floor(Math.random() * camposVazios.length)];
   const campo = document.getElementById(`p${randomIndice}`);
   campo.textContent = listaSinonimos[randomIndice - 1].toLowerCase();
-  campo.style.animationName = "aoAcertar"
+  campo.style.animationName = "aoAcertar";
+  
+  camposComDica.add(campo);
+  
+  contadordicas += 1;
+  
+  aplicarEstilosDica(campo);
+  campo.parentElement.style.animationName = "aoPedirDica";
+}
+
+function aplicarEstilosDica(campo) {
   const temaAtual = document.body.getAttribute('data-theme');
-  contadordicas += 1
+  
   if (temaAtual === 'dark') {
     campo.parentElement.style.backgroundColor = '#6e6e6eff';
     campo.parentElement.querySelector('span').style.color = 'white';
+    campo.parentElement.style.boxShadow = '';
   } else {
     campo.parentElement.style.backgroundColor = '#e9b8edff';
+    campo.parentElement.querySelector('span').style.color = '';
     campo.parentElement.style.boxShadow = "0 6px 12px rgba(0, 0, 0, 0.25), 4px 4px 0px #e9b8edff";
-  } campo.parentElement.style.animationName = "aoPedirDica"
+  }
 }
+
+const observadorTema = new MutationObserver(() => {
+  camposComDica.forEach(campo => {
+    aplicarEstilosDica(campo);
+  });
+});
+
+observadorTema.observe(document.body, {
+  attributes: true,
+  attributeFilter: ['data-theme']
+});
 
 window.desistir = function () { // feito
   usuarioDesistiu = true;
