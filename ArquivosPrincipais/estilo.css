@@ -479,7 +479,6 @@ body {
     border: none;
     font-weight: bold;
     caret-color: transparent;
-
 }
 
 .divdotimer {
@@ -1065,7 +1064,7 @@ body {
 
 
 /* ////////////////////// */
-.url-personalizada {
+/* .url-personalizada {
     margin-top: 15px;
     padding-top: 10px;
     border-top: 1px solid #e9ecef;
@@ -1106,7 +1105,6 @@ body {
 .foto-container:hover #foto {
     transform: scale(1.05);
 }
-
 
 .modal {
     display: none;
@@ -1175,7 +1173,22 @@ body {
   .botoess .no:hover {
     background-color: #95a5a6;
     transform: scale(1.05);
-  }
+  } */
+
+#esqueceu {
+    color: black;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 15px;
+    caret-color: transparent;
+
+}
+
+#esqueceu:hover {
+    color: #0250a3;
+    cursor: pointer;
+    caret-color: transparent;
+}
 
 /*keyframes para todas as animacoes*/
 @keyframes aoAcertar {
