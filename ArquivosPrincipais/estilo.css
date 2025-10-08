@@ -488,6 +488,7 @@ body {
     right: 30px;
     z-index: 100;
 }
+
 .divdospontos {
     position: fixed;
     bottom: 30px;
@@ -733,14 +734,12 @@ body {
 
 }
 
-#mensagemErroRegistro,
-#mensagemErroLogin {
+#mensagem {
     position: absolute;
     top: 10px;
     left: 50%;
     transform: translateX(-50%);
     color: #fff;
-    background-color: #ff4d4f;
     border-radius: 8px;
     padding: 10px 20px;
     font-size: 14px;
@@ -752,12 +751,20 @@ body {
     z-index: 1000;
 }
 
-#mensagemErroRegistro.ativo,
-#mensagemErroLogin.ativo {
+#mensagem.ativo {
     display: block;
     opacity: 1;
     top: 20px;
 }
+
+.mensagem-erro {
+    background-color: #ff4d4f;
+}
+
+.mensagem-sucesso {
+    background-color: #4CAF50;
+}
+
 
 .novoclasse {
     font-weight: bold;
@@ -939,15 +946,15 @@ body {
     border: none;
     color: #fff;
     font-size: 22px;
-    cursor: pointer;                             
+    cursor: pointer;
 }
 
-#fotoUsuario{
+#fotoUsuario {
     width: 100px;
     height: 100px;
 }
 
-#configConta{
+#configConta {
     width: 200px;
     height: 30px;
     border-radius: 20px;
@@ -958,88 +965,89 @@ body {
     transition: transform 0.2s ease;
 }
 
-#configConta:hover{
+#configConta:hover {
     transform: scale(1.05);
 }
 
 /*muda tudo outra hora */
 
 #modalImagens {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  align-items: center;
-  justify-content: center;
-  z-index: 3000;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    align-items: center;
+    justify-content: center;
+    z-index: 3000;
 }
 
 #modalImagens.ativo {
-  display: flex;
+    display: flex;
 }
 
 .galeria {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  max-width: 600px;
-  width: 90%;
-  max-height: 80vh;
-  overflow-y:auto;
-  position: relative;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
 }
 
 .galeria h3 {
-  color: #a885c9;
-  margin-bottom: 15px;
-  font-size: 20px;
-  font-weight: bold;
-  text-align: center;
+    color: #a885c9;
+    margin-bottom: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
 }
 
 .botaofechargaleria {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  color: rgb(0, 0, 0);
-  border: none;
-  width: 25px;
-  height: 25px;
-  cursor: pointer;
-  font-size: 25px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    color: rgb(0, 0, 0);
+    border: none;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    font-size: 25px;
 }
 
 .imagenstodas {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  gap: 10px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
 }
 
 .imagem-opcao {
-  width: 100%;
-  height: 90px;
-  object-fit: cover;
-  border-radius: 8px;
-  cursor: pointer;
-  border: 2px solid transparent;
+    width: 100%;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 2px solid transparent;
 }
 
 .imagem-opcao:hover {
-  transform: scale(1.05);
-  border-color: #8c6bac;
+    transform: scale(1.05);
+    border-color: #8c6bac;
 }
 
 .imagem-opcao.selecionada {
-  border-color: #8c6bac;
+    border-color: #8c6bac;
 }
+
 /* ///////////////////////////// */
 
 
-#imagemSelect{
+#imagemSelect {
     width: 110px;
     height: 120px;
     border-radius: 50px;
@@ -1048,7 +1056,7 @@ body {
     transition: border-color 0.3s, box-shadow 0.3s ease;
 }
 
-#imagemSelect:hover{
+#imagemSelect:hover {
     transform: scale(1.05);
     border-color: #8c6bac;
     transition-duration: 0.7px;
@@ -1058,45 +1066,113 @@ body {
 
 /* ////////////////////// */
 .url-personalizada {
-  margin-top: 15px;
-  padding-top: 10px;
-  border-top: 1px solid #e9ecef;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #e9ecef;
 }
 
 .url-personalizada input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #e9ecef;
-  border-radius: 8px;
-  font-size: 14px;
-  margin-bottom: 10px;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-bottom: 10px;
 }
 
 .confirmarr {
-  width: 100%;
-  padding: 12px;
-  background: #8c6bac;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 14px;
+    width: 100%;
+    padding: 12px;
+    background: #8c6bac;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
 }
 
 .foto-container {
-  position: relative;
+    position: relative;
 }
 
 #foto {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 4px solid white;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid white;
 }
 
 .foto-container:hover #foto {
-  transform: scale(1.05);
+    transform: scale(1.05);
 }
+
+
+#confirmardeletar {
+    display: none; 
+    position: fixed;
+    top:0; 
+    left:0;
+    bottom:0; 
+    right:0;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  #confirmardeletar.ativo {
+    display: flex; 
+  }
+  
+  .afenaodeleta {
+    background: #fff;
+    border-radius: 15px;
+    padding: 25px 30px;
+    text-align: center;
+    max-width: 350px;
+    width: 90%;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    
+  }
+  
+  .afenaodeleta h3 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .botoess {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+  }
+  
+  .botoess button {
+    border: none;
+    padding: 10px 25px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .botoess .yes {
+    background-color: #e74c3c;
+    color: white;
+  }
+  .botoess .yes:hover {
+    background-color: #c0392b;
+    transform: scale(1.05);
+  }
+  
+  .botoess .no {
+    background-color: #bdc3c7;
+    color: #2c3e50;
+  }
+  .botoess .no:hover {
+    background-color: #95a5a6;
+    transform: scale(1.05);
+  }
 
 
 /*keyframes para todas as animacoes*/

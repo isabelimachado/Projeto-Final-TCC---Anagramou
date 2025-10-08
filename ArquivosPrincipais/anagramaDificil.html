@@ -125,9 +125,7 @@
   <!--! login  -->
 
   <div class="instrucoes oculto" id="Login">
-    <p id="mensagemErroLogin">
-      Sua mensagem de erro aqui
-      <button class="botao-ok" onclick="fecharAlerta()">OK</button>
+    <p id="mensagem"  style="display:none;">
     </p>
     <div class="conteudo-instrucoes">
       <button class="botao-sair" onclick="apertarBotao(2)">✖</button>
@@ -152,7 +150,9 @@
   <!--!registro -->
 
   <div class="instrucoes oculto" id="Registro">
-    <p id="mensagemErroRegistro"></p>
+    <p id="mensagem"  style="display:none;">
+      <button class="botao-ok" onclick="fecharAlerta()">OK</button>
+    </p>
     <div class="conteudo-instrucoes">
       <button class="botao-sair" onclick="apertarBotao(2)">✖</button>
       <div class="cabecalho-instrucoes">

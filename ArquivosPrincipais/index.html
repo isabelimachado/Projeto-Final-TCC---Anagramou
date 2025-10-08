@@ -125,9 +125,7 @@
   <!--! login  -->
 
   <div class="instrucoes oculto" id="Login">
-    <p id="mensagemErroLogin">
-      Sua mensagem de erro aqui
-      <button class="botao-ok" onclick="fecharAlerta()">OK</button>
+    <p id="mensagem"  style="display:none;">
     </p>
     <div class="conteudo-instrucoes">
       <button class="botao-sair" onclick="apertarBotao(2)">✖</button>
@@ -152,7 +150,6 @@
   <!--!registro -->
 
   <div class="instrucoes oculto" id="Registro">
-    <p id="mensagemErroRegistro"></p>
     <div class="conteudo-instrucoes">
       <button class="botao-sair" onclick="apertarBotao(2)">✖</button>
       <div class="cabecalho-instrucoes">
@@ -244,23 +241,6 @@
       const instrucoes = document.getElementById('Instrucoes');
 
       setTimeout(() => {
-
-        if (login && !login.classList.contains('oculto')) {
-          const conteudo = login.querySelector('.conteudo-instrucoes');
-          const botaoPerfil = document.getElementById('botao-iconeID');
-          if (conteudo && !conteudo.contains(event.target) && event.target !== botaoPerfil && !botaoPerfil.contains(event.target)) {
-            login.classList.add('oculto');
-          }
-        }
-
-        if (registro && !registro.classList.contains('oculto')) {
-          const conteudo = registro.querySelector('.conteudo-instrucoes');
-          const linkRegistrar = event.target.closest('.link-registrar');
-          if (conteudo && !conteudo.contains(event.target) && !linkRegistrar) {
-            registro.classList.add('oculto');
-          }
-        }
-
         if (instrucoes && !instrucoes.classList.contains('oculto')) {
           const conteudo = instrucoes.querySelector('.conteudo-instrucoes');
           const botaoInstrucoes = event.target.closest('.botao-icone');
@@ -340,6 +320,16 @@
         <input type="text" id="urlImagem" placeholder="Cole a URL da imagem aqui (jpg, png, webp)" class="input-url">
         <button class="confirmarr" onclick="confirmarAlteracoes()">Confirmar Alteração</button> 
         <button class="confirmarr" onclick="deletarConta()" style="position: relative;margin-top: 10px;">Deletar Conta</button> 
+        <div id="confirmardeletar" class="modal">
+          <div class="afenaodeleta">
+            <h3>Você quer mesmo deletar a conta :( ?</h3>
+            <div class="botoess">
+              <button class="yes" onclick="deletarConta()">Sim</button>
+              <button class="no" onclick="fecharConfirmacao()">Não</button>
+            </div>
+          </div>
+        </div>
+        <p id="mensagemDeletar"></p>
       </div>
     </div>
   </div>
