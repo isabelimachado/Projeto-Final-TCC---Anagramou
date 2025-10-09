@@ -210,6 +210,7 @@ window.InputResposta = function () {  // feito
       y.style.animationName = "aoAcertar";
     } else {
       console.log("Já foi incluso!");
+      mostrarMensagem("Já foi incluso!",1)
     }
   } else {
     console.log("Resposta incorreta !");
@@ -237,7 +238,7 @@ window.dica = function () {
   });
   
   if (camposVazios.length === 0) {
-    alert("As dicas já foram usadas!");
+    mostrarMensagem("As dicas já foram usadas!!",2)
     return;
   }
   
@@ -281,6 +282,7 @@ observadorTema.observe(document.body, {
 
 window.desistir = function () { // feito
   usuarioDesistiu = true;
+  mostrarMensagem("Mais sorte na próxima!",1)
   for (let i = 0; i < 6; i++) {
     const y = document.getElementById(`campos${1 + i}`);
     if (y.style.backgroundColor !== "rgb(13, 249, 64)") {
@@ -394,7 +396,6 @@ document.addEventListener("DOMContentLoaded", () => { // feito
     }
   });
 });
-
 //tempo
 document.addEventListener("DOMContentLoaded", () => { // feito
   const input = document.getElementById("input-jogar")
@@ -499,25 +500,34 @@ window.funcEnfeites = function () { // feito
 
 /////   FUNÇÕES HAVER COM USUARIOS ///////
 
-window.mostrarMensagem = function (texto, tipo = "sucesso") {
-  const msg = document.getElementById("mensagem"); //div q vai mudar
+window.mostrarMensagem = function (texto,tipoResultado) {  
+  const container = document.getElementById("mensagemContainer")
+  const msg = document.querySelector(".mensagemResultado"); 
+  
+  if(tipoResultado === 1){
+    container.style.backgroundColor = "#ff2c2c" // erro
+  }
+  else if(tipoResultado === 2){
+    container.style.backgroundColor = "#00ff77" // sucesso
+  }else{ console.log("erro")}
 
-  msg.innerHTML = `${texto}`;
+  msg.textContent = texto
+  container.style.display = "inline"
 
-  msg.className = tipo === "erro" ? "mensagem-erro" : "mensagem-sucesso";
+  setTimeout(() => {
+    container.classList.add("adicionar")
+  },3000)
+  setTimeout(() => {
+    container.style.display = "none"
+    msg.textContent = "placeTexto"
+    container.classList.remove("adicionar")
+  },5000)
 
-  msg.style.display = "block";
-  msg.style.opacity = "1";
-
-  clearTimeout(window.msgTimeout);
-  window.msgTimeout = setTimeout(() => msg.remove(), 5000);
 }
-
 
 window.registro = async function (email, nome, senha, tempo, totalPontos) {
   let acertouTudo = null;
-  if (listaAchou.length === 6) acertouTudo = true;
-
+  if (listaAchou.length === 6 || usuarioDesistiu) acertouTudo = true;
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
     const user = userCredential.user;
@@ -556,11 +566,10 @@ window.registro = async function (email, nome, senha, tempo, totalPontos) {
         });
         break;
     }
-
-    mostrarMensagem("Registro realizado com sucesso!", "sucesso");
-
+    mostrarMensagem("Entrando...",2)
   } catch (err) {
-    mostrarMensagem("Erro ao registrar: " + (errorFirebase(err.code) || "Verifique os dados e tente novamente."), "erro");
+    mostrarMensagem("Erro ao registrar!!",1)
+    console.log(err)
   }
 }
 
@@ -572,17 +581,16 @@ window.login = async function (email, senha) {
     const docRef = doc(db, "usuarios", user.uid);
     const docSnap = await getDoc(docRef);
     let dados = null;
-
     if (docSnap.exists()) {
       dados = docSnap.data();
     }
-
-    mostrarMensagem("Login realizado com sucesso!", "sucesso");
+    mostrarMensagem("Entrando...",2)
+    setTimeout(() => window.location.reload() ,1000)
     return dados;
-
   } catch (err) {
     console.log("Erro ao fazer login: " + err);
-    mostrarMensagem(errorFirebase(err.code) || "Erro ao fazer login.", "erro");
+    mostrarMensagem("Erro ao logar!!",1)
+
   }
 }
 
@@ -614,9 +622,9 @@ window.LoginGoogle = async function () {
 
     const dados = docSnapShot.data();
     console.log(dados);
-    mostrarMensagem("Bem-vindo, " + user.displayName + "!", "sucesso");
-
+    setTimeout(() => window.location.reload(), 100)
   } catch (err) {
+    mostrarMensagem("Erro ao logar/registrar com Google!!",1)
     console.log("Erro ao tentar autenticar com Google:", err);
   }
 }
@@ -642,14 +650,12 @@ window.salvarResultado = async function () {
     try {
       const snapshot = await getDoc(ref);
       if (!snapshot.exists) {
-        mostrarMensagem("Este usuário ainda não possui dados salvos.", "erro");
         return;
       }
-
       const dados = snapshot.data();
       if (paginaAtual == "facil" && dados.JaAcertouHojeFacil) { return }
-      if (paginaAtual == "medio" && dados.JaAcertouHojeMedio) { return }
-      if (paginaAtual == "dificil" && dados.JaAcertouHojeDificil) { return }
+      if (paginaAtual == "medio" && dados.JaAcertouHojeMedio) {  return }
+      if (paginaAtual == "dificil" && dados.JaAcertouHojeDificil) {  return }
 
       switch (paginaAtual) {
         case "facil":
@@ -658,15 +664,13 @@ window.salvarResultado = async function () {
             JaAcertouHojeFacil: true,
             pontosFaceis: document.getElementById("pointsDisplay").textContent
           }, { merge: true });
-          mostrarMensagem("Progresso fácil atualizado!", "sucesso");
           break;
         case "medio":
           await setDoc(ref, {
-            tempoMedio: document.getElementById("pointsDisplay").textContent,
+            tempoMedio: document.getElementById("timeDisplay").textContent,
             JaAcertouHojeMedio: true,
             pontosMedios: document.getElementById("pointsDisplay").textContent
           }, { merge: true });
-          mostrarMensagem("Progresso médio atualizado!", "sucesso");
           break;
         case "dificil":
           await setDoc(ref, {
@@ -674,11 +678,11 @@ window.salvarResultado = async function () {
             JaAcertouHojeDificil: true,
             pontosDificies: document.getElementById("pointsDisplay").textContent
           }, { merge: true });
-          mostrarMensagem("Progresso difícil atualizado!", "sucesso");
           break;
       }
+      mostrarMensagem("Foi salvo os resultados!",2)
     } catch (err) {
-      console.log("Erro ao salvar resultado/ ERRO:" + err);
+      console.log("Erro ao salvar resultado/ ERRO:" +err);
     }
   }
 }
@@ -691,14 +695,16 @@ window.trocarIcone = function () {
 }
 
 window.sairDaConta = async function () {
+  let sair = false
   signOut(auth).then(() => {
-    mostrarMensagem("Você saiu da conta.", "sucesso");
-    setTimeout(() => window.location.reload(), 1000);
+    if(!sair){
+      sair = true
+      setTimeout(() => window.location.reload(), 1000);
+    }
+    
   }).catch(() => {
-    mostrarMensagem("Erro ao sair da conta.", "erro");
   });
 }
-
 
 window.revelarAnagramas = async function () {
   if (!globalUser) { console.log("ninguem logado!"); return }
@@ -738,6 +744,7 @@ window.revelarAnagramas = async function () {
       if (paginaAtual === "facil") { document.getElementById("pointsDisplay").textContent = dados.pontosFaceis; document.getElementById("timeDisplay").textContent = "🎉" }
       if (paginaAtual === "medio") { document.getElementById("pointsDisplay").textContent = dados.pontosMedios; document.getElementById("timeDisplay").textContent = "🎉" }
       if (paginaAtual === "dificil") { document.getElementById("pointsDisplay").textContent = dados.pontosDificies; document.getElementById("timeDisplay").textContent = "🎉" }
+      mostrarMensagem("🎉Uhu!🎉",2)
     } else {
       console.log("Não vira os anagramas!")
     }
@@ -843,7 +850,7 @@ window.confirmarAlteracoes = async function () {
     if (inputURL.includes("jpeg") || inputURL.includes("png") || inputURL.includes("webp") || inputURL.includes("jpg")) {
       console.log("Formato valido!")
     } else {
-      console.log("Invalido")
+      alert("Nada digitado")
       return
     }
     tipoCaso = 2
@@ -896,17 +903,15 @@ window.deletarConta = async function () {
   const user = auth.currentUser
   try {
       await deleteUser(user).then(() => {
-      const msg = document.getElementById("mensagemDeletar");
-      msg.textContent = "Deletando conta...";
       deleteDoc(doc(db,"usuarios",globalUser))
-      setTimeout(() => window.location.reload() ,1000)
+      mostrarMensagem("Volte sempre!",2)
+      setTimeout(() => window.location.reload() ,2000)
     }).catch((error) => {
       console.log("Erro ao deletar // ERRO:"+error)
     });
     
   } catch (err) {
     console.log("Erro ao deletar conta:"+err);
-    msg.textContent = "Erro ao deletar conta";
   }
 };
 
