@@ -20,7 +20,7 @@ async function exemplo(a1, a2, a3, a4, a5, a6,database) {
   if(database == 1) banco = "descPalavraFacil"  
   if(database == 2) banco = "descPalavraMedia"
   if(database == 3) banco = "descPalavraDificil"
-  const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+  const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
   const palavras = [a1, a2, a3, a4, a5, a6];
   const prompt = `Forneça apenas um sinônimo simples e moderno para as seguintes palavras, na mesma ordem, com exatamente duas palavras por item, separados por vírgula. Não adicione explicações, quebras de linha, nem texto extra. Apenas os sinônimos: ${palavras.join(", ")}`;

@@ -353,8 +353,6 @@ window.MostrarDados = async function () { // sinceramente que função insuporta
         const pFoto = document.createElement("img");
         pFoto.src = fotoURL;
         pFoto.className = "foto-ranking"
-        pFoto.style.pointerEvents = "none";
-
 
         infoDiv.appendChild(pNome);
         infoDiv.appendChild(pTempo);
