@@ -28,6 +28,7 @@
       </button>
     </div>
 
+    
     <div class="titulo"><b>ANAGRAMOU!</b></div>
 
     <div class="botoes-direita">
@@ -240,7 +241,7 @@
 
   <div id="ranking">
     <button class="botaoRanking" id="fechar" onclick="apertarBotao(8)">X</button>
-    <h2>RANKING GLOBAL</h2>
+    <h2>RANKING</h2>
     <div class="verproprioplacar" onclick="apertarBotao(9)" id="placarAuxiliar">
       <i class="fa-solid fa-user" style="font-size: 30px; position: relative; right: 15px;"></i>
       <span>Acessar perfil</span>
@@ -335,6 +336,22 @@
 
   <div id="mensagemContainer">
     <span class="mensagemResultado"> mensagemDeErroTeste </span>   
+  </div>
+
+<style>
+  #rankingPerfil{
+    opacity: 0;
+    position: fixed;
+    z-index: 1000;
+    background-color: rgb(186, 186, 206);
+    width: 90%;
+    height: 50%;
+    justify-content: center;
+    margin-top: 90px;
+  }
+</style>
+  <div id="rankingPerfil">
+    <span id="rankingNome">ola!</span>
   </div>
 
 </html>

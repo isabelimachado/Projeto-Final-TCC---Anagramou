@@ -108,11 +108,9 @@ window.mudarEstado = function () {
       break;
     case 7: // mostrarRanking
       document.getElementById("ranking").classList.toggle("aberta");
-      document.getElementById("divJogador").classList.toggle("aberta");
       break;
     case 8: // fecharGaveta
       document.getElementById("ranking").classList.remove("aberta");
-      document.getElementById("divJogador").classList.remove("aberta");
       break;
     case 9: //abrirPlacarProprio
       document.getElementById("placarProprio").classList.add("aberto");
@@ -317,7 +315,7 @@ window.MostrarDados = async function () { // sinceramente que função insuporta
       let posicao = 1
       usuarios.forEach(infos => {
         const divPlayer = document.createElement("div");
-        divPlayer.id = "divJogador";
+       divPlayer.id = "divJogador"
         const posicaoSpan = document.createElement("span");
         posicaoSpan.className = "jogador-posicao";
         if (posicao === 1) posicaoSpan.classList.add("primeiro");
@@ -355,6 +353,8 @@ window.MostrarDados = async function () { // sinceramente que função insuporta
         const pFoto = document.createElement("img");
         pFoto.src = fotoURL;
         pFoto.className = "foto-ranking"
+        pFoto.style.pointerEvents = "none";
+
 
         infoDiv.appendChild(pNome);
         infoDiv.appendChild(pTempo);
@@ -365,7 +365,6 @@ window.MostrarDados = async function () { // sinceramente que função insuporta
 
         containerFoto.appendChild(pFoto)
         rankingDiv.appendChild(divPlayer);
-
         posicao++;
       })
     })
@@ -500,29 +499,35 @@ window.funcEnfeites = function () { // feito
 
 /////   FUNÇÕES HAVER COM USUARIOS ///////
 
-window.mostrarMensagem = function (texto,tipoResultado) {  
-  const container = document.getElementById("mensagemContainer")
-  const msg = document.querySelector(".mensagemResultado"); 
+window.mostrarMensagem = function(texto, tipoResultado){
+  const divCriar = document.createElement("div")
+  const textoDentro = document.createElement("span")
   
+  divCriar.id = "mensagemContainer"
+  textoDentro.className ="mensagemResultado"
+  divCriar.style.display = "inline"
+  
+  textoDentro.textContent = texto
+  document.body.appendChild(divCriar)
+  divCriar.appendChild(textoDentro)
+
+    
   if(tipoResultado === 1){
-    container.style.backgroundColor = "#ff2c2c" // erro
+    divCriar.style.backgroundColor = "#ff2c2c" // erro
   }
   else if(tipoResultado === 2){
-    container.style.backgroundColor = "#00ff77" // sucesso
-  }else{ console.log("erro")}
-
-  msg.textContent = texto
-  container.style.display = "inline"
+    divCriar.style.backgroundColor = "#00ff77" // sucesso
+  }
+  else{ console.log("erro")}
 
   setTimeout(() => {
-    container.classList.add("adicionar")
+    divCriar.classList.add("adicionar")
   },3000)
   setTimeout(() => {
-    container.style.display = "none"
-    msg.textContent = "placeTexto"
-    container.classList.remove("adicionar")
+    divCriar.style.display = "none"
+    textoDentro.textContent = "placeTexto"
+    divCriar.classList.remove("adicionar")
   },5000)
-
 }
 
 window.registro = async function (email, nome, senha, tempo, totalPontos) {
@@ -645,6 +650,7 @@ window.EnviarRegistro = function () {
 }
 
 window.salvarResultado = async function () {
+  if(!globalUser) setTimeout(() => apertarBotao(6), 2000)
   if (globalUser) {
     const ref = doc(db, "usuarios", globalUser);
     try {
@@ -744,6 +750,8 @@ window.revelarAnagramas = async function () {
       if (paginaAtual === "facil") { document.getElementById("pointsDisplay").textContent = dados.pontosFaceis; document.getElementById("timeDisplay").textContent = "🎉" }
       if (paginaAtual === "medio") { document.getElementById("pointsDisplay").textContent = dados.pontosMedios; document.getElementById("timeDisplay").textContent = "🎉" }
       if (paginaAtual === "dificil") { document.getElementById("pointsDisplay").textContent = dados.pontosDificies; document.getElementById("timeDisplay").textContent = "🎉" }
+      document.getElementById("input-jogar").style.display = "none"
+      document.getElementById("botaoResposta").style.display = "none"
       mostrarMensagem("🎉Uhu!🎉",2)
     } else {
       console.log("Não vira os anagramas!")
