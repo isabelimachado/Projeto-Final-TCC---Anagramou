@@ -1,8 +1,11 @@
 const admin = require('firebase-admin');
 const serviceAccount = require('./seguranca.json');
+require('dotenv').config({ path: './variaveis.env' });
+
+console.log(process.env.apiGemini)
 
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-const genAI = new GoogleGenerativeAI("AIzaSyAMKZiXnJVL0fHZODpzmxhd9TGHSxEhBT8");
+const genAI = new GoogleGenerativeAI(process.env.apiGemini);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
@@ -20,7 +23,9 @@ async function exemplo(a1, a2, a3, a4, a5, a6,database) {
   if(database == 1) banco = "descPalavraFacil"  
   if(database == 2) banco = "descPalavraMedia"
   if(database == 3) banco = "descPalavraDificil"
-  const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+const model = genAI.getGenerativeModel({
+  model: "gemini-2.5-flash"
+});
 
   const palavras = [a1, a2, a3, a4, a5, a6];
   const prompt = `Forneça apenas um sinônimo simples e moderno para as seguintes palavras, na mesma ordem, com exatamente duas palavras por item, separados por vírgula. Não adicione explicações, quebras de linha, nem texto extra. Apenas os sinônimos: ${palavras.join(", ")}`;
