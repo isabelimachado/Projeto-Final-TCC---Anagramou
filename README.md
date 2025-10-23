@@ -15,5 +15,3 @@ Como funciona a criação dos anagramas e suas dicas?
 Um pacote .json é filtrado e seleciona uma palavra totalmente aleatória repartida em pedaços então comparamos suas letras de modo separado e o arquivo retorna os anagramas da palavra escolhida existentes no .json.
 As dicas pegam os anagramas da palavra do dia no banco e retornam um sinônimo delas.
 
-O projeto está completo?
-R: Ainda falta muita coisa
