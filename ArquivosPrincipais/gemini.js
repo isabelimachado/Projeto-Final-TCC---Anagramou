@@ -1,11 +1,19 @@
-const admin = require('firebase-admin');
 const serviceAccount = require('./seguranca.json');
-require('dotenv').config({ path: './variaveis.env' });
+import { GoogleGenAI } from "@google/genai";
+import dotenv from "dotenv"
+dotenv.config({ path: "./variaveis.env" });
 
-console.log(process.env.apiGemini)
+const ai = new GoogleGenAI({
+  apiKey:process.env.GOOGLE_API_KEY,
+});
 
-const { GoogleGenerativeAI } = require("@google/generative-ai");
-const genAI = new GoogleGenerativeAI(process.env.apiGemini);
+/* async function main() {
+  const response = await ai.models.generateContent({
+    model: "gemini-2.5-flash",
+    contents: "Explain how AI works in a few words",
+  });
+  console.log(response.text);
+} */
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
@@ -24,7 +32,7 @@ async function exemplo(a1, a2, a3, a4, a5, a6,database) {
   if(database == 2) banco = "descPalavraMedia"
   if(database == 3) banco = "descPalavraDificil"
 const model = genAI.getGenerativeModel({
-  model: "gemini-2.5-flash"
+  model: "gemini-2.5-flash-lite"
 });
 
   const palavras = [a1, a2, a3, a4, a5, a6];
