@@ -28,7 +28,7 @@
       </button>
     </div>
 
-    
+
     <div class="titulo"><b>ANAGRAMOU!</b></div>
 
     <div class="botoes-direita">
@@ -48,9 +48,6 @@
   </header>
 
   <div class="selecionarDificuldade">
-
-
-
     <button class="botao-dificuldade"><a href="index.html">FÁCIL</a></button>
     <button class="botao-dificuldade"><a href="anagramaMedio.html">MÉDIO</a></button>
     <button class="botao-dificuldade"><a href="anagramaDificil.html">DÍFICIL</a></button>
@@ -245,12 +242,15 @@
   <div id="ranking">
     <button class="botaoRanking" id="fechar" onclick="apertarBotao(8)">X</button>
     <h2>RANKING</h2>
-    <div class="verproprioplacar" onclick="apertarBotao(9)" id="placarAuxiliar">
-      <i class="fa-solid fa-user" style="font-size: 30px; position: relative; right: 15px;"></i>
+
+    <div id="placarAuxiliar"></div>
+
+    <div class="verproprioplacar" onclick="apertarBotao(9)">
+      <i class="fa-solid fa-user"></i>
       <span>Acessar perfil</span>
     </div>
-
   </div>
+
   <div id="placarProprio">
     <button class="botao-sair" onclick="apertarBotao(10)">✖</button>
     <h2 style="text-align: center;">MEU PERFIL</h2>
@@ -338,6 +338,7 @@
   </div>
 
   <div id="mensagemContainer">
-    <span class="mensagemResultado"> mensagemDeErroTeste </span>   
+    <span class="mensagemResultado"> mensagemDeErroTeste </span>
   </div>
+
 </html>

@@ -364,6 +364,8 @@ window.MostrarDados = async function () { // sinceramente que função insuporta
         containerFoto.appendChild(pFoto)
         rankingDiv.appendChild(divPlayer);
         posicao++;
+        const placarAuxiliar = document.getElementById("placarAuxiliar");
+        rankingDiv.insertBefore(divPlayer, placarAuxiliar)
       })
     })
   } catch (err) {

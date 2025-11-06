@@ -132,7 +132,7 @@ a {
 [data-theme="dark"] .botao-dificuldade,
 [data-theme="dark"] #input-jogar,
 [data-theme="dark"] .divdapalavra {
-      background-color: whitesmoke;
+    background-color: whitesmoke;
 }
 
 [data-theme="dark"] #ranking {
@@ -558,7 +558,7 @@ body {
     width: 35%;
     border-radius: 30px;
     display: flex;
-    align-items: center;    
+    align-items: center;
     justify-content: center;
     text-align: center;
     margin: 8px;
@@ -767,30 +767,27 @@ body {
     background-color: #4CAF50;
 }
 
-
 .verproprioplacar {
-    position: absolute;
-    top: 90%;
-    left: 50%;
     opacity: 0;
-    display: none;
+    visibility: hidden;
     align-items: center;
     justify-content: center;
-    width: 90%;
-    max-width: 400px;
+    width: 95%;
+    max-width: 500px;
     background-color: #f0f0f0;
-    padding: 10px 20px;
+    padding: 20px 20px;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     cursor: pointer;
-    transition: opacity 0.4s ease, transform 0.4s ease;
-    z-index: 1000;
+    z-index: 10;
     caret-color: transparent;
+    margin: 12px auto 10px;
+    text-align: center;
 }
 
 #ranking.aberta .verproprioplacar {
     opacity: 1;
-    transform: translate(-50%, -10%);
+    visibility: visible;
 }
 
 #placarProprio {
@@ -820,7 +817,7 @@ body {
 }
 
 .verproprioplacar span {
-    font-size: 16px;
+    font-size: 20px;
     color: #333;
     font-weight: 500;
 }
@@ -1059,7 +1056,7 @@ body {
 }
 
 
- .url-personalizada {
+.url-personalizada {
     margin-top: 15px;
     padding-top: 10px;
     border-top: 1px solid #e9ecef;
@@ -1179,7 +1176,7 @@ body {
     cursor: pointer;
 }
 
-#mensagemContainer{
+#mensagemContainer {
     width: 200px;
     height: 50px;
     position: fixed;
@@ -1191,14 +1188,17 @@ body {
     display: none;
     z-index: 9998;
 }
-.adicionar{
+
+.adicionar {
     animation: subir 0.5s ease-in-out forwards;
 }
-.mensagemResultado{
+
+.mensagemResultado {
     z-index: 9999;
     display: inline;
     color: black;
 }
+
 /*keyframes para todas as animacoes*/
 @keyframes aoAcertar {
     from {
@@ -1260,11 +1260,13 @@ body {
         opacity: 0;
     }
 }
-@keyframes subir{
-    to{
+
+@keyframes subir {
+    to {
         transform: translateY(-100vh);
     }
 }
+
 /* @keyframes isabelly {
     from{
         transform: rotateZ(0deg);
