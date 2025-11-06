@@ -31,6 +31,7 @@ let databaseSinonimos = ""
 let usuarioDesistiu = false
 let timer = 0
 let contadordicas = 0
+let jaRegistrou = false
 
 const imagensAleatorias = [
   "imagensAleatorias/gatodandojoia.jpeg",
@@ -437,7 +438,6 @@ document.addEventListener('click', function (event) {
         instrucoes.classList.add('oculto');
       }
     }
-
   }, 10);
 });
 
@@ -570,6 +570,7 @@ window.registro = async function (email, nome, senha, tempo, totalPontos) {
         break;
     }
     mostrarMensagem("Entrando...",2)
+    setTimeout(() => window.location.reload(), 1000);
   } catch (err) {
     mostrarMensagem("Erro ao registrar!!",1)
     console.log(err)
@@ -639,12 +640,20 @@ window.EnviarLogin = function () {
 }
 
 window.EnviarRegistro = function () {
-  const email = document.getElementById("emailRegistro").value;
-  const nome = document.getElementById("nomeRegistro").value;
-  const senha = document.getElementById("senhaRegistro").value;
-  const tempo = document.getElementById("timeDisplay").textContent;
-  const pontos = document.getElementById("pointsDisplay").textContent;
-  registro(email, nome, senha, tempo, pontos);
+  if(!jaRegistrou){
+    console.log("mandando email....")
+    mostrarMensagem("Espere...",2)
+    jaRegistrou = true
+    const email = document.getElementById("emailRegistro").value;
+    const nome = document.getElementById("nomeRegistro").value;
+    const senha = document.getElementById("senhaRegistro").value;
+    const tempo = document.getElementById("timeDisplay").textContent;
+    const pontos = document.getElementById("pointsDisplay").textContent;
+    registro(email, nome, senha, tempo, pontos);
+  }
+  else{
+    console.log("para de manda registro!")
+  }
 }
 
 window.salvarResultado = async function () {
@@ -856,7 +865,7 @@ window.confirmarAlteracoes = async function () {
     if (inputURL.includes("jpeg") || inputURL.includes("png") || inputURL.includes("webp") || inputURL.includes("jpg")) {
       console.log("Formato valido!")
     } else {
-      alert("Nada digitado")
+      mostrarMensagem("Nada digitado",1)
       return
     }
     tipoCaso = 2
@@ -864,7 +873,7 @@ window.confirmarAlteracoes = async function () {
     if (inputURL.includes("jpeg") || inputURL.includes("png") || inputURL.includes("webp") || inputURL.includes("jpg")) {
       console.log("Formato valido!")
     } else {
-      console.log("Invalido")
+      mostrarMensagem("Inválido",1)
       return
     }
     console.log("os dois tao preenchidos!")
