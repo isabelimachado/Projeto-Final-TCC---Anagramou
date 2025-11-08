@@ -541,7 +541,7 @@ window.registro = async function (email, nome, senha, tempo, totalPontos) {
       case "facil":
         await setDoc(doc(db, "usuarios", user.uid), {
           nome: nome,
-          tempo: tempo,
+          tempoFacil: tempo,
           email: email,
           JaAcertouHojeFacil: acertouTudo,
           foto: "",
@@ -552,7 +552,7 @@ window.registro = async function (email, nome, senha, tempo, totalPontos) {
       case "medio":
         await setDoc(doc(db, "usuarios", user.uid), {
           nome: nome,
-          tempo: tempo,
+          tempoMediio: tempo,
           email: email,
           foto: "",
           JaAcertouHojeMedio: acertouTudo,
@@ -563,7 +563,7 @@ window.registro = async function (email, nome, senha, tempo, totalPontos) {
       case "dificil":
         await setDoc(doc(db, "usuarios", user.uid), {
           nome: nome,
-          tempo: tempo,
+          tempoDificil: tempo,
           email: email,
           JaAcertouHojeDificil: acertouTudo,
           pontosDificies: totalPontos,
