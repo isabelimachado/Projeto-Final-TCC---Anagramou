@@ -47,12 +47,15 @@ const imagensAleatorias = [
 const hoje = new Date();
 const diaAtual = new Intl.DateTimeFormat('pt-BR').format(hoje).replace(/\//g, '-');
 
+const botoes = document.querySelectorAll(".botao-dificuldade");
+
 if (window.location.pathname.includes("index.html") || window.location.pathname === "/") {
   tipoPonto = "pontosFaceis"
   destinoPontosPagina = "JaAcertouHojeFacil"
   paginaAtual = "facil"
   databaseAtual = "palavraDoDiaFacil"
   databaseSinonimos = "descPalavraFacil"
+  botoes[0].style.backgroundColor = "#b8b6b6"
 }
 if (window.location.pathname.includes("anagramaMedio.html")) {
   tipoPonto = "pontosMedios"
@@ -60,6 +63,7 @@ if (window.location.pathname.includes("anagramaMedio.html")) {
   paginaAtual = "medio"
   databaseAtual = "palavraDoDiaMedia"
   databaseSinonimos = "descPalavraMedia"
+  botoes[1].style.backgroundColor = "#b8b6b6"
 }
 if (window.location.pathname.includes("anagramaDificil.html")) {
   tipoPonto = "pontosDificies"
@@ -67,6 +71,7 @@ if (window.location.pathname.includes("anagramaDificil.html")) {
   paginaAtual = "dificil"
   databaseAtual = "palavraDoDiaDificil"
   databaseSinonimos = "descPalavraDificil"
+  botoes[2].style.backgroundColor = "#b8b6b6"
 }
 
 let listaVariaveis = [tipoPonto, destinoPontosPagina, paginaAtual, databaseAtual, databaseSinonimos, diaAtual]
@@ -114,6 +119,7 @@ window.mudarEstado = function () {
       document.getElementById("ranking").classList.remove("aberta");
       break;
     case 9: //abrirPlacarProprio
+      if(!globalUser){ mostrarMensagem("Faça login para acessar o placar!",1); return}
       document.getElementById("placarProprio").classList.add("aberto");
       break;
     case 10: // fecharPlacarProprio
@@ -532,6 +538,7 @@ window.mostrarMensagem = function(texto, tipoResultado){
 
 window.registro = async function (email, nome, senha, tempo, totalPontos) {
   let acertouTudo = null;
+  setTimeout(() => jaRegistrou = false ,2500)
   if (listaAchou.length === 6 || usuarioDesistiu) acertouTudo = true;
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, senha);

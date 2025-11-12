@@ -768,7 +768,7 @@ body {
 }
 
 .verproprioplacar {
-    opacity: 0;
+    opacity: 1;
     visibility: hidden;
     align-items: center;
     justify-content: center;
