@@ -260,6 +260,12 @@ body {
     transition: all 0.2s ease;
 }
 
+.botao-dificuldade:hover {
+    transform: translateY(-3px);
+    background: #a8a6a64f;
+}
+
+
 .rodape {
     width: 100%;
     background: #e7e4e4;

@@ -55,7 +55,8 @@ if (window.location.pathname.includes("index.html") || window.location.pathname 
   paginaAtual = "facil"
   databaseAtual = "palavraDoDiaFacil"
   databaseSinonimos = "descPalavraFacil"
-  botoes[0].style.backgroundColor = "#b8b6b6"
+  botoes[0].style.backgroundColor = "#a8a6a64f"
+
 }
 if (window.location.pathname.includes("anagramaMedio.html")) {
   tipoPonto = "pontosMedios"
@@ -63,7 +64,7 @@ if (window.location.pathname.includes("anagramaMedio.html")) {
   paginaAtual = "medio"
   databaseAtual = "palavraDoDiaMedia"
   databaseSinonimos = "descPalavraMedia"
-  botoes[1].style.backgroundColor = "#b8b6b6"
+  botoes[1].style.backgroundColor = "#a8a6a64f"
 }
 if (window.location.pathname.includes("anagramaDificil.html")) {
   tipoPonto = "pontosDificies"
@@ -71,7 +72,8 @@ if (window.location.pathname.includes("anagramaDificil.html")) {
   paginaAtual = "dificil"
   databaseAtual = "palavraDoDiaDificil"
   databaseSinonimos = "descPalavraDificil"
-  botoes[2].style.backgroundColor = "#b8b6b6"
+  botoes[2].style.backgroundColor = "#a8a6a64f"
+
 }
 
 let listaVariaveis = [tipoPonto, destinoPontosPagina, paginaAtual, databaseAtual, databaseSinonimos, diaAtual]
