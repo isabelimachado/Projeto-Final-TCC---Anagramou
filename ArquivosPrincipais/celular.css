@@ -55,71 +55,58 @@ body {
 
 .cabecalho {
     width: 100%;
-    max-width: 100%;
+    height: 55px;
+    position: relative;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    padding: clamp(10px, 3vw, 20px);
-    margin-bottom: 10px;
-    gap: clamp(8px, 2vw, 12px);
+    justify-content: center;
+    padding: 4px 10px;
+    margin-bottom: 4px;
 }
 
-.botoes-esquerda,
-.botoes-direita {
-    display: flex;
-    gap: clamp(8px, 2vw, 15px);
-    flex-shrink: 0;
-    width: 100%;
-    justify-content: center;
-}
 
 .botoes-esquerda {
-    order: 1;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    display: flex;
+    gap: 6px;
 }
 
 .botoes-direita {
-    order: 3;
-}
-
-.titulo {
-    order: 2;
-    font-size: clamp(22px, 5.5vw, 28px);
-    font-weight: 700;
-    color: white;
-    text-align: center;
-    width: 100%;
-    white-space: normal;
-    overflow: visible;
-    text-overflow: clip;
-    line-height: 1.2;
-    padding: clamp(4px, 1vw, 8px) 0;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    display: flex;
+    gap: 7px;
 }
 
 .botao-icone {
+    width: 20px;
+    height: 20px;
     background: white;
+    border-radius: 10px;
     border: none;
-    border-radius: 8px;
-    padding: clamp(7px, 2vw, 10px);
-    font-size: clamp(16px, 4vw, 19px);
     cursor: pointer;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    transition: all 0.2s ease;
-    color: #333;
-    min-width: clamp(36px, 9vw, 44px);
-    min-height: clamp(36px, 9vw, 44px);
+    font-size: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    caret-color: transparent;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    transition: 0.2s;
 }
 
 .botao-icone:hover {
     transform: translateY(-2px);
-    background: #f0f0f0;
 }
 
-.botao-icone:active {
-    transform: translateY(0);
+
+.titulo {
+    font-size: 30px;
+    font-weight: 900;
+    text-align: center;
+    margin-top: 7rem;
+    color: white;
 }
 
 .selecionarDificuldade {
@@ -132,6 +119,7 @@ body {
     padding-top: clamp(8px, 2vw, 10px);
     justify-content: center;
     width: 100%;
+    margin-top: 60px;
 }
 
 .botao-dificuldade {
@@ -163,7 +151,7 @@ body {
     width: 100%;
     max-width: 100%;
     background: #e7e4e4;
-    padding: clamp(20px, 5vw, 30px) clamp(15px, 4vw, 20px);
+    padding: clamp(40px, 5vw, 30px) clamp(15px, 4vw, 20px);
     border-radius: 20px 20px 0 0;
     box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.1);
     margin-top: auto;
@@ -417,14 +405,14 @@ body {
 
 .divdotimer {
     position: fixed;
-    bottom: clamp(140px, 30vw, 190px);
+    bottom: clamp(180px, 30vw, 190px);
     right: clamp(15px, 4vw, 30px);
     z-index: 100;
 }
 
 .divdospontos {
     position: fixed;
-    bottom: clamp(140px, 30vw, 190px);
+    bottom: clamp(180px, 30vw, 190px);
     right: clamp(130px, 32vw, 180px);
     z-index: 100;
 }
