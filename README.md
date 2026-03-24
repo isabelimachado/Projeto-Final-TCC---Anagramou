@@ -24,7 +24,7 @@ Podendo alternar entre fácil,médio e díficil
 Ferramentas usadas : HTML,CSS,JavaScript, NodeJS
 Banco de dados : Firebase
 
-POR QUE ELE EXISTE:
+# POR QUE ELE EXISTE:
 Trabalho final de conclusão de curso!
 
-Feito por Brayan Freitas e Isabeli Machado
+Feito por @brayann07 e @isabelimachado
