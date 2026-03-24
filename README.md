@@ -26,6 +26,5 @@ Banco de dados : Firebase
 
 # POR QUE ELE EXISTE:
 Trabalho final de conclusão de curso!
-
 #
 Feito por @brayann07 e @isabelimachado
