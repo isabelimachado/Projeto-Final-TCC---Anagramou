@@ -19,7 +19,7 @@ Ferramentas usadas : HTML,CSS,JavaScript, NodeJS
 Banco de dados : Firebase
 
 # OBJETIVO
-Encontrar as 6 permutações da palavra principal,, ganhando pontos e garantindo seu lugar no ranking!
+Encontrar as 6 permutações da palavra principal, ganhando pontos e garantindo seu lugar no ranking!
 Podendo alternar entre fácil,médio e díficil
 
 Feito por Brayan Freitas e Isabeli Machado
