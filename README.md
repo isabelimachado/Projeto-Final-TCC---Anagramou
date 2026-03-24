@@ -18,11 +18,9 @@
 # OBJETIVO:
 Encontrar as 6 permutações da palavra principal, ganhando pontos e garantindo seu lugar no ranking!<br>
 Podendo alternar entre fácil,médio e díficil
-
 # FERRAMENTAS:
 Ferramentas usadas : HTML, CSS, JavaScript, NodeJS<br>
 Banco de dados : Firebase
-
 # POR QUE ELE EXISTE:
 Trabalho final de conclusão de curso!
 #
