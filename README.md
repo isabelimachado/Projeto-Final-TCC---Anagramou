@@ -22,8 +22,8 @@ Podendo alternar entre fácil,médio e díficil
 Ferramentas usadas : HTML, CSS, JavaScript, NodeJS<br>
 Banco de dados : Firebase
 # POR QUE ELE EXISTE:
-Trabalho final de conclusão de curso!
-
+Trabalho final de conclusão de curso!<br>
+PS: Nota final foi <span><h1>9.7!</h1></span>
 <p align="center">
   <span style = "font-size:20" >Feito por @brayann07 e @isabelimachado</span><br><br>
    <img src="https://i.redd.it/s%C3%A9rio-qual-a-ra%C3%A7a-do-cachorro-aifolou-v0-pa1fzn4wmnr71.jpg?width=186&format=pjpg&auto=webp&s=a5b320c8670d7744f8f045d2ee1325cd669ed327" alt="foto"     width="120" height="120" style="margin:10px;">
